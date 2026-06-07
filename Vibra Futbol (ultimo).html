@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vibra Fútbol — 足球震动</title>
+  <meta name="theme-color" content="#0a0a14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FEF9F2;
+      --surface: #FFFFFF;
+      --surface-alt: #FFF7ED;
+      --red-bright: #F44336;
+      --red-soft: #FFEBEE;
+      --gold: #F9A825;
+      --gold-bright: #FFD600;
+      --gold-soft: #FFF8E1;
+      --green-bright: #66BB6A;
+      --green-soft: #E8F5E9;
+      --blue-bright: #42A5F5;
+      --blue-soft: #E3F2FD;
+      --orange: #FF6D00;
+      --navy: #1A237E;
+      --text: #1A1A2E;
+      --text-secondary: #4A4A5A;
+      --text-muted: #8A8A9A;
+      --border: rgba(0,0,0,0.06);
+      --font-display: 'Bangers', cursive;
+      --font-heading: 'Fredoka', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+      --font-zh: 'Noto Sans SC', sans-serif;
+      --radius: 14px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #0a0a14;
+    }
+
+    .top-stripe {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 4px; z-index: 999;
+      background: linear-gradient(90deg,#E53935,#FF9800,#FFD600,#4CAF50,#2196F3,#9C27B0,#E53935);
+      background-size: 200% 100%;
+      animation: stripeFlow 4s linear infinite;
+    }
+    @keyframes stripeFlow { from{background-position:0% 0%} to{background-position:200% 0%} }
+
+    .pulse-bg {
+      position: fixed; top: 38%; left: 50%;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,168,37,0.22) 0%, transparent 70%);
+      transform: translate(-50%,-50%);
+      animation: pulseHeart 3s ease-in-out infinite;
+      pointer-events: none; z-index: 0;
+      transition: background 0.5s, animation-duration 0.5s;
+    }
+    .pulse-bg.fast { animation-duration: 1.2s; }
+    .pulse-bg.goal {
+      background: radial-gradient(circle, rgba(255,214,0,0.45) 0%, transparent 70%);
+      animation: pulseGoalBurst 0.25s ease-out 4;
+    }
+    .pulse-bg.flatline { background: radial-gradient(circle, rgba(100,0,0,0.3) 0%, transparent 70%); animation: none; }
+    @keyframes pulseHeart { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.4} 50%{transform:translate(-50%,-50%) scale(1.12);opacity:0.7} }
+    @keyframes pulseGoalBurst { 0%{transform:translate(-50%,-50%) scale(1);opacity:0.9} 100%{transform:translate(-50%,-50%) scale(2.8);opacity:0} }
+
+    .vibra-indicator {
+      position: fixed; top: 18px; right: 18px; z-index: 10;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--red-bright);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; color: #fff;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .vibra-indicator.active { opacity: 1; animation: vibraShake 0.3s ease; }
+    @keyframes vibraShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px) rotate(-3deg)} 75%{transform:translateX(4px) rotate(3deg)} }
+
+    /* ================================================
+       SPLASH — IMAGEN DE FONDO + CAPAS
+       ================================================ */
+    #splash {
+      position: fixed; inset: 0; z-index: 100;
+      overflow: hidden;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #splash.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
+
+    /* IMAGEN DE FONDO */
+    .splash-bg {
+      position: absolute; inset: 0;
+      background: url('https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Fondo%20del%20estadio.png') center center / cover no-repeat;
+      z-index: 0;
+    }
+
+    /* Overlay oscuro para que el texto se lea */
+    .splash-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(0,0,0,0.45) 0%,
+          rgba(0,0,0,0.1) 30%,
+          rgba(0,0,0,0.05) 50%,
+          rgba(0,0,0,0.15) 75%,
+          rgba(0,0,0,0.5) 100%
+        );
+      z-index: 1;
+    }
+
+    /* TROFEO — IMAGEN */
+    .trophy-layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      animation: trophyFloat 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .trophy-layer img {
+      width: 140px;
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(255,215,0,0.5))
+              drop-shadow(0 4px 20px rgba(0,0,0,0.4));
+      /* Fondo blanco → transparente */
+      mix-blend-mode: multiply;
+    }
+
+    @keyframes trophyFloat {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-12px); }
+    }
+
+    /* Glow detrás del trofeo */
+    .trophy-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
+      animation: glowPulse 2.5s ease-in-out infinite;
+      z-index: 9;
+      pointer-events: none;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    /* MESSI — IMAGEN */
+    .messi-layer {
+      position: absolute;
+      bottom: 8%;
+      left: 3%;
+      z-index: 12;
+      animation: playerFloat 2.5s ease-in-out infinite;
+    }
+
+    .messi-layer img {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+      /* Fondo blanco → transparente */
+      mix-blend-mode: multiply;
+    }
+
+    @keyframes playerFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* WU LEI — IMAGEN */
+    .wulei-layer {
+      position: absolute;
+      bottom: 8%;
+      right: 3%;
+      z-index: 12;
+      animation: playerFloat 2.5s ease-in-out infinite;
+      animation-delay: 0.6s;
+    }
+
+    .wulei-layer img {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+      /* Fondo blanco → transparente */
+      mix-blend-mode: multiply;
+    }
+
+    /* ESTRELLAS CSS (encima de la imagen) */
+    .sky-stars { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .sky-star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--d) ease-in-out infinite;
+      animation-delay: var(--dl);
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: var(--lo); transform: scale(1); }
+      50% { opacity: var(--hi); transform: scale(1.4); }
+    }
+
+    /* CONFETI CSS (encima de todo) */
+    .confetti-container {
+      position: absolute; inset: 0;
+      pointer-events: none; overflow: hidden;
+      z-index: 20;
+    }
+
+    .confetti {
+      position: absolute;
+      width: var(--w, 6px);
+      height: var(--h, 10px);
+      background: var(--c);
+      top: -20px;
+      animation: confettiFall var(--cd) linear infinite;
+      animation-delay: var(--dl);
+      border-radius: var(--br, 0);
+      opacity: 0.8;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+      50% { transform: translateY(50vh) rotate(180deg) scale(0.8); opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(360deg) scale(0.5); opacity: 0; }
+    }
+
+    /* HUMO CSS */
+    .smoke-container {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 3;
+    }
+
+    .smoke-cloud {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+      animation: smokeFloat var(--sd) ease-in-out infinite;
+      animation-delay: var(--sdl);
+    }
+
+    @keyframes smokeFloat {
+      0%,100% { transform: translateX(0) scale(1); opacity: 0.2; }
+      50% { transform: translateX(var(--sx, 20px)) scale(1.15); opacity: 0.5; }
+    }
+
+    /* BANDERAS DE PAÍSES */
+    .flag-strip {
+      position: absolute;
+      top: 12%;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 0 20px;
+      z-index: 15;
+    }
+
+    .fs-flag {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      animation: fsPulse 4s ease-in-out infinite;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+    }
+
+    @keyframes fsPulse {
+      0%,100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.08); }
+    }
+
+    /* TÍTULO */
+    .epic-title {
+      position: absolute;
+      top: 3%; left: 0; right: 0;
+      text-align: center;
+      z-index: 25;
+      padding: 0 16px;
+    }
+
+    .epic-title h1 {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      background: linear-gradient(135deg, #FFD600, #FF6D00, #F44336, #FFD600);
+      background-size: 300% 300%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: titleShimmer 3s ease infinite;
+      line-height: 1;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.7));
+    }
+
+    @keyframes titleShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .epic-title .sub {
+      font-family: var(--font-heading);
+      font-size: 0.85rem; font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+      margin-top: 2px;
+    }
+
+    .epic-title .zh {
+      font-family: var(--font-zh);
+      font-size: 0.95rem; font-weight: 700;
+      color: rgba(255,215,0,0.8);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+
+    /* VS */
+    .vs-badge {
+      position: absolute;
+      bottom: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: #FFD600;
+      text-shadow: 0 0 20px rgba(255,214,0,0.6), 0 2px 4px rgba(0,0,0,0.6);
+      z-index: 13;
+      letter-spacing: 0.1em;
+      animation: vsPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes vsPulse {
+      0%,100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    /* BOTONES */
+    .epic-buttons {
+      position: absolute;
+      bottom: 2%; left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 30;
+      padding: 0 36px;
+    }
+
+    .btn-vamos {
+      padding: 15px 56px; border: none;
+      background: linear-gradient(135deg, #F44336, #FF6D00);
+      color: #fff; font-family: var(--font-heading);
+      font-size: 1.35rem; font-weight: 700;
+      letter-spacing: 0.08em; border-radius: 50px; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(244,67,54,0.4), 0 0 40px rgba(244,67,54,0.15);
+      transition: all 0.3s ease;
+      width: 100%; max-width: 280px;
+    }
+    .btn-vamos:hover, .btn-vamos:active { transform: scale(1.05); box-shadow: 0 6px 28px rgba(244,67,54,0.5); }
+
+    .btn-sub {
+      padding: 9px 28px; border: 1.5px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7); font-family: var(--font-heading);
+      font-size: 0.75rem; font-weight: 600;
+      border-radius: 20px; cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+    .btn-sub:hover { background: rgba(255,255,255,0.15); }
+
+    /* ============================================
+       MAIN APP (igual que v5)
+       ============================================ */
+    #main { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 4px 16px 0; display: none; background: var(--bg); }
+    #main.show { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    header { padding: 18px 0 12px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 0.05em; background: linear-gradient(135deg, var(--red-bright), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .live-badge { display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; color: var(--red-bright); background: var(--red-soft); padding: 5px 12px; border-radius: 20px; }
+    .live-dot { width: 8px; height: 8px; background: var(--red-bright); border-radius: 50%; animation: blink 1.2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .section-title { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
+    .section-title::before { content: '★'; color: var(--gold-bright); }
+    .match-card { background: var(--surface); border-radius: var(--radius); padding: 16px 16px 14px; margin-bottom: 12px; border-left: 4px solid var(--gold); box-shadow: var(--shadow); animation: cardIn 0.45s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+    .match-card:nth-child(2) { animation-delay: 0.08s; border-left-color: var(--red-bright); }
+    .match-card:nth-child(3) { animation-delay: 0.16s; border-left-color: var(--green-bright); }
+    @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+    .match-card.following { border-left-width: 5px; box-shadow: 0 4px 20px rgba(249,168,37,0.15), var(--shadow); }
+    .match-card.event-flash { animation: eFlash 0.4s ease; }
+    @keyframes eFlash { 0%{box-shadow:0 0 0 3px rgba(249,168,37,0.4),var(--shadow)} 100%{box-shadow:var(--shadow)} }
+    .match-teams { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .team { display: flex; align-items: center; gap: 8px; flex: 1; }
+    .team.away { justify-content: flex-end; text-align: right; }
+    .team-flag { font-size: 1.8rem; line-height: 1; }
+    .team-name { font-family: var(--font-heading); font-size: 0.92rem; font-weight: 600; }
+    .match-center { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+    .match-score { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 0.1em; line-height: 1; color: var(--navy); }
+    .match-time { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; color: var(--red-bright); margin-top: 3px; }
+    .match-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .match-group { font-family: var(--font-heading); font-size: 0.65rem; font-weight: 500; color: var(--text-muted); background: var(--surface-alt); padding: 3px 10px; border-radius: 8px; }
+    .btn-follow { padding: 7px 20px; border: 2px solid var(--text-muted); background: transparent; color: var(--text-muted); font-family: var(--font-heading); font-size: 0.72rem; font-weight: 600; border-radius: 20px; cursor: pointer; transition: all 0.3s; }
+    .btn-follow:hover { border-color: var(--red-bright); color: var(--red-bright); }
+    .btn-follow.active { border-color: var(--red-bright); background: linear-gradient(135deg, var(--red-bright), var(--orange)); color: #fff; }
+    .team-label { display: inline-block; font-family: var(--font-heading); font-size: 0.6rem; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
+    .team-label.home-label { background: var(--gold-soft); color: #E65100; }
+    .team-label.away-label { background: var(--blue-soft); color: var(--blue); }
+    .team-label.all-label { background: var(--green-soft); color: var(--green); }
+    .event-feed { margin-top: 20px; padding-bottom: 100px; }
+    .event-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: eSlide 0.3s ease; }
+    @keyframes eSlide { from{opacity:0;transform:translateX(-12px)} to{opacity:1;transform:translateX(0)} }
+    .event-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+    .event-icon.goal{background:var(--gold-soft)} .event-icon.my-goal{background:var(--gold-soft);border:2px solid var(--gold)} .event-icon.opp-goal{background:#3E0000;border:2px solid #600} .event-icon.shot{background:var(--red-soft)} .event-icon.free{background:var(--blue-soft)} .event-icon.danger{background:var(--orange-soft)} .event-icon.yellow{background:#FFFDE7} .event-icon.red{background:var(--red-soft)} .event-icon.whistle{background:#F3E5F5}
+    .event-info{flex:1} .event-desc{font-size:0.82rem;line-height:1.4} .event-desc strong{font-weight:700} .event-desc.goal-text{color:var(--orange);font-weight:700} .event-desc.opp-text{color:#880000;font-weight:700} .event-meta{font-family:var(--font-heading);font-size:0.6rem;font-weight:500;color:var(--text-muted);margin-top:2px}
+    .feed-empty{text-align:center;padding:32px 0;color:var(--text-muted);font-size:0.88rem;font-style:italic}
+    .bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:linear-gradient(to top,var(--bg) 65%,transparent);padding:20px 16px 28px;display:flex;gap:10px;max-width:480px;margin:0 auto}
+    .btn-demo{flex:1;padding:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#fff;font-family:var(--font-heading);font-size:0.95rem;font-weight:700;letter-spacing:0.06em;border-radius:var(--radius);cursor:pointer;box-shadow:0 4px 16px rgba(255,109,0,0.25);transition:all 0.3s}
+    .btn-demo:hover{transform:scale(1.02)}
+    .btn-test{width:52px;padding:14px;border:2px solid var(--text-muted);background:var(--surface);color:var(--text-muted);font-size:1.2rem;border-radius:var(--radius);cursor:pointer;transition:all 0.3s}
+    #team-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;justify-content:center;background:rgba(26,26,46,0.5);opacity:0;pointer-events:none;transition:opacity 0.3s}
+    #team-modal.show{opacity:1;pointer-events:auto}
+    .team-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+    #team-modal.show .team-sheet{transform:translateY(0)}
+    .team-sheet-title{font-family:var(--font-heading);font-size:1.1rem;font-weight:700;text-align:center;margin-bottom:6px}
+    .team-sheet-sub{font-family:var(--font-heading);font-size:0.7rem;font-weight:500;text-align:center;color:var(--text-muted);margin-bottom:18px}
+    .team-option{padding:16px;border:2px solid var(--border);background:var(--surface-alt);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px}
+    .team-option:hover{border-color:var(--red-bright);background:var(--red-soft)}
+    .team-option .flag{font-size:1.8rem} .team-option .name{font-family:var(--font-heading);font-size:0.95rem;font-weight:700;flex:1} .team-option .desc{font-size:0.7rem;color:var(--text-muted);font-family:var(--font-heading)}
+    #goal-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(26,26,46,0.82);opacity:0;pointer-events:none;transition:opacity 0.3s}
+    #goal-overlay.show{opacity:1;pointer-events:auto} #goal-overlay.flatline-mode{background:rgba(20,0,0,0.88)}
+    .goal-ray{position:absolute;width:3px;height:120px;background:linear-gradient(to top,rgba(255,214,0,0.6),transparent);transform-origin:bottom center;animation:rayPulse 1.5s ease-in-out infinite;bottom:50%;left:50%}
+    .goal-ray:nth-child(1){transform:translateX(-50%) rotate(0deg)} .goal-ray:nth-child(2){transform:translateX(-50%) rotate(30deg);animation-delay:0.1s} .goal-ray:nth-child(3){transform:translateX(-50%) rotate(60deg);animation-delay:0.2s} .goal-ray:nth-child(4){transform:translateX(-50%) rotate(90deg);animation-delay:0.3s} .goal-ray:nth-child(5){transform:translateX(-50%) rotate(120deg);animation-delay:0.4s} .goal-ray:nth-child(6){transform:translateX(-50%) rotate(150deg);animation-delay:0.5s} .goal-ray:nth-child(7){transform:translateX(-50%) rotate(180deg);animation-delay:0.6s} .goal-ray:nth-child(8){transform:translateX(-50%) rotate(210deg);animation-delay:0.7s} .goal-ray:nth-child(9){transform:translateX(-50%) rotate(240deg);animation-delay:0.8s} .goal-ray:nth-child(10){transform:translateX(-50%) rotate(270deg);animation-delay:0.9s} .goal-ray:nth-child(11){transform:translateX(-50%) rotate(300deg);animation-delay:1s} .goal-ray:nth-child(12){transform:translateX(-50%) rotate(330deg);animation-delay:1.1s}
+    @keyframes rayPulse{0%,100%{opacity:0.3;height:100px}50%{opacity:0.8;height:160px}}
+    #goal-overlay.flatline-mode .goal-ray{background:linear-gradient(to top,rgba(150,0,0,0.4),transparent)}
+    .goal-burst{position:absolute;width:180px;height:180px;border-radius:50%;border:2px solid var(--gold-bright);animation:burstExp 1s ease-out forwards;opacity:0}
+    .goal-burst:nth-child(13){animation-delay:0s} .goal-burst:nth-child(14){animation-delay:0.2s} .goal-burst:nth-child(15){animation-delay:0.4s}
+    @keyframes burstExp{0%{transform:scale(0.3);opacity:1}100%{transform:scale(5);opacity:0}}
+    #goal-overlay.flatline-mode .goal-burst{border-color:#600}
+    .goal-text{font-family:var(--font-display);font-size:5.5rem;background:linear-gradient(135deg,#FFD600,#FF6D00,#F44336,#FFD600);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gShimmer 1.5s ease infinite,gPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;letter-spacing:0.12em;z-index:1;filter:drop-shadow(0 0 30px rgba(255,214,0,0.5))}
+    @keyframes gShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes gPop{0%{transform:scale(0) rotate(-8deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}
+    #goal-overlay.flatline-mode .goal-text{font-size:3rem;background:linear-gradient(135deg,#600,#400,#600);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(100,0,0,0.5))}
+    .goal-detail{font-family:var(--font-heading);font-size:1rem;font-weight:600;color:#fff;margin-top:16px;opacity:0;animation:fUp 0.4s ease 0.5s forwards;z-index:1;text-align:center}
+    .goal-detail .flag{font-size:1.8rem;display:block;margin-bottom:4px}
+    @keyframes fUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .goal-sparkle{position:absolute;font-size:1.4rem;animation:spFloat 2s ease-in-out infinite;opacity:0;z-index:1}
+    #goal-overlay.show .goal-sparkle{opacity:0.7}
+    .goal-sparkle:nth-child(16){top:18%;left:20%} .goal-sparkle:nth-child(17){top:22%;right:18%;animation-delay:0.3s} .goal-sparkle:nth-child(18){bottom:25%;left:15%;animation-delay:0.6s} .goal-sparkle:nth-child(19){bottom:20%;right:22%;animation-delay:0.9s} .goal-sparkle:nth-child(20){top:35%;left:10%;animation-delay:1.2s} .goal-sparkle:nth-child(21){top:40%;right:10%;animation-delay:1.5s}
+    @keyframes spFloat{0%,100%{transform:translateY(0) rotate(0deg) scale(1);opacity:0.4}50%{transform:translateY(-18px) rotate(25deg) scale(1.3);opacity:0.9}}
+    #goal-overlay.flatline-mode .goal-sparkle{display:none}
+    .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-100px);z-index:150;background:var(--surface);border-radius:var(--radius);padding:12px 20px;max-width:360px;width:calc(100% - 32px);box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+    .toast-content{display:flex;align-items:center;gap:10px;font-size:0.82rem;font-weight:600}
+    .toast-icon{font-size:1.3rem;flex-shrink:0}
+    #vibra-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;justify-content:center;background:rgba(26,26,46,0.5);opacity:0;pointer-events:none;transition:opacity 0.3s}
+    #vibra-modal.show{opacity:1;pointer-events:auto}
+    .vibra-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+    #vibra-modal.show .vibra-sheet{transform:translateY(0)}
+    .vibra-title{font-family:var(--font-heading);font-size:1.2rem;font-weight:700;text-align:center;margin-bottom:18px}
+    .vibra-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .vibra-btn{padding:14px 10px;border:2px solid var(--border);background:var(--surface-alt);color:var(--text);font-family:var(--font-heading);font-size:0.75rem;font-weight:600;border-radius:12px;cursor:pointer;transition:all 0.2s;text-align:center;line-height:1.4}
+    .vibra-btn:hover{border-color:var(--red-bright);background:var(--red-soft)}
+    .vibra-btn .emoji{font-size:1.5rem;display:block;margin-bottom:6px}
+    .vibra-btn small{color:var(--text-muted);font-weight:400;font-size:0.62rem}
+    .vibra-close{margin-top:16px;width:100%;padding:13px;border:none;background:var(--surface-alt);color:var(--text-muted);font-family:var(--font-heading);font-size:0.8rem;font-weight:600;border-radius:12px;cursor:pointer}
+    .sensitivity-row{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+    .sensitivity-label{font-family:var(--font-heading);font-size:0.75rem;font-weight:600;color:var(--text-muted)}
+    .toggle-group{display:flex;gap:6px}
+    .toggle-btn{padding:6px 14px;border:2px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--font-heading);font-size:0.68rem;font-weight:600;border-radius:16px;cursor:pointer;transition:all 0.2s}
+    .toggle-btn.active{border-color:var(--red-bright);color:var(--red-bright);background:var(--red-soft)}
+    .hidden{display:none!important}
+  </style>
+</head>
+
+<body>
+  <div class="top-stripe"></div>
+  <div class="pulse-bg" id="pulseBg"></div>
+  <div class="vibra-indicator" id="vibraIndicator">📳</div>
+
+  <div id="splash">
+    <!-- FONDO: IMAGEN DEL ESTADIO -->
+    <div class="splash-bg"></div>
+
+    <!-- Overlay oscuro para legibilidad -->
+    <div class="splash-overlay"></div>
+
+    <!-- Estrellas CSS encima -->
+    <div class="sky-stars" id="skyStars"></div>
+
+    <!-- Humo CSS -->
+    <div class="smoke-container" id="smoke"></div>
+
+    <!-- Glow del trofeo -->
+    <div class="trophy-glow"></div>
+
+    <!-- TROFEO: IMAGEN -->
+    <div class="trophy-layer">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Trofeo%20Copa%20del%20Mundo.png"
+           alt="Copa del Mundo">
+    </div>
+
+    <!-- VS -->
+    <div class="vs-badge">VS</div>
+
+    <!-- MESSI: IMAGEN -->
+    <div class="messi-layer">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Messi.png"
+           alt="Messi">
+    </div>
+
+    <!-- WU LEI: IMAGEN -->
+    <div class="wulei-layer">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Wu%20Lei.png"
+           alt="Wu Lei">
+    </div>
+
+    <!-- Bandera de países -->
+    <div class="flag-strip" id="flagStrip"></div>
+
+    <!-- Confeti CSS -->
+    <div class="confetti-container" id="confetti"></div>
+
+    <!-- Título -->
+    <div class="epic-title">
+      <h1>VIBRA FÚTBOL</h1>
+      <div class="sub">Siente cada jugada</div>
+      <div class="zh">足球震动 — 感受每一刻</div>
+    </div>
+
+    <!-- Botones -->
+    <div class="epic-buttons">
+      <button class="btn-vamos" id="btnEnter">¡VAMOS!</button>
+      <button class="btn-sub" id="btnAbout">Sobre el proyecto / 关于项目</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="main">
+    <header>
+      <div class="brand">VIBRA FÚTBOL</div>
+      <div class="live-badge"><div class="live-dot"></div>DEMO EN VIVO</div>
+    </header>
+    <div class="section-title">Partidos en vivo</div>
+    <div id="matchList"></div>
+    <div class="event-feed">
+      <div class="section-title">Últimos eventos</div>
+      <div id="eventFeed"><div class="feed-empty">Seguí un partido para vibrar ⚽</div></div>
+    </div>
+  </div>
+
+  <div class="bottom-bar hidden" id="bottomBar">
+    <button class="btn-demo" id="btnDemo">PROBAR VIBRACIONES</button>
+    <button class="btn-test" id="btnTest">📳</button>
+  </div>
+
+  <div id="team-modal">
+    <div class="team-sheet">
+      <div class="team-sheet-title">ELEGÍ TU EQUIPO</div>
+      <div class="team-sheet-sub" id="teamSheetSub"></div>
+      <div id="teamOptions"></div>
+      <button class="vibra-close" onclick="closeTeamModal()">CANCELAR</button>
+    </div>
+  </div>
+
+  <div id="goal-overlay">
+    <div class="goal-ray"></div><div class="goal-ray"></div><div class="goal-ray"></div>
+    <div class="goal-ray"></div><div class="goal-ray"></div><div class="goal-ray"></div>
+    <div class="goal-ray"></div><div class="goal-ray"></div><div class="goal-ray"></div>
+    <div class="goal-ray"></div><div class="goal-ray"></div><div class="goal-ray"></div>
+    <div class="goal-burst"></div><div class="goal-burst"></div><div class="goal-burst"></div>
+    <div class="goal-text" id="goalText">¡GOL!</div>
+    <div class="goal-detail" id="goalDetail"></div>
+    <div class="goal-sparkle">⭐</div><div class="goal-sparkle">✨</div>
+    <div class="goal-sparkle">⭐</div><div class="goal-sparkle">✨</div>
+    <div class="goal-sparkle">⭐</div><div class="goal-sparkle">✨</div>
+  </div>
+
+  <div class="toast" id="toast"><div class="toast-content"><span class="toast-icon" id="toastIcon"></span><span id="toastText"></span></div></div>
+
+  <div id="vibra-modal">
+    <div class="vibra-sheet">
+      <div class="vibra-title">PROBAR PATRONES DE VIBRACIÓN</div>
+      <div class="vibra-grid">
+        <button class="vibra-btn" data-pattern="goal"><span class="emoji">⚽</span>¡GOL!<br><small>Festejo extendido (~20s)</small></button>
+        <button class="vibra-btn" data-pattern="opp_goal"><span class="emoji">💔</span>GOL EN CONTRA<br><small>Línea plana del corazón</small></button>
+        <button class="vibra-btn" data-pattern="shot"><span class="emoji">🥅</span>TIRO AL ARCO<br><small>Fuerte → se desvanece</small></button>
+        <button class="vibra-btn" data-pattern="free_kick"><span class="emoji">🦶</span>TIRO LIBRE<br><small>Silbato</small></button>
+        <button class="vibra-btn" data-pattern="danger"><span class="emoji">💓</span>JUGADA DE RIESGO<br><small>Latidos acelerados</small></button>
+        <button class="vibra-btn" data-pattern="yellow"><span class="emoji">🟨</span>AMARILLA<br><small>Descendente</small></button>
+        <button class="vibra-btn" data-pattern="red"><span class="emoji">🟥</span>ROJA<br><small>Agresiva</small></button>
+        <button class="vibra-btn" data-pattern="end"><span class="emoji">🏁</span>FINAL<br><small>Doble pitido</small></button>
+      </div>
+      <div class="sensitivity-row">
+        <span class="sensitivity-label">Intensidad</span>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-sensitivity="low">Suave</button>
+          <button class="toggle-btn active" data-sensitivity="medium">Normal</button>
+          <button class="toggle-btn" data-sensitivity="high">Fuerte</button>
+        </div>
+      </div>
+      <button class="vibra-close" onclick="closeVibraModal()">CERRAR</button>
+    </div>
+  </div>
+
+<script>
+// === ELEMENTOS CSS DINÁMICOS ===
+
+// Estrellas
+(function(){
+  const c=document.getElementById('skyStars');
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='sky-star';
+    const sz=Math.random()*2+0.5;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*30}%;width:${sz}px;height:${sz}px;--d:${2+Math.random()*4}s;--dl:${Math.random()*5}s;--lo:${0.1+Math.random()*0.2};--hi:${0.4+Math.random()*0.4}`;
+    c.appendChild(s);
+  }
+})();
+
+// Humo
+(function(){
+  const c=document.getElementById('smoke');
+  for(let i=0;i<5;i++){
+    const s=document.createElement('div');
+    s.className='smoke-cloud';
+    const size=80+Math.random()*120;
+    s.style.cssText=`left:${10+Math.random()*80}%;top:${20+Math.random()*60}%;width:${size}px;height:${size*0.6}px;--sd:${4+Math.random()*4}s;--sdl:${Math.random()*3}s;--sx:${-20+Math.random()*40}px`;
+    c.appendChild(s);
+  }
+})();
+
+// Banderas
+(function(){
+  const flags=['🇦🇷','🇨🇳','🇧🇷','🇫🇷','🇩🇪','🇪🇸','🇮🇹','🇯🇵','🇰🇷','🇺🇸','🇲🇽','🏴','🇳🇱','🇵🇹','🇧🇪','🇭🇷','🇨🇴','🇺🇾','🇳🇬','🇲🇦','🇦🇺','🇸🇦','🇨🇭','🇩🇰','🇪🇨','🇸🇳','🇪🇬','🇹🇳','🇨🇲','🇨🇷','🇵🇦','🇳🇿','🇵🇾','🇵🇪','🇨🇱','🇯🇲'];
+  const c=document.getElementById('flagStrip');
+  flags.forEach((f,i)=>{
+    const s=document.createElement('span');
+    s.className='fs-flag';
+    s.textContent=f;
+    s.style.animationDelay=`${i*0.12}s`;
+    c.appendChild(s);
+  });
+})();
+
+// Confeti
+(function(){
+  const c=document.getElementById('confetti');
+  const colors=['#FFD600','#F44336','#75AADB','#fff','#66BB6A','#FF6D00','#CC0000','#42A5F5'];
+  for(let i=0;i<35;i++){
+    const el=document.createElement('div');
+    el.className='confetti';
+    const w=4+Math.random()*6;
+    const h=6+Math.random()*10;
+    el.style.cssText=`left:${Math.random()*100}%;--w:${w}px;--h:${h}px;--c:${colors[Math.floor(Math.random()*colors.length)]};--cd:${3+Math.random()*5}s;--dl:${Math.random()*6}s;--br:${Math.random()>0.5?'50%':'0'}`;
+    c.appendChild(el);
+  }
+})();
+
+// === VIBRATIONS ===
+const CONFIG={sensitivity:'medium',notifEnabled:false};
+const SENS_MULT={low:0.6,medium:1,high:1.5};
+const VIB={shot:[200,80,180,80,150,100,120,120,80,150,50,200,30],free_kick:[80,60,80,120,300],yellow:[200,150,100],red:[300,80,300,80,300,80,300],end:[400,200,400]};
+const VIB_FLATLINE=[3000,500,2000,500,1500];
+const HEARTBEAT=[[250,650,250,750,250,650,250],[220,480,220,480,220,480,220,550],[200,370,200,370,200,370,200,370,200],[180,280,180,280,180,280,180,280,180,280,180],[150,220,150,220,150,220,150,220,150,220,150,220,150]];
+const heartState={matchId:null,level:0,lastTime:0,fadeTimer:null,resetTimer:null};
+function triggerDanger(m){const n=Date.now();if(heartState.matchId===m&&n-heartState.lastTime<12000)heartState.level=Math.min(heartState.level+1,4);else heartState.level=0;heartState.matchId=m;heartState.lastTime=n;clearTimeout(heartState.fadeTimer);clearTimeout(heartState.resetTimer);doVibrate(HEARTBEAT[heartState.level]);heartState.fadeTimer=setTimeout(()=>{if(heartState.matchId===m)doVibrate([100,200,80,280,60,360,40])},5000);heartState.resetTimer=setTimeout(()=>{heartState.matchId=null;heartState.level=0},12000)}
+function resetHeartbeat(){clearTimeout(heartState.fadeTimer);clearTimeout(heartState.resetTimer);heartState.matchId=null;heartState.level=0}
+function triggerGoalCelebration(){resetHeartbeat();state.recentGoal=true;doVibrate([300,80,300,80,500]);setTimeout(()=>doVibrate([200,100,200,100,200,100,300,150,300]),2500);setTimeout(()=>doVibrate([180,100,180,100,180,100,200,120,200,120,180]),5500);setTimeout(()=>doVibrate([150,120,150,120,150,120,150,150,150]),9000);setTimeout(()=>doVibrate([100,180,80,220,60,260,40]),12500);setTimeout(()=>doVibrate([50,300,40,380,30]),15500);setTimeout(()=>doVibrate([150]),18500);setTimeout(()=>{state.recentGoal=false},21000)}
+function triggerFlatline(){resetHeartbeat();state.recentGoal=true;doVibrate(VIB_FLATLINE);setTimeout(()=>doVibrate([120,600,120,600,150,500,180]),7000);setTimeout(()=>doVibrate([180,400,200,400,220]),11000);setTimeout(()=>{state.recentGoal=false},13000)}
+function doVibrate(p){const m=SENS_MULT[CONFIG.sensitivity]||1;const s=p.map(v=>Math.round(v*m));if('vibrate' in navigator)try{navigator.vibrate(s)}catch(e){}const d=s.reduce((a,b)=>a+b,0);const i=document.getElementById('vibraIndicator');i.classList.add('active');setTimeout(()=>i.classList.remove('active'),d)}
+
+const DEMO_MATCHES=[{id:1,home:'Argentina',homeFlag:'🇦🇷',away:'Brasil',awayFlag:'🇧🇷',score:[0,0],minute:0,group:'Grupo A'},{id:2,home:'China PR',homeFlag:'🇨🇳',away:'España',awayFlag:'🇪🇸',score:[0,0],minute:0,group:'Grupo B'},{id:3,home:'Francia',homeFlag:'🇫🇷',away:'Alemania',awayFlag:'🇩🇪',score:[0,0],minute:0,group:'Grupo C'}];
+const DEMO_EVENTS={1:[{delay:5000,type:'shot',team:'home',player:'Messi',minute:11},{delay:12000,type:'free_kick',team:'home',minute:17},{delay:18000,type:'danger',team:'home',minute:22},{delay:22000,type:'danger',team:'home',minute:24},{delay:27000,type:'goal',team:'home',player:'Messi',minute:28,scorer:'Lionel Messi'},{delay:44000,type:'shot',team:'away',player:'Vinícius Jr.',minute:36},{delay:50000,type:'yellow',team:'away',player:'Casemiro',minute:42},{delay:55000,type:'danger',team:'away',minute:51},{delay:59000,type:'danger',team:'away',minute:54},{delay:62000,type:'goal',team:'away',player:'Vinícius Jr.',minute:57,scorer:'Vinícius Jr.'},{delay:78000,type:'free_kick',team:'home',minute:67},{delay:82000,type:'danger',team:'home',minute:72},{delay:86000,type:'goal',team:'home',player:'J. Álvarez',minute:79,scorer:'Julián Álvarez'},{delay:98000,type:'red',team:'away',player:'Marquinhos',minute:86},{delay:106000,type:'end',minute:90}],2:[{delay:6000,type:'shot',team:'away',player:'Pedri',minute:8},{delay:14000,type:'free_kick',team:'home',minute:16},{delay:20000,type:'danger',team:'home',minute:22},{delay:24000,type:'danger',team:'home',minute:25},{delay:28000,type:'goal',team:'home',player:'Wu Lei',minute:30,scorer:'武磊 (Wu Lei)'},{delay:42000,type:'shot',team:'away',player:'Morata',minute:41},{delay:50000,type:'free_kick',team:'away',minute:53},{delay:56000,type:'goal',team:'away',player:'Pedri',minute:63,scorer:'Pedri'},{delay:66000,type:'yellow',team:'home',player:'Zhang Linpeng',minute:72},{delay:72000,type:'danger',team:'home',minute:78},{delay:76000,type:'danger',team:'home',minute:82},{delay:80000,type:'goal',team:'home',player:'Wu Lei',minute:88,scorer:'武磊 (Wu Lei)'},{delay:94000,type:'end',minute:90}],3:[{delay:7000,type:'free_kick',team:'home',minute:10},{delay:14000,type:'goal',team:'home',player:'Mbappé',minute:19,scorer:'Kylian Mbappé'},{delay:30000,type:'shot',team:'away',player:'Wirtz',minute:28},{delay:36000,type:'danger',team:'away',minute:35},{delay:40000,type:'danger',team:'away',minute:38},{delay:44000,type:'goal',team:'away',player:'Musiala',minute:44,scorer:'Jamal Musiala'},{delay:58000,type:'shot',team:'home',player:'Griezmann',minute:58},{delay:66000,type:'free_kick',team:'away',minute:66},{delay:72000,type:'goal',team:'home',player:'Mbappé',minute:74,scorer:'Kylian Mbappé'},{delay:82000,type:'yellow',team:'away',player:'Kimmich',minute:82},{delay:90000,type:'end',minute:90}]};
+const EV_ICON={goal:'⚽',shot:'🥅',free_kick:'🦶',danger:'💓',yellow:'🟨',red:'🟥',start:'📣',end:'🏁'};
+const state={matches:JSON.parse(JSON.stringify(DEMO_MATCHES)),followed:new Set(),chosenTeam:{},events:[],demoTimers:{},minuteIntervals:{},recentGoal:false,pendingTeamPicker:null};
+const dom={splash:document.getElementById('splash'),btnEnter:document.getElementById('btnEnter'),main:document.getElementById('main'),bottomBar:document.getElementById('bottomBar'),matchList:document.getElementById('matchList'),eventFeed:document.getElementById('eventFeed'),goalOver:document.getElementById('goal-overlay'),goalText:document.getElementById('goalText'),goalDet:document.getElementById('goalDetail'),toast:document.getElementById('toast'),toastIco:document.getElementById('toastIcon'),toastTxt:document.getElementById('toastText'),pulseBg:document.getElementById('pulseBg'),btnDemo:document.getElementById('btnDemo'),btnTest:document.getElementById('btnTest'),vibraMod:document.getElementById('vibra-modal'),teamMod:document.getElementById('team-modal'),teamOpts:document.getElementById('teamOptions'),teamSub:document.getElementById('teamSheetSub')};
+
+function renderMatches(){dom.matchList.innerHTML=state.matches.map(m=>{const f=state.followed.has(m.id);const c=state.chosenTeam[m.id];let l='';if(f&&c==='home')l=`<span class="team-label home-label">⚽ ${m.home}</span>`;else if(f&&c==='away')l=`<span class="team-label away-label">⚽ ${m.away}</span>`;else if(f)l=`<span class="team-label all-label">⚽ Todos</span>`;return`<div class="match-card ${f?'following':''}" id="card-${m.id}"><div class="match-teams"><div class="team home"><span class="team-flag">${m.homeFlag}</span><span class="team-name">${m.home}</span></div><div class="match-center"><div class="match-score">${m.score[0]} — ${m.score[1]}</div><div class="match-time">${m.minute}'</div></div><div class="team away"><span class="team-name">${m.away}</span><span class="team-flag">${m.awayFlag}</span></div></div><div class="match-actions"><span class="match-group">${m.group} ${l}</span><button class="btn-follow ${f?'active':''}" onclick="toggleFollow(${m.id})">${f?'● SIGUIENDO':'SEGUIR'}</button></div></div>`}).join('')}
+
+function openTeamModal(mid){const m=state.matches.find(x=>x.id===mid);if(!m)return;state.pendingTeamPicker=mid;dom.teamSub.textContent=`${m.homeFlag} ${m.home} vs ${m.away} ${m.awayFlag}`;dom.teamOpts.innerHTML=`<div class="team-option" onclick="chooseTeam(${mid},'home')"><span class="flag">${m.homeFlag}</span><span class="name">${m.home}</span><span class="desc">Celebrás goles de ${m.home}</span></div><div class="team-option" onclick="chooseTeam(${mid},'away')"><span class="flag">${m.awayFlag}</span><span class="name">${m.away}</span><span class="desc">Celebrás goles de ${m.away}</span></div><div class="team-option" onclick="chooseTeam(${mid},null)"><span class="flag">🌍</span><span class="name">Todos los goles</span><span class="desc">Sin distinción</span></div>`;dom.teamMod.classList.add('show')}
+function closeTeamModal(){dom.teamMod.classList.remove('show');state.pendingTeamPicker=null}
+function chooseTeam(mid,s){state.chosenTeam[mid]=s;state.followed.add(mid);closeTeamModal();startDemo(mid);if(state.followed.size>0)dom.pulseBg.classList.add('fast');renderMatches();if(!CONFIG.notifEnabled&&'Notification' in window)Notification.requestPermission().then(p=>{CONFIG.notifEnabled=(p==='granted')})}
+function toggleFollow(id){if(state.followed.has(id)){state.followed.delete(id);delete state.chosenTeam[id];stopDemo(id);if(state.followed.size===0)dom.pulseBg.classList.remove('fast');renderMatches()}else openTeamModal(id)}
+
+function addEvent(mid,ev){const match=state.matches.find(m=>m.id===mid);if(!match)return;const ch=state.chosenTeam[mid];const opp=ch&&ev.team!==ch&&ch!==null;const ic=ev.type==='goal'?(opp?'opp-goal':'my-goal'):ev.type==='shot'?'shot':ev.type==='free_kick'?'free':ev.type==='danger'?'danger':['yellow','red'].includes(ev.type)?ev.type:'whistle';const tF=ev.team==='home'?match.homeFlag:match.awayFlag;let desc='';switch(ev.type){case'goal':desc=opp?`<strong class="opp-text">${tF} Gol de ${ev.scorer||ev.player}</strong>`:`<strong class="goal-text">${tF} ¡GOL de ${ev.scorer||ev.player}!</strong>`;break;case'shot':desc=`${tF} Tiro al arco — ${ev.player||''}`;break;case'free_kick':desc=`${tF} Tiro libre`;break;case'danger':desc=`${tF} ¡Jugada de peligro!`;break;case'yellow':desc=`${tF} Tarjeta amarilla — ${ev.player||''}`;break;case'red':desc=`${tF} Tarjeta roja — ${ev.player||''}`;break;case'end':desc=`${match.homeFlag} ${match.home} ${match.score[0]} - ${match.score[1]} ${match.away} ${match.awayFlag} — Final`;break;default:desc=`${tF} ${ev.type}`}const emp=dom.eventFeed.querySelector('.feed-empty');if(emp)emp.remove();const el=document.createElement('div');el.className='event-item';el.innerHTML=`<div class="event-icon ${ic}">${EV_ICON[ev.type]||'•'}</div><div class="event-info"><div class="event-desc">${desc}</div><div class="event-meta">${ev.minute}' — ${match.home} vs ${match.away}</div></div>`;dom.eventFeed.insertBefore(el,dom.eventFeed.firstChild);while(dom.eventFeed.children.length>30)dom.eventFeed.removeChild(dom.eventFeed.lastChild)}
+
+function updateScore(mid,t){const m=state.matches.find(x=>x.id===mid);if(m)t==='home'?m.score[0]++:m.score[1]++}
+function flashCard(mid){const c=document.getElementById(`card-${mid}`);if(!c)return;c.classList.remove('event-flash');void c.offsetWidth;c.classList.add('event-flash');setTimeout(()=>c.classList.remove('event-flash'),500)}
+function showToast(icon,text,ms=3500){dom.toastIco.textContent=icon;dom.toastTxt.textContent=text;dom.toast.classList.add('show');setTimeout(()=>dom.toast.classList.remove('show'),ms)}
+
+function showGoalOverlay(mid,ev){const m=state.matches.find(x=>x.id===mid);if(!m)return;const ch=state.chosenTeam[mid];const opp=ch&&ev.team!==ch&&ch!==null;const tF=ev.team==='home'?m.homeFlag:m.awayFlag;if(opp){dom.goalOver.classList.add('flatline-mode');dom.goalText.textContent='GOL EN CONTRA';dom.goalDet.innerHTML=`<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.4)">${ev.minute}'</small>`;dom.pulseBg.classList.add('flatline');triggerFlatline();sendNotif(`📉 Gol de ${ev.scorer||''}`,`${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`)}else{dom.goalOver.classList.remove('flatline-mode');dom.goalText.textContent='¡GOL!';dom.goalDet.innerHTML=`<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.6)">${ev.minute}'</small>`;dom.pulseBg.classList.remove('flatline');dom.pulseBg.classList.add('goal');triggerGoalCelebration();sendNotif(`⚽ ¡GOL! ${ev.scorer||''}`,`${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`)}dom.goalOver.classList.add('show');setTimeout(()=>{dom.goalOver.classList.remove('show','flatline-mode');dom.pulseBg.classList.remove('goal','flatline')},opp?6000:5000)}
+function sendNotif(t,b){if(!CONFIG.notifEnabled||!('Notification' in window))return;try{new Notification(t,{body:b,tag:'vibra-futbol'})}catch(e){}}
+
+function startDemo(mid){const evs=DEMO_EVENTS[mid];if(!evs)return;state.minuteIntervals[mid]=setInterval(()=>{const m=state.matches.find(x=>x.id===mid);if(m&&m.minute<90){m.minute++;const el=document.querySelector(`#card-${mid} .match-time`);if(el)el.textContent=m.minute+"'"}});if(!state.demoTimers[mid])state.demoTimers[mid]=[];evs.forEach(ev=>{const t=setTimeout(()=>{if(!state.followed.has(mid))return;const m=state.matches.find(x=>x.id===mid);if(m)m.minute=ev.minute;const te=document.querySelector(`#card-${mid} .match-time`);if(te)te.textContent=ev.minute+"'";flashCard(mid);switch(ev.type){case'danger':triggerDanger(mid);break;case'shot':doVibrate(VIB.shot);break;case'free_kick':doVibrate(VIB.free_kick);break;case'goal':updateScore(mid,ev.team);renderMatches();const card=document.getElementById(`card-${mid}`);if(card)card.classList.add('following');setTimeout(()=>showGoalOverlay(mid,ev),300);break;case'yellow':doVibrate(VIB.yellow);break;case'red':doVibrate(VIB.red);break;case'end':doVibrate(VIB.end);showToast('🏁',`Final: ${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);break}if(ev.type!=='goal'&&ev.type!=='end'){const lb={shot:'Tiro al arco',free_kick:'Tiro libre',danger:'Jugada de peligro',yellow:'Tarjeta amarilla',red:'Tarjeta roja'};showToast(EV_ICON[ev.type]||'•',`${lb[ev.type]||ev.type} — ${ev.team==='home'?m.home:m.away} ${ev.minute}'`)}addEvent(mid,ev)},ev.delay);state.demoTimers[mid].push(t)})}
+
+function stopDemo(mid){if(state.demoTimers[mid]){state.demoTimers[mid].forEach(clearTimeout);delete state.demoTimers[mid]}if(state.minuteIntervals[mid]){clearInterval(state.minuteIntervals[mid]);delete state.minuteIntervals[mid]}const m=state.matches.find(x=>x.id===mid);if(m){m.score=[0,0];m.minute=0}resetHeartbeat();renderMatches()}
+
+function openVibraModal(){dom.vibraMod.classList.add('show')}
+function closeVibraModal(){dom.vibraMod.classList.remove('show')}
+
+function init(){
+  dom.btnEnter.addEventListener('click',()=>{
+    dom.splash.classList.add('hide');
+    dom.main.classList.add('show');
+    dom.bottomBar.classList.remove('hidden');
+    setTimeout(()=>dom.splash.style.display='none',800);
+  });
+  document.getElementById('btnAbout').addEventListener('click',()=>{
+    alert('Vibra Fútbol (足球震动)\n\nHerramienta de bienestar emocional para trabajadores a través de la pasión futbolera.\n\nUn proyecto de cooperación cultural Argentina-China.');
+  });
+  renderMatches();
+  dom.btnDemo.addEventListener('click',openVibraModal);
+  dom.btnTest.addEventListener('click',openVibraModal);
+  dom.vibraMod.addEventListener('click',e=>{if(e.target===dom.vibraMod)closeVibraModal()});
+  dom.teamMod.addEventListener('click',e=>{if(e.target===dom.teamMod)closeTeamModal()});
+  document.querySelectorAll('.vibra-btn[data-pattern]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const p=btn.dataset.pattern;
+      if(p==='danger'){triggerDanger('demo');setTimeout(()=>triggerDanger('demo'),4000);setTimeout(()=>triggerDanger('demo'),8000)}
+      else if(p==='goal')triggerGoalCelebration();
+      else if(p==='opp_goal')triggerFlatline();
+      else if(VIB[p])doVibrate(VIB[p]);
+      btn.style.borderColor='var(--red-bright)';btn.style.background='var(--red-soft)';
+      setTimeout(()=>{btn.style.borderColor='';btn.style.background=''},600);
+    });
+  });
+  document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      CONFIG.sensitivity=btn.dataset.sensitivity;
+      document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+  dom.goalOver.addEventListener('click',()=>{
+    dom.goalOver.classList.remove('show','flatline-mode');
+    dom.pulseBg.classList.remove('goal','flatline');
+  });
+  console.log('✅ Vibra Fútbol v6 — Imágenes reales integradas');
+}
+init();
+</script>
+
+</body>
+</html>
