@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vibra Fútbol — Contenido Editorial / 编辑内容</title>
+  <meta name="theme-color" content="#FEF9F2">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FEF9F2;
+      --surface: #FFFFFF;
+      --surface-alt: #FFF7ED;
+      --red: #D32F2F;
+      --red-bright: #F44336;
+      --red-soft: #FFEBEE;
+      --gold: #F9A825;
+      --gold-bright: #FFD600;
+      --gold-soft: #FFF8E1;
+      --green: #2E7D32;
+      --green-bright: #66BB6A;
+      --green-soft: #E8F5E9;
+      --blue: #1565C0;
+      --blue-bright: #42A5F5;
+      --blue-soft: #E3F2FD;
+      --orange: #FF6D00;
+      --orange-soft: #FFF3E0;
+      --purple: #7B1FA2;
+      --purple-soft: #F3E5F5;
+      --pink: #E91E63;
+      --navy: #1A237E;
+      --text: #1A1A2E;
+      --text-secondary: #4A4A5A;
+      --text-muted: #8A8A9A;
+      --border: rgba(0,0,0,0.06);
+      --font-display: 'Bangers', cursive;
+      --font-heading: 'Fredoka', sans-serif;
+      --font-body: 'Nunito', sans-serif;
+      --font-zh: 'Noto Sans SC', sans-serif;
+      --radius: 14px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(255,214,0,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 75%, rgba(244,67,54,0.05) 0%, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .top-stripe {
+      position: sticky; top: 0; z-index: 999;
+      height: 4px;
+      background: linear-gradient(90deg, #E53935,#FF9800,#FFD600,#4CAF50,#2196F3,#9C27B0,#E53935);
+      background-size: 200% 100%;
+      animation: stripeFlow 4s linear infinite;
+    }
+    @keyframes stripeFlow { from{background-position:0% 0%} to{background-position:200% 0%} }
+
+    /* HEADER */
+    .page-header {
+      max-width: 640px; margin: 0 auto;
+      padding: 28px 20px 0;
+    }
+
+    .header-top {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--red-bright), var(--orange));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lang-toggle {
+      display: flex; gap: 0;
+      border-radius: 20px; overflow: hidden;
+      border: 2px solid var(--border);
+    }
+
+    .lang-btn {
+      padding: 8px 18px; border: none;
+      background: transparent;
+      font-family: var(--font-heading);
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--red-bright);
+      color: #fff;
+    }
+
+    .page-subtitle {
+      font-family: var(--font-heading);
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .page-intro {
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: var(--gold-soft);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--gold);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* CONTENIDO: GRUPOS */
+    .content-section {
+      max-width: 640px; margin: 0 auto;
+      padding: 8px 20px 0;
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-muted);
+      margin: 24px 0 10px;
+      display: flex; align-items: center; gap: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px; height: 3px; border-radius: 2px;
+      display: inline-block;
+    }
+
+    .section-label.type-match::before { background: var(--gold); }
+    .section-label.type-contain::before { background: var(--red-bright); }
+    .section-label.type-legal::before { background: var(--blue-bright); }
+    .section-label.type-resilience::before { background: var(--green-bright); }
+    .section-label.type-fact::before { background: var(--orange); }
+    .section-label.type-wellness::before { background: var(--purple); }
+    .section-label.type-validate::before { background: var(--pink); }
+
+    /* CARDS */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      border-left: 4px solid var(--gold);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover { box-shadow: var(--shadow-lg); }
+
+    .card[data-type="contain"] { border-left-color: var(--red-bright); }
+    .card[data-type="legal"]   { border-left-color: var(--blue-bright); }
+    .card[data-type="resilience"] { border-left-color: var(--green-bright); }
+    .card[data-type="fact"]    { border-left-color: var(--orange); }
+    .card[data-type="wellness"]{ border-left-color: var(--purple); }
+    .card[data-type="validate"]{ border-left-color: var(--pink); }
+
+    .card-head {
+      padding: 14px 16px 10px;
+      cursor: pointer;
+      display: flex; align-items: flex-start; gap: 10px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card-type-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+
+    .card[data-type="match"] .card-type-icon      { background: var(--gold-soft); }
+    .card[data-type="contain"] .card-type-icon     { background: var(--red-soft); }
+    .card[data-type="legal"] .card-type-icon       { background: var(--blue-soft); }
+    .card[data-type="resilience"] .card-type-icon  { background: var(--green-soft); }
+    .card[data-type="fact"] .card-type-icon        { background: var(--orange-soft); }
+    .card[data-type="wellness"] .card-type-icon    { background: var(--purple-soft); }
+    .card[data-type="validate"] .card-type-icon    { background: #FCE4EC; }
+
+    .card-head-text { flex: 1; }
+
+    .card-title-text {
+      font-family: var(--font-heading);
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .card-brief-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .card-chevron {
+      font-size: 1rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .card.open .card-chevron { transform: rotate(90deg); }
+
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+    }
+
+    .card.open .card-body {
+      max-height: 1200px;
+    }
+
+    .card-body-inner {
+      padding: 0 16px 16px;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .card-body-inner p { margin-bottom: 12px; }
+    .card-body-inner p:last-child { margin-bottom: 0; }
+
+    .card-body-inner .action {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 8px 14px;
+      background: var(--surface-alt);
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .card-body-inner .verify-note {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #FFF8E1;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.7rem; font-weight: 500;
+      color: var(--orange);
+      border-left: 3px solid var(--gold);
+    }
+
+    .zh-content { font-family: var(--font-zh); }
+
+    /* VALIDATION SECTION */
+    .validation-section {
+      max-width: 640px; margin: 0 auto;
+      padding: 16px 20px 80px;
+    }
+
+    .validate-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      border-left: 4px solid var(--pink);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .validate-card:nth-child(2) { border-left-color: var(--green-bright); }
+    .validate-card:nth-child(3) { border-left-color: var(--blue-bright); }
+
+    .validate-head {
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .validate-title {
+      font-family: var(--font-heading);
+      font-size: 0.9rem; font-weight: 700;
+      flex: 1;
+    }
+
+    .validate-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .validate-card.open .validate-body { max-height: 800px; }
+
+    .validate-inner {
+      padding: 0 16px 16px;
+    }
+
+    .validate-inner ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .validate-inner li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      display: flex; align-items: flex-start; gap: 8px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .validate-inner li:last-child { border-bottom: none; }
+
+    .check { color: var(--green-bright); font-weight: bold; flex-shrink: 0; }
+
+    .lang { display: none; }
+    .lang.es-active .es { display: block; }
+    .lang.zh-active .zh { display: block; }
+    .lang.es-active .only-zh { display: none; }
+    .lang.zh-active .only-es { display: none; }
+    .lang.es-active .zh, .lang.zh-active .es { display: none; }
+
+    /* Responsive inline lang toggle */
+    body.es-active .es { display: inline; }
+    body.zh-active .zh { display: inline; }
+    body.es-active .zh { display: none; }
+    body.zh-active .es { display: none; }
+
+    body.es-active .es-block { display: block; }
+    body.zh-active .zh-block { display: block; }
+    body.es-active .zh-block { display: none; }
+    body.zh-active .es-block { display: none; }
+
+    /* Para bloques completos */
+    body.es-active .only-zh { display: none !important; }
+    body.zh-active .only-es { display: none !important; }
+
+    /* Footer */
+    .page-footer {
+      max-width: 640px; margin: 0 auto;
+      padding: 0 20px 40px;
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body class="es-active">
+
+  <div class="top-stripe"></div>
+
+  <!-- ===================== HEADER ===================== -->
+  <div class="page-header">
+    <div class="header-top">
+      <div class="page-title">VIBRA FÚTBOL</div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+
+    <div class="page-subtitle only-es">Contenido editorial de demostración — Agente de IA especializado en deporte, salud mental y bienestar laboral</div>
+    <div class="page-subtitle only-zh">演示性编辑内容 — 专注于体育、心理健康和职业福祉的AI智能体</div>
+
+    <div class="page-intro only-es">
+      Este documento presenta una muestra del contenido que el agente editorial de Vibra Fútbol genera para los usuarios. Cada pieza combina datos deportivos con perspectivas de psicología, derecho laboral y bienestar. Las piezas están diseñadas para expandirse: el titular y la reseña dan una vista rápida; el contenido completo ofrece profundidad.
+      <br><br>
+      <strong>Colaboradores de validación:</strong> Este contenido requiere revisión antes de publicarse. Los marcos de validación para cada colaborador están al final del documento.
+    </div>
+    <div class="page-intro only-zh">
+      本文档展示了Vibra Fútbol编辑智能体为用户生成的内容样本。每篇文章将体育数据与心理学、劳动法和健康福祉的视角相结合。文章设计为可展开形式：标题和简介提供快速浏览；完整内容提供深度阅读。
+      <br><br>
+      <strong>验证合作者：</strong>此内容发布前需要审核。每位合作者的验证框架列在文档末尾。
+    </div>
+  </div>
+
+  <!-- ===================== POST-PARTIDO ===================== -->
+  <div class="content-section">
+
+    <div class="section-label type-match only-es">POST-PARTIDO</div>
+    <div class="section-label type-match only-zh">赛后回顾</div>
+
+    <!-- PIEZA 1: Victoria -->
+    <div class="card" data-type="match">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">⚽</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Messi a los 39: los límites los ponés vos</div>
+          <div class="card-title-text only-zh">39岁的梅西：界限由你来定</div>
+          <div class="card-brief-text only-es">Argentina venció a Brasil 2-1 con gol de Messi a los 39 años. Un recordatorio de que la edad no define lo que podés lograr.</div>
+          <div class="card-brief-text only-zh">阿根廷2-1击败巴西，39岁的梅西打入关键一球。年龄无法定义你的成就。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Messi lo hizo otra vez. Gol decisivo contra Brasil a los 39 años, cuando muchos ya lo daban por retirado. Y no hablamos solo de fútbol: hablamos de una persona que se niega a aceptar que el tiempo le ponga un techo.</p>
+          <p>Hoy, en tu jornada laboral, alguien puede haberte dicho que no podés. Que ya pasó tu momento. Que el trabajo que hacés es todo lo que vas a conseguir. Messi no escuchó a esos voceros. Y vos tampoco tenés que hacerlo.</p>
+          <p>Los límites no los pone la edad, ni el lugar donde trabajás, ni lo que otros opinan. Los ponés vos, cada mañana, cuando decidís levantarte.</p>
+          <div class="action">👉 Mirá por la ventana. Respirá profundo. Acordate de algo que lograste cuando nadie creía que podías. Esa persona sigue ahí.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>梅西又做到了。39岁，在很多人认为他已经该退役的年纪，他在对阵巴西的比赛中打入了决定性进球。这不仅仅是足球，而是一个人拒绝让时间为自己设限的故事。</p>
+          <p>今天在工作中，也许有人对你说过你不行，说你的时代已经过去，说你现在做的就是你这辈子能达到的全部。梅西没有听信这些话，你也不必。</p>
+          <p>界限不是由年龄决定的，不是由你的工作场所决定的，也不是由别人的看法决定的。它由你来决定——每天早晨，当你选择起身面对新的一天。</p>
+          <div class="action">👉 看看窗外。深深呼吸。想想你曾经做到过的、没有人相信你能做到的那件事。那个你，还在。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 2: Derrota -->
+    <div class="card" data-type="match">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">📉</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Wu Lei y el gol que no alcanzó</div>
+          <div class="card-title-text only-zh">武磊和那个不够的进球</div>
+          <div class="card-brief-text only-es">China cayó 1-2 ante España, pero el gol de Wu Lei al 88' nos enseñó que el esfuerzo siempre cuenta.</div>
+          <div class="card-brief-text only-zh">中国1-2负于西班牙，但武磊在第88分钟的进球告诉我们：努力本身就值得尊敬。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>El minuto 88. Wu Lei recibe el balón, gira, dispara. Gol. El estadio explota. Por un instante, todo es posible.</p>
+          <p>Pero el fútbol es así: a veces das todo y no alcanza. España terminó ganando 2-1. Y Wu Lei se fue del campo con la cabeza baja, como muchos de nosotros después de un día difícil en el que pusimos todo y no fue suficiente.</p>
+          <p>Pero esto es lo que Wu Lei no sabe mientras camina hacia el vestuario: millones de personas en China lo vieron pelear hasta el último segundo. Y eso les dio fuerza. Les recordó que no importa cuántas veces pierdas, lo importante es que seguís intentando.</p>
+          <p>Hoy, si tu día fue uno de esos días en los que nada salió bien, acordate del minuto 88. Acordate de Wu Lei. Acordate de que el gol que no cambió el resultado sí cambió el ánimo de millones.</p>
+          <div class="action">👉 Cerrá los ojos un momento. Pensá en algo que hiciste bien hoy, por más chico que sea. Ese es tu gol del minuto 88.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>第88分钟。武磊接球，转身，射门。球进了。球场沸腾了。那一瞬间，一切皆有可能。</p>
+          <p>但足球就是这样：有时你全力以赴，依然不够。西班牙最终2-1获胜。武磊低着头走下球场，就像我们很多人在拼尽全力却依然不顺利的一天结束后那样。</p>
+          <p>但武磊在走向更衣室时并不知道的是：中国有数百万人看到了他战斗到最后一秒。这给了他们力量，提醒他们——无论输多少次，重要的是你仍在努力。</p>
+          <p>今天，如果你也经历了不顺利的一天，请记住第88分钟。记住武磊。记住那个没有改变比分、却改变了数百万人心情的进球。</p>
+          <div class="action">👉 闭上眼睛。想一想今天你做得好的一件事，不管多么微小。那就是你第88分钟的进球。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== CONTENCIÓN ===================== -->
+    <div class="section-label type-contain only-es">CONTENCIÓN POST-GOL</div>
+    <div class="section-label type-contain only-zh">失球后的情感支撑</div>
+
+    <!-- PIEZA 3: Gol en contra -->
+    <div class="card" data-type="contain">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">💔</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Cuando te hacen un gol: tu dolor es real</div>
+          <div class="card-title-text only-zh">当对手进球时：你的痛是真实的</div>
+          <div class="card-brief-text only-es">La vibración de la "línea plana" tiene un significado emocional real. No la minimices.</div>
+          <div class="card-brief-text only-zh">"心跳停止"的振动有着真实的情感意义。不要轻视它。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Sentiste esa vibración larga, uniforme, sin pulso. Como si algo se hubiera detenido. Y emocionalmente, algo se detuvo: tu esperanza de que el partido iba a ir bien.</p>
+          <p>Duele. Y está bien que duela. La psicología deportiva nos enseña que cuando nos identificamos profundamente con un equipo, su derrota se siente como propia. No es exageración: es neurociencia. Tu cerebro procesa el gol en contra de la misma manera que procesa una decepción personal.</p>
+          <p>Pero después de esa vibración larga, el corazón volvió a latir. Suave al principio, después más firme. Eso es lo que hacemos los seres humanos: sentimos el dolor, lo procesamos, y después seguimos.</p>
+          <p>No minimices lo que sentís. No es "sólo un gol". Es una emoción real, y las emociones reales merecen ser reconocidas.</p>
+          <div class="action">👉 Hacé una pausa. Poné la mano en el pecho. Sentí tu corazón. Sigue latiendo. Seguí vos también.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>你感受到了那段漫长、均匀、没有起伏的振动。仿佛有什么停止了。而在情感上，确实有什么停止了——你对比赛会顺利进行的期望。</p>
+          <p>这很痛。痛是正常的。运动心理学告诉我们，当我们深深认同一支球队时，它的失败会让我们感同身受。这不是夸张，而是神经科学：你的大脑处理对方进球的方式，与处理个人失望的方式是相同的。</p>
+          <p>但在那段漫长的振动之后，心跳重新开始了。起初很轻，然后越来越有力。这就是我们人类所做的：感受痛苦，经历它，然后继续前行。</p>
+          <p>不要轻视你的感受。那不仅仅是一个进球。那是真实的情感，而真实的情感值得被认真对待。</p>
+          <div class="action">👉 停一下。把手放在胸口。感受你的心跳。它还在跳。你也是。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== DERECHO LABORAL ===================== -->
+    <div class="section-label type-legal only-es">DERECHO LABORAL</div>
+    <div class="section-label type-legal only-zh">劳动权利</div>
+
+    <!-- PIEZA 4: Derecho chino -->
+    <div class="card" data-type="legal">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">📋</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Tu día de descanso no es un favor, es un derecho</div>
+          <div class="card-title-text only-zh">你的休息日不是恩赐，而是权利</div>
+          <div class="card-brief-text only-es">Art. 38 del Código Laboral de China: al menos 1 día de descanso por semana. No es opcional.</div>
+          <div class="card-brief-text only-zh">中国《劳动法》第三十八条：每周至少休息一天。这不是可选的。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>¿Cuántas semanas seguidas trabajaste sin parar? Si la respuesta es "no me acuerdo", hay algo que necesitás saber.</p>
+          <p>El Artículo 38 del Código Laboral de la República Popular China dice textualmente: "El empleador garantizará al menos un día de descanso por semana para los trabajadores."</p>
+          <p>No es un beneficio. No es una concesión. Es un derecho. Y los derechos no se piden: se ejercen.</p>
+          <p>Si estás trabajando semanas completas sin descanso, no es normalidad. Es una violación de tus derechos laborales. Y si bien entendemos que la situación de cada trabajador es diferente, queremos que sepas que la ley está de tu lado.</p>
+          <p>Tu cuerpo necesita descansar. Tu mente necesita desconectarse. Y sí, necesitás sentir que hay algo más que trabajo en tu vida. Como el partido de hoy.</p>
+          <div class="action">👉 Revisá tu última semana de trabajo. ¿Tuviste al menos un día libre? Si no, considerá hablar con recursos humanos o consultar a un asesor laboral. Tu salud lo merece.</div>
+          <div class="verify-note">⚠️ [VERIFICAR] Art. 38 del Código Laboral de la RPCh — Validar con especialista en derecho laboral chino</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>你连续工作了多少周没有休息？如果答案是"不记得了"，有些事你需要知道。</p>
+          <p>《中华人民共和国劳动法》第三十八条明确规定："用人单位应当保证劳动者每周至少休息一日。"</p>
+          <p>这不是福利，不是恩赐，而是权利。权利不需要乞求，只需要行使。</p>
+          <p>如果你连续几周都在工作没有休息，那不是正常的，那是对你劳动权利的侵犯。我们理解每位劳动者的处境不同，但希望你知道——法律站在你这边。</p>
+          <p>你的身体需要休息，你的大脑需要断开连接。是的，你的生活中需要一些工作之外的东西。比如今天的比赛。</p>
+          <div class="action">👉 回顾一下你上周的工作。你至少休息了一天吗？如果没有，考虑与人力资源部门沟通，或者咨询劳动权益方面的专业人士。你的健康值得被重视。</div>
+          <div class="verify-note">⚠️ [核实] 《中华人民共和国劳动法》第三十八条——需经劳动法专家验证</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 5: Derecho argentino -->
+    <div class="card" data-type="legal">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">📋</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">La hora de pausa que te mereces</div>
+          <div class="card-title-text only-zh">你应得的那一小时休息</div>
+          <div class="card-brief-text only-es">Art. 195 LCT Argentina: derecho a 1 hora de descanso en jornadas de más de 6 horas.</div>
+          <div class="card-brief-text only-zh">阿根廷《劳动合同法》第195条：连续工作超过6小时，有权休息至少1小时。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Son las 14:00. Llevás 5 horas trabajando sin parar. La cabeza pesa, los ojos arden, y el estómago pide algo. ¿Sabés qué dice la ley al respecto?</p>
+          <p>El Artículo 195 de la Ley de Contrato de Trabajo establece que cuando la jornada diaria exceda las 6 horas, el trabajador tendrá derecho a una pausa de al menos 1 hora. No es opcional. No depende de la buena voluntad de tu empleador. Es ley.</p>
+          <p>Esa hora no es solo para comer. Es para descansar la mente, mover el cuerpo, y sí, quizás mirar cómo va el partido de tu equipo. No te sientas culpable por descansar: el descanso es parte del trabajo. Los estudios muestran que los trabajadores que toman pausas regulares son más productivos, cometen menos errores y tienen mejor salud mental.</p>
+          <p>El descanso no te hace débil. Te hace humano.</p>
+          <div class="action">👉 Si hoy trabajaste más de 6 horas seguidas sin pausa, no es normal. Es tu derecho. Usalo. Salí a caminar 5 minutos. Respirá aire fresco. Tu trabajo va a seguir ahí cuando vuelvas.</div>
+          <div class="verify-note">⚠️ [VERIFICAR] Art. 195 LCT — Validar con especialista en Seguridad e Higiene laboral</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>下午两点。你已经连续工作了5个小时。头很沉，眼睛酸痛，胃在抗议。你知道法律对此怎么说吗？</p>
+          <p>阿根廷《劳动合同法》第195条规定：当每日工作时间超过6小时时，劳动者有权获得至少1小时的休息。这不是可选的，不取决于雇主的好意——这是法律。</p>
+          <p>这一个小时不仅仅用来吃饭。它是为了让你的大脑休息、身体活动，是的，也许还可以看看你支持的球队的比赛。不要因为休息而感到内疚：休息是工作的一部分。研究表明，定期休息的员工效率更高，犯错更少，心理健康状况更好。</p>
+          <p>休息不是软弱的表现，而是人性的体现。</p>
+          <div class="action">👉 如果今天你连续工作超过6小时没有休息，这不正常，这是你的权利。出去走5分钟。呼吸新鲜空气。工作会在你回来时继续等着你。</div>
+          <div class="verify-note">⚠️ [核实] 阿根廷劳动合同法第195条——需经劳动安全与卫生专家验证</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== RESILIENCIA ===================== -->
+    <div class="section-label type-resilience only-es">HISTORIAS DE RESILIENCIA</div>
+    <div class="section-label type-resilience only-zh">韧性故事</div>
+
+    <!-- PIEZA 6: Wu Lei -->
+    <div class="card" data-type="resilience">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">💪</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">La lesión de Wu Lei y el gol que volvió</div>
+          <div class="card-title-text only-zh">武磊的伤病和那个回归的进球</div>
+          <div class="card-brief-text only-es">Una lesión que casi termina su carrera lo llevó a marcar el gol más importante de su vida.</div>
+          <div class="card-brief-text only-zh">一次几乎终结职业生涯的伤病，如何成就了他最重要的进球。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>En 2020, Wu Lei fue diagnosticado con una lesión en la rodilla que lo dejó fuera de los terrenos de juego durante meses. En China, los cronistas deportivos empezaron a escribir su obituario futbolístico. "Ya fue", decían. "El mejor jugador chino de su generación se acabó."</p>
+          <p>Wu Lei no leyó esos artículos. O si los leyó, no les hizo caso. Se sometió a una rehabilitación larga, dolorosa, y solitaria. Meses de fisioterapia. Meses de entrenar solo mientras sus compañeros jugaban. Meses de dudar si alguna vez volvería.</p>
+          <p>Volvió. Y no solo volvió: volvió para marcar goles decisivos en los momentos más importantes. Porque eso hacen los que no se rinden: convierten el dolor en combustible.</p>
+          <p>Quizás hoy es uno de esos días en los que sentís que la lesión de la vida es demasiado grave. Que ya no hay vuelta. Wu Lei te dice que sí la hay. Siempre la hay.</p>
+          <div class="action">👉 Pensá en algo que te pasó que parecía el fin, y que después resultó ser un nuevo comienzo. Esa fuerza sigue en vos.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>2020年，武磊被诊断出膝伤，离开了赛场数月之久。中国的体育媒体已经开始为他的足球生涯写讣告。"完了"，他们说，"这一代中国最好的球员到此为止了。"</p>
+          <p>武磊没有看那些文章。或者即使看了，也没有在意。他经历了漫长、痛苦而孤独的康复过程——数月的理疗，数月独自训练而队友们在场上比赛，数月怀疑自己是否还能回来。</p>
+          <p>他回来了。不仅仅回来了——他在最关键的时刻打入了关键进球。因为不放弃的人就是这样做的：把痛苦化为燃料。</p>
+          <p>也许今天是你觉得人生的伤势太重、无法恢复的一天。武磊告诉你：可以恢复的。永远可以。</p>
+          <div class="action">👉 想想你曾经经历过的一件看似是终点的事，后来却成了新的起点。那份力量，依然在你身上。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 7: Trabajador -->
+    <div class="card" data-type="resilience">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🏭</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">El obrero que miraba el reloj</div>
+          <div class="card-title-text only-zh">那个总在看表的工人</div>
+          <div class="card-brief-text only-es">La historia de un trabajador de fábrica que encontró algo que lo hizo dejar de mirar el reloj.</div>
+          <div class="card-brief-text only-zh">一个工厂工人如何找到了让他不再盯着时钟的事。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Zhang Wei trabajaba en una fábrica de Shenzhen. Ocho horas, seis días a la semana. Cada día igual al anterior. Cada hora, un vistazo al reloj. No porque quisiera irse, sino porque no sabía para qué se quedaba.</p>
+          <p>Un día, un compañero le mostró algo en su teléfono: un partido de la Superliga China. Zhang Wei no era hincha de nadie. Pero esa tarde, cuando el equipo local metió el gol del triunfo en el minuto 93, algo cambió. Sonrió. En la fábrica. Sin razón aparente.</p>
+          <p>Al día siguiente, Zhang Wei buscó cuándo jugaba su equipo. Empezó a esperar los partidos. Y algo curioso pasó: las horas en la fábrica ya no eran un reloj que mirar, sino un tiempo que pasar antes de algo que lo esperaba.</p>
+          <p>El fútbol no le cambió el trabajo. Le cambió la mirada. Y cuando cambiás la mirada, el mundo se ve distinto.</p>
+          <div class="action">👉 Preguntate: ¿hay algo que te haga sonreír sin razón? Si no lo tenés, quizás hoy es el día de buscarlo. Puede ser cualquier cosa. Incluso un gol.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>张伟在深圳的一家工厂工作。每天八小时，每周六天。每天和前一天一样。每隔一小时看一下表——不是因为他想走，而是因为他不知道自己为什么留下来。</p>
+          <p>一天，一个同事给他看了一段手机上的视频：一场中超比赛。张伟不是任何球队的球迷。但那天下午，当主队在第93分钟打入制胜球时，有什么东西改变了。他笑了。在工厂里。没有任何特别的原因。</p>
+          <p>第二天，张伟查了球队下一场比赛的时间。他开始期待比赛的到来。然后一件奇妙的事发生了：工厂里的时间不再是用来盯着时钟的，而是用来等待某件让他期待的事。</p>
+          <p>足球没有改变他的工作，改变了他看世界的方式。而当你改变了看世界的方式，世界就变了。</p>
+          <div class="action">👉 问自己：有没有什么事能让你无缘无故地微笑？如果还没有，也许今天就是开始寻找的那天。可以是任何事。甚至是一个进球。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== DATOS DEL DÍA ===================== -->
+    <div class="section-label type-fact only-es">DATOS DEL DÍA</div>
+    <div class="section-label type-fact only-zh">每日数据</div>
+
+    <!-- PIEZA 8 -->
+    <div class="card" data-type="fact">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🌍</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">El fútbol une al mundo: 5.000 millones de personas</div>
+          <div class="card-title-text only-zh">足球连接世界：50亿人</div>
+          <div class="card-brief-text only-es">El Mundial 2026 será el evento deportivo más visto de la historia. Cuando tu teléfono vibra, no estás solo.</div>
+          <div class="card-brief-text only-zh">2026年世界杯将成为历史上观看人数最多的赛事。当你的手机振动时，你不是一个人。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Cinco mil millones de personas. Esa es la audiencia estimada del Mundial FIFA 2026. Casi dos de cada tres personas en el planeta van a ver al menos un partido.</p>
+          <p>¿Sabés qué significa eso? Que cuando sentís la vibración de tu teléfono durante el partido, no estás solo. Hay millones de personas en este exacto momento sintiendo lo mismo que vos. En China, en Argentina, en fábricas, oficinas, hospitales, escuelas.</p>
+          <p>El fútbol tiene ese poder: hacer que extraños sientan lo mismo al mismo tiempo. No importa el idioma, la cultura, ni la distancia. Un gol es un gol, y la alegría que genera es universal.</p>
+          <div class="action">👉 Hacé una pausa. Pensá en alguien que esté lejos pero que sabés que estaría sintiendo lo mismo que vos si estuviera viendo el partido. Esa conexión es real.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>50亿人。这是2026年FIFA世界杯的预计观众人数。地球上每三个人中就有两个会至少看一场比赛。</p>
+          <p>你知道这意味着什么吗？当你的手机在比赛中振动时，你不是一个人。此时此刻，有数百万人和你感受着相同的事情。在中国，在阿根廷，在工厂、办公室、医院、学校里。</p>
+          <p>足球就有这样的力量：让陌生人在同一时刻产生相同的感觉。语言、文化、距离都不重要。进球就是进球，它带来的快乐是普世的。</p>
+          <div class="action">👉 停下来想一想：有没有一个远方的人，如果也在看这场比赛，此刻会和你有着同样的感受？那种连接是真实的。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 9 -->
+    <div class="card" data-type="fact">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🧠</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">El fútbol activa tu cerebro como si fuera real</div>
+          <div class="card-title-text only-zh">足球让你的大脑以为一切是真的</div>
+          <div class="card-brief-text only-es">Ver a tu equipo activa las mismas zonas cerebrales que vivir una experiencia personal. La ciencia lo confirma.</div>
+          <div class="card-brief-text only-zh">观看你支持的球队比赛时，大脑的反应与亲身体验相同。科学已经证实。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Investigadores de la Universidad de Salzburgo descubrieron algo fascinante: cuando un hincha ve a su equipo marcar un gol, su cerebro se activa de la misma manera que cuando vive una emoción personal significativa. No es "como si" fuera real: para tu cerebro, ES real.</p>
+          <p>La dopamina se libera. El cortisol baja. El corazón se acelera. Todo el cuerpo reacciona como si el gol lo hubieras metido vos.</p>
+          <p>¿Por qué esto importa? Porque significa que cada vibración de tu teléfono durante el Mundial no es solo una notificación. Es una inyección real de neuroquímicos que mejoran tu estado de ánimo. Es tu cerebro diciéndote: "esto importa, y yo estoy con vos."</p>
+          <p>La ciencia respalda lo que los hinchas siempre supieron: el fútbol no es solo un deporte. Es una experiencia emocional con consecuencias reales en tu bienestar.</p>
+          <div class="action">👉 La próxima vez que tu teléfono vibre con un gol, no lo sientas como una interrupción. Sentilo como un regalo neurológico.</div>
+          <div class="verify-note">⚠️ [VERIFICAR] Estudio de la Universidad de Salzburgo sobre identificación deportiva y activación cerebral — Citar fuente específica</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>萨尔茨堡大学的研究人员发现了一个迷人的现象：当一个球迷看到自己支持的球队进球时，大脑的激活方式与经历个人重大情感事件完全相同。不是"好像"是真的——对你的大脑来说，就是真的。</p>
+          <p>多巴胺被释放，皮质醇下降，心跳加速。整个身体的反应就像那个进球是你自己踢进的一样。</p>
+          <p>这为什么重要？因为这意味着世界杯期间你手机的每一次振动都不仅仅是一条通知，而是一剂真正改善你心情的神经化学物质。是你的大脑在告诉你："这很重要，我和你在一起。"</p>
+          <p>科学证实了球迷们一直都知道的事：足球不仅仅是一项运动，它是一种对你的幸福感有实际影响的情感体验。</p>
+          <div class="action">👉 下次当你的手机因进球而振动时，不要觉得那是一次打扰。把它当作大脑送给你的礼物。</div>
+          <div class="verify-note">⚠️ [核实] 萨尔茨堡大学关于体育认同与大脑激活的研究——需引用具体来源</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== PAUSA ACTIVA ===================== -->
+    <div class="section-label type-wellness only-es">BIENESTAR Y NUTRICIÓN</div>
+    <div class="section-label type-wellness only-zh">健康与营养</div>
+
+    <!-- PIEZA 10: Respiración -->
+    <div class="card" data-type="wellness">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🫁</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Tu estadio de 1 minuto</div>
+          <div class="card-title-text only-zh">你的一分钟球场</div>
+          <div class="card-brief-text only-es">Una técnica de respiración 4-4-6 que podés hacer en cualquier lugar. Nadie lo nota. Tu cuerpo lo agradece.</div>
+          <div class="card-brief-text only-zh">4-4-6呼吸法，随时随地可做，无人察觉，身体会感谢你。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>Esto no requiere cerrar los ojos, ni sentarte en posición de loto, ni ir a ningún lado. Lo podés hacer parado, sentado, o incluso caminando. Nadie va a notar nada.</p>
+          <p>Se llama respiración 4-4-6, y es así:</p>
+          <p><strong>Inhalá</strong> por la nariz contando hasta 4.<br><strong>Sostené</strong> el aire contando hasta 4.<br><strong>Exhalá</strong> por la boca contando hasta 6.</p>
+          <p>Repetí 4 veces. Toma exactamente 1 minuto.</p>
+          <p>¿Por qué funciona? Porque cuando exhalás más tiempo del que inhalás, le decís a tu sistema nervioso que todo está bien. Tu ritmo cardíaco baja. Tus músculos se relajan. Tu mente se aclara.</p>
+          <p>Es como el silbato del árbitro que hace una pausa en el juego: a veces lo que necesitás es un minuto para volver con más fuerza.</p>
+          <div class="action">👉 Probalo ahora. Mientras leés esto. Nadie lo va a notar. Cuatro ciclos. Un minuto. Tu cuerpo te lo va a agradecer.</div>
+          <div class="verify-note">⚠️ [VERIFICAR] Técnica de respiración 4-4-6 — Validar con especialista en Seguridad e Higiene y/o Pilar Sordo</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>这不需要闭眼，不需要盘腿打坐，不需要去任何地方。你可以站着、坐着、甚至走路时做。没有人会注意到。</p>
+          <p>这叫做4-4-6呼吸法：</p>
+          <p><strong>吸气</strong>——用鼻子吸气，数到4。<br><strong>屏息</strong>——屏住呼吸，数到4。<br><strong>呼气</strong>——用嘴呼气，数到6。</p>
+          <p>重复4次。刚好1分钟。</p>
+          <p>为什么有效？因为当你呼气的时间比吸气长时，你是在告诉神经系统"一切都好"。心率下降，肌肉放松，头脑清醒。</p>
+          <p>就像裁判吹响暂停哨一样：有时候你需要的只是一分钟，然后以更强的状态回来。</p>
+          <div class="action">👉 现在就试试。就在你读这段话的时候。没人会注意到。四个循环。一分钟。你的身体会感谢你。</div>
+          <div class="verify-note">⚠️ [核实] 4-4-6呼吸技术——需经劳动安全与卫生专家和/或Pilar Sordo验证</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 11: Nutrición -->
+    <div class="card" data-type="wellness">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🍚</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Lo que comés antes de entrar a trabajar</div>
+          <div class="card-title-text only-zh">上班前你吃的东西</div>
+          <div class="card-brief-text only-es">Un desayuno simple puede cambiar tu día. No necesitás dinero: necesitás información.</div>
+          <div class="card-brief-text only-zh">一顿简单的早餐可以改变你的一天。你不需要很多钱，你需要的是正确的信息。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>No vamos a decirte que comás quinoa orgánica con smoothie de açaí. Sabemos que eso no es realista para la mayoría de los trabajadores. Pero sí vamos a decirte esto:</p>
+          <p>Tu cuerpo necesita combustible para empezar el día. Y hay opciones simples y accesibles que hacen una diferencia real:</p>
+          <p><strong>Arroz o pan + un huevo:</strong> la combinación de carbohidratos y proteína te da energía sostenida por horas.<br><strong>Agua antes del café:</strong> deshidratarse es más fácil de lo que creés, y la deshidratación causa fatiga y mal humor.<br><strong>Una banana o una manzana:</strong> el potasio y la fibra mantienen tu energía estable.</p>
+          <p>No es magia. Es bioquímica básica. Cuando tu cuerpo tiene lo que necesita, tu mente funciona mejor. Y cuando tu mente funciona mejor, todo el día se siente diferente.</p>
+          <div class="action">👉 Mañana, antes de ir a trabajar, asegurate de comer algo con proteína y beber un vaso de agua. Solo eso. Fijate cómo te sentís.</div>
+          <div class="verify-note">⚠️ [VERIFICAR] Consejos de nutrición — Validar con especialista. No sustituye asesoramiento nutricional profesional.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>我们不会叫你去吃有机藜麦配巴西莓果昔。我们知道那对大多数劳动者来说不现实。但我们要告诉你的是：</p>
+          <p>你的身体需要燃料来开始新的一天。有一些简单又实惠的选择，能带来真正的改变：</p>
+          <p><strong>米饭或馒头加一个鸡蛋：</strong>碳水化合物和蛋白质的组合给你持续数小时的能量。<br><strong>先喝水再喝咖啡：</strong>脱水比你想象的更容易发生，而脱水会导致疲劳和情绪低落。<br><strong>一根香蕉或一个苹果：</strong>钾和纤维帮助你保持稳定的能量水平。</p>
+          <p>这不是魔法，而是基本的生物化学。当你的身体得到它需要的，你的大脑就会更好地运作。而当你的大脑更好地运作时，整个一天的感觉都会不同。</p>
+          <div class="action">👉 明天上班前，确保吃一些有蛋白质的东西，并喝一杯水。就这样。感受一下有什么不同。</div>
+          <div class="verify-note">⚠️ [核实] 营养建议——需经专家验证，不替代专业营养咨询</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIEZA 12: Bienestar general -->
+    <div class="card" data-type="wellness">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-type-icon">🌅</div>
+        <div class="card-head-text">
+          <div class="card-title-text only-es">Hoy puede ser un buen día</div>
+          <div class="card-title-text only-zh">今天可以是美好的一天</div>
+          <div class="card-brief-text only-es">A veces lo único que necesitás es que alguien te recuerde que los días buenos existen, incluso cuando no los estás viendo.</div>
+          <div class="card-brief-text only-zh">有时你唯一需要的，是有人提醒你：美好的日子是存在的，即使你现在看不到。</div>
+        </div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner only-es">
+          <p>No sabemos qué tipo de día estás teniendo. Puede ser uno de esos días en los que todo pesa, en los que el reloj no avanza, en los que sentís que nada tiene sentido. Si es así, queremos que sepas algo: está bien sentirse así. No estás roto. No sos débil. Estás teniendo un día difícil, y los días difíciles pasan.</p>
+          <p>También puede ser que hoy sea un día normal. Ni bueno ni malo. Solo un día. Y a veces esos días normales son los que más necesitan algo que los haga especiales. Algo chico. Algo como sentir tu teléfono vibrar y saber que ahí afuera, en algún lugar del mundo, alguien acaba de meter un gol hermoso.</p>
+          <p>No necesitás grandes cambios para tener un buen día. A veces solo necesitás un momento de conexión con algo que te importa.</p>
+          <p>Si estos sentimientos de tristeza o vacío son persistentes y no mejoran, hablar con un profesional de la salud mental puede ayudar mucho. No es debilidad: es la decisión más valiente que podés tomar.</p>
+          <div class="action">👉 Donde sea que estés ahora mismo, hacé una cosa: buscá algo lindo. Puede ser un rayo de sol, una canción lejana, la sonrisa de alguien. Sostené ese momento 5 segundos. Ahí está. Tu buen día ya empezó.</div>
+        </div>
+        <div class="card-body-inner zh-content only-zh">
+          <p>我们不知道你今天过得怎样。也许是那种一切都沉甸甸的一天，时钟走得特别慢，你觉得一切都没有意义。如果是这样，我们想告诉你：这样感受是可以的。你没有坏掉，你不软弱。你只是在经历困难的一天，而困难的一天会过去。</p>
+          <p>也许今天只是普通的一天。不好也不坏。只是普通的一天。有时候，这些普通的日子最需要一点让它们变得特别的东西。一些小事。比如感受手机的振动，然后知道在世界某处，有人刚刚踢进了一个漂亮的进球。</p>
+          <p>你不需要巨大的改变才能拥有美好的一天。有时候你只需要一个与你在乎的事物连接的瞬间。</p>
+          <p>如果这种悲伤或空虚的感觉持续存在且没有改善，与心理健康专业人士谈谈会很有帮助。这不是软弱，而是你能做出的最勇敢的决定。</p>
+          <div class="action">👉 不管你现在在哪里，做一件事：去找一个美好的东西。可以是一缕阳光、远处的歌声、某个人的微笑。抓住那个瞬间5秒钟。就在那里。你美好的一天已经开始了。</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fin content-section -->
+
+  <!-- ===================== VALIDACIÓN ===================== -->
+  <div class="validation-section">
+
+    <div class="section-label type-validate only-es">MARCOS DE VALIDACIÓN — Colaboradores</div>
+    <div class="section-label type-validate only-zh">验证框架 — 合作者</div>
+
+    <div class="page-intro only-es" style="margin-bottom:14px">
+      Cada pieza de contenido del agente de Vibra Fútbol debe ser revisada por al menos uno de los siguientes colaboradores antes de publicarse. A continuación se detalla qué debe validar cada uno.
+    </div>
+    <div class="page-intro only-zh" style="margin-bottom:14px">
+      Vibra Fútbol智能体生成的每篇内容，在发布前至少需要以下一位合作者的审核。以下是每位合作者需要验证的具体内容。
+    </div>
+
+    <!-- Validación: Pilar Sordo -->
+    <div class="validate-card">
+      <div class="validate-head" onclick="toggleValidate(this)">
+        <div class="card-type-icon" style="background:#FCE4EC">🧠</div>
+        <div class="validate-title only-es">Pilar Sordo — Validación psicológica</div>
+        <div class="validate-title only-zh">Pilar Sordo — 心理学验证</div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="validate-body">
+        <div class="validate-inner">
+          <ul>
+            <li><span class="check">☐</span> <span class="only-es">Evaluar el marco psicológico general: ¿las técnicas de contención y motivación propuestas son responsables y efectivas?</span><span class="only-zh">评估总体心理学框架：所提出的情感支撑和激励技术是否负责任且有效？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Revisar el tono: ¿es cálido sin ser condescendiente? ¿es accesible sin ser simplista?</span><span class="only-zh">审查语气：是否温暖而不居高临下？是否通俗而不肤浅？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Validar que las narrativas de resiliencia (Wu Lei, Zhang Wei) sean psicológicamente responsables y no minimicen el sufrimiento real.</span><span class="only-zh">验证韧性故事（武磊、张伟）在心理学上是否负责任，且没有淡化真实的痛苦。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Verificar que cada pieza que menciona estados emocionales difíciles incluya una referencia a buscar ayuda profesional.</span><span class="only-zh">确认每篇涉及困难情绪状态的文章都包含寻求专业帮助的提示。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Evaluar si el uso del fútbol como vehículo emocional es apropiado y no genera dependencia o evasión.</span><span class="only-zh">评估将足球作为情感载体是否恰当，是否会导致依赖或逃避。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Revisar la técnica de respiración 4-4-6: ¿es correcta? ¿es segura para cualquier persona?</span><span class="only-zh">审查4-4-6呼吸法：方法是否正确？对所有人是否安全？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Identificar cualquier contenido que, sin intención, pueda ser dañino para personas en situación de vulnerabilidad emocional.</span><span class="only-zh">识别任何可能无意中对情绪脆弱人群造成伤害的内容。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Validación: Seguridad e Higiene -->
+    <div class="validate-card">
+      <div class="validate-head" onclick="toggleValidate(this)">
+        <div class="card-type-icon" style="background:var(--green-soft)">🦺</div>
+        <div class="validate-title only-es">Seguridad e Higiene Laboral — Validación técnica</div>
+        <div class="validate-title only-zh">职业安全与卫生 — 技术验证</div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="validate-body">
+        <div class="validate-inner">
+          <ul>
+            <li><span class="check">☐</span> <span class="only-es">Verificar que la referencia al Art. 195 de la Ley de Contrato de Trabajo argentina sea precisa y esté actualizada.</span><span class="only-zh">确认阿根廷《劳动合同法》第195条的引用准确且为最新版本。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Validar que la técnica de respiración 4-4-6 es técnicamente correcta y no presenta riesgos.</span><span class="only-zh">验证4-4-6呼吸法在技术上是否正确且无风险。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Revisar los consejos de nutrición: ¿son adecuados para trabajadores con recursos limitados? ¿hay riesgo de información incorrecta?</span><span class="only-zh">审查营养建议：是否适合资源有限的劳动者？是否有信息错误的风险？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Evaluar si hay riesgos en promover el uso del teléfono (aunque sea pasivo) en entornos laborales industriales.</span><span class="only-zh">评估在工业工作环境中推广使用手机（即使是被动使用）是否存在风险。</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Aportar perspectiva sobre condiciones reales de trabajo en Argentina: ¿las sugerencias de pausas son realistas?</span><span class="only-zh">提供阿根廷工作实际情况的视角：休息建议是否现实？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Verificar si hay normativas adicionales de seguridad laboral que deberían mencionarse.</span><span class="only-zh">确认是否有其他应提及的劳动安全法规。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Validación: Legal -->
+    <div class="validate-card">
+      <div class="validate-head" onclick="toggleValidate(this)">
+        <div class="card-type-icon" style="background:var(--blue-soft)">⚖️</div>
+        <div class="validate-title only-es">Validación Legal — Derecho laboral chino y argentino</div>
+        <div class="validate-title only-zh">法律验证 — 中国和阿根廷劳动法</div>
+        <div class="card-chevron">▸</div>
+      </div>
+      <div class="validate-body">
+        <div class="validate-inner">
+          <ul>
+            <li><span class="check">☐</span> <span class="only-es">Verificar Art. 38 del Código Laboral de la República Popular China: ¿la cita textual es correcta? ¿hay regulaciones complementarias?</span><span class="only-zh">核实《中华人民共和国劳动法》第三十八条：引用是否准确？是否有补充规定？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Verificar Art. 195 de la Ley de Contrato de Trabajo argentina: ¿la interpretación es correcta? ¿hay jurisprudencia relevante?</span><span class="only-zh">核实阿根廷《劳动合同法》第195条：解释是否正确？是否有相关判例？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Evaluar riesgos legales de la app: ¿hay responsabilidad si un trabajador es sancionado por usar la app durante la jornada?</span><span class="only-zh">评估应用的法律风险：如果工人因在工作期间使用应用而受到处罚，应用是否承担责任？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Revisar implicancias de privacidad: ¿la app recolecta datos? ¿cumple con la PIPL china y la Ley de Protección de Datos Personales argentina?</span><span class="only-zh">审查隐私影响：应用是否收集数据？是否符合中国《个人信息保护法》和阿根廷《个人数据保护法》？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Verificar cumplimiento de normativas de contenido digital en China: ¿el contenido necesita aprobación de alguna entidad regulatoria?</span><span class="only-zh">确认是否符合中国数字内容法规：内容是否需要监管机构的批准？</span></li>
+            <li><span class="check">☐</span> <span class="only-es">Revisar la Ley 26.657 de Salud Mental argentina: ¿hay obligaciones legales al ofrecer contenido sobre bienestar emocional?</span><span class="only-zh">审查阿根廷第26.657号心理健康法：提供情感健康内容是否有法律义务？</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer only-es">
+    Vibra Fútbol — Contenido editorial de demostración<br>
+    Documento generado como parte del proyecto de cooperación cultural Argentina-China<br>
+    Junio 2026
+  </div>
+  <div class="page-footer only-zh">
+    Vibra Fútbol — 演示性编辑内容<br>
+    作为阿根廷-中国文化合作项目的一部分而生成的文档<br>
+    2026年6月
+  </div>
+
+  <script>
+    // === Language Toggle ===
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        document.body.className = lang + '-active';
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // === Card Expand/Collapse ===
+    function toggleCard(head) {
+      const card = head.closest('.card');
+      card.classList.toggle('open');
+    }
+
+    function toggleValidate(head) {
+      const card = head.closest('.validate-card');
+      card.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
