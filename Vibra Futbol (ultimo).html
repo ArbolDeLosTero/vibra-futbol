@@ -29,7 +29,6 @@
       --orange: #FF6D00;
       --navy: #1A237E;
       --text: #1A1A2E;
-      --text-secondary: #4A4A5A;
       --text-muted: #8A8A9A;
       --border: rgba(0,0,0,0.06);
       --font-display: 'Bangers', cursive;
@@ -40,376 +39,105 @@
       --shadow: 0 2px 12px rgba(0,0,0,0.07);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:var(--font-body); color:var(--text); min-height:100vh; overflow-x:hidden; background:#0a0a14; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: var(--font-body);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      background: #0a0a14;
-    }
-
-    .top-stripe {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 4px; z-index: 999;
-      background: linear-gradient(90deg,#E53935,#FF9800,#FFD600,#4CAF50,#2196F3,#9C27B0,#E53935);
-      background-size: 200% 100%;
-      animation: stripeFlow 4s linear infinite;
-    }
+    .top-stripe { position:fixed; top:0; left:0; right:0; height:4px; z-index:999; background:linear-gradient(90deg,#E53935,#FF9800,#FFD600,#4CAF50,#2196F3,#9C27B0,#E53935); background-size:200% 100%; animation:stripeFlow 4s linear infinite; }
     @keyframes stripeFlow { from{background-position:0% 0%} to{background-position:200% 0%} }
 
-    .pulse-bg {
-      position: fixed; top: 38%; left: 50%;
-      width: 260px; height: 260px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(249,168,37,0.22) 0%, transparent 70%);
-      transform: translate(-50%,-50%);
-      animation: pulseHeart 3s ease-in-out infinite;
-      pointer-events: none; z-index: 0;
-      transition: background 0.5s, animation-duration 0.5s;
-    }
-    .pulse-bg.fast { animation-duration: 1.2s; }
-    .pulse-bg.goal {
-      background: radial-gradient(circle, rgba(255,214,0,0.45) 0%, transparent 70%);
-      animation: pulseGoalBurst 0.25s ease-out 4;
-    }
-    .pulse-bg.flatline { background: radial-gradient(circle, rgba(100,0,0,0.3) 0%, transparent 70%); animation: none; }
+    .pulse-bg { position:fixed; top:38%; left:50%; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(249,168,37,0.22) 0%,transparent 70%); transform:translate(-50%,-50%); animation:pulseHeart 3s ease-in-out infinite; pointer-events:none; z-index:0; transition:background 0.5s,animation-duration 0.5s; }
+    .pulse-bg.fast { animation-duration:1.2s; }
+    .pulse-bg.goal { background:radial-gradient(circle,rgba(255,214,0,0.45) 0%,transparent 70%); animation:pulseGoalBurst 0.25s ease-out 4; }
+    .pulse-bg.flatline { background:radial-gradient(circle,rgba(100,0,0,0.3) 0%,transparent 70%); animation:none; }
     @keyframes pulseHeart { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.4} 50%{transform:translate(-50%,-50%) scale(1.12);opacity:0.7} }
     @keyframes pulseGoalBurst { 0%{transform:translate(-50%,-50%) scale(1);opacity:0.9} 100%{transform:translate(-50%,-50%) scale(2.8);opacity:0} }
 
-    .vibra-indicator {
-      position: fixed; top: 18px; right: 18px; z-index: 10;
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--red-bright);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; color: #fff;
-      opacity: 0; transition: opacity 0.15s;
-    }
-    .vibra-indicator.active { opacity: 1; animation: vibraShake 0.3s ease; }
+    .vibra-indicator { position:fixed; top:18px; right:18px; z-index:10; width:30px; height:30px; border-radius:50%; background:var(--red-bright); display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:#fff; opacity:0; transition:opacity 0.15s; }
+    .vibra-indicator.active { opacity:1; animation:vibraShake 0.3s ease; }
     @keyframes vibraShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px) rotate(-3deg)} 75%{transform:translateX(4px) rotate(3deg)} }
 
-    /* Background mode indicator */
-    .bg-mode-badge {
-      position: fixed; top: 18px; left: 18px; z-index: 10;
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--font-heading); font-size: 0.6rem; font-weight: 600;
-      color: var(--green-bright); background: var(--green-soft);
-      padding: 4px 10px; border-radius: 12px;
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .bg-mode-badge.active { opacity: 1; }
+    .bg-mode-badge { position:fixed; top:18px; left:18px; z-index:10; display:flex; align-items:center; gap:6px; font-family:var(--font-heading); font-size:0.6rem; font-weight:600; color:var(--green-bright); background:var(--green-soft); padding:4px 10px; border-radius:12px; opacity:0; transition:opacity 0.3s; }
+    .bg-mode-badge.active { opacity:1; }
 
-    /* ================================================
-       SPLASH — IMAGEN DE FONDO + CAPAS
-       ================================================ */
-    #splash {
-      position: fixed; inset: 0; z-index: 100;
-      overflow: hidden;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    #splash.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
+    /* SPLASH */
+    #splash { position:fixed; inset:0; z-index:100; overflow:hidden; transition:opacity 0.8s ease,transform 0.8s ease; }
+    #splash.hide { opacity:0; transform:scale(1.06); pointer-events:none; }
+    .splash-bg { position:absolute; inset:0; background:url('https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Fondo%20del%20estadio.png') center center / cover no-repeat; z-index:0; }
+    .splash-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.1) 30%,rgba(0,0,0,0.05) 50%,rgba(0,0,0,0.15) 75%,rgba(0,0,0,0.5) 100%); z-index:1; }
+    .trophy-layer { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10; animation:trophyFloat 3s ease-in-out infinite; pointer-events:none; }
+    .trophy-layer img { width:140px; height:auto; filter:drop-shadow(0 0 30px rgba(255,215,0,0.5)) drop-shadow(0 4px 20px rgba(0,0,0,0.4)); mix-blend-mode:multiply; }
+    @keyframes trophyFloat { 0%,100%{transform:translate(-50%,-50%) translateY(0)} 50%{transform:translate(-50%,-50%) translateY(-12px)} }
+    .trophy-glow { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:250px; height:250px; border-radius:50%; background:radial-gradient(circle,rgba(255,215,0,0.3),transparent 70%); animation:glowPulse 2.5s ease-in-out infinite; z-index:9; pointer-events:none; }
+    @keyframes glowPulse { 0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)} }
+    .messi-layer { position:absolute; bottom:8%; left:3%; z-index:12; animation:playerFloat 2.5s ease-in-out infinite; }
+    .messi-layer img { width:160px; height:auto; filter:drop-shadow(0 4px 16px rgba(0,0,0,0.5)); mix-blend-mode:multiply; }
+    @keyframes playerFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .wulei-layer { position:absolute; bottom:8%; right:3%; z-index:12; animation:playerFloat 2.5s ease-in-out infinite; animation-delay:0.6s; }
+    .wulei-layer img { width:160px; height:auto; filter:drop-shadow(0 4px 16px rgba(0,0,0,0.5)); mix-blend-mode:multiply; }
+    .sky-stars { position:absolute; inset:0; pointer-events:none; z-index:2; }
+    .sky-star { position:absolute; background:#fff; border-radius:50%; animation:twinkle var(--d) ease-in-out infinite; animation-delay:var(--dl); }
+    @keyframes twinkle { 0%,100%{opacity:var(--lo);transform:scale(1)} 50%{opacity:var(--hi);transform:scale(1.4)} }
+    .confetti-container { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:20; }
+    .confetti { position:absolute; width:var(--w,6px); height:var(--h,10px); background:var(--c); top:-20px; animation:confettiFall var(--cd) linear infinite; animation-delay:var(--dl); border-radius:var(--br,0); opacity:0.8; }
+    @keyframes confettiFall { 0%{transform:translateY(0) rotate(0deg) scale(1);opacity:0.9} 50%{transform:translateY(50vh) rotate(180deg) scale(0.8);opacity:0.7} 100%{transform:translateY(110vh) rotate(360deg) scale(0.5);opacity:0} }
+    .smoke-container { position:absolute; inset:0; pointer-events:none; z-index:3; }
+    .smoke-cloud { position:absolute; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.1),transparent 70%); animation:smokeFloat var(--sd) ease-in-out infinite; animation-delay:var(--sdl); }
+    @keyframes smokeFloat { 0%,100%{transform:translateX(0) scale(1);opacity:0.2} 50%{transform:translateX(var(--sx,20px)) scale(1.15);opacity:0.5} }
+    .flag-strip { position:absolute; top:12%; left:0; right:0; display:flex; justify-content:center; gap:6px; flex-wrap:wrap; padding:0 20px; z-index:15; }
+    .fs-flag { font-size:0.85rem; opacity:0.6; animation:fsPulse 4s ease-in-out infinite; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
+    @keyframes fsPulse { 0%,100%{opacity:0.4;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.08)} }
+    .epic-title { position:absolute; top:3%; left:0; right:0; text-align:center; z-index:25; padding:0 16px; }
+    .epic-title h1 { font-family:var(--font-display); font-size:3rem; background:linear-gradient(135deg,#FFD600,#FF6D00,#F44336,#FFD600); background-size:300% 300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:titleShimmer 3s ease infinite; line-height:1; filter:drop-shadow(0 2px 10px rgba(0,0,0,0.7)); }
+    @keyframes titleShimmer { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    .epic-title .sub { font-family:var(--font-heading); font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.7); text-shadow:0 1px 6px rgba(0,0,0,0.7); margin-top:2px; }
+    .epic-title .zh { font-family:var(--font-zh); font-size:0.95rem; font-weight:700; color:rgba(255,215,0,0.8); text-shadow:0 1px 6px rgba(0,0,0,0.6); }
+    .vs-badge { position:absolute; bottom:30%; left:50%; transform:translateX(-50%); font-family:var(--font-display); font-size:2rem; color:#FFD600; text-shadow:0 0 20px rgba(255,214,0,0.6),0 2px 4px rgba(0,0,0,0.6); z-index:13; letter-spacing:0.1em; animation:vsPulse 2s ease-in-out infinite; }
+    @keyframes vsPulse { 0%,100%{opacity:0.7;transform:translateX(-50%) scale(1)} 50%{opacity:1;transform:translateX(-50%) scale(1.1)} }
+    .epic-buttons { position:absolute; bottom:2%; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:8px; z-index:30; padding:0 36px; }
+    .btn-vamos { padding:15px 56px; border:none; background:linear-gradient(135deg,#F44336,#FF6D00); color:#fff; font-family:var(--font-heading); font-size:1.35rem; font-weight:700; letter-spacing:0.08em; border-radius:50px; cursor:pointer; box-shadow:0 4px 20px rgba(244,67,54,0.4),0 0 40px rgba(244,67,54,0.15); transition:all 0.3s ease; width:100%; max-width:280px; }
+    .btn-vamos:hover,.btn-vamos:active { transform:scale(1.05); box-shadow:0 6px 28px rgba(244,67,54,0.5); }
+    .btn-sub { padding:9px 28px; border:1.5px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); font-family:var(--font-heading); font-size:0.75rem; font-weight:600; border-radius:20px; cursor:pointer; transition:all 0.3s ease; backdrop-filter:blur(4px); }
+    .btn-sub:hover { background:rgba(255,255,255,0.15); }
 
-    .splash-bg {
-      position: absolute; inset: 0;
-      background: url('https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Fondo%20del%20estadio.png') center center / cover no-repeat;
-      z-index: 0;
-    }
-
-    .splash-overlay {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg,
-          rgba(0,0,0,0.45) 0%,
-          rgba(0,0,0,0.1) 30%,
-          rgba(0,0,0,0.05) 50%,
-          rgba(0,0,0,0.15) 75%,
-          rgba(0,0,0,0.5) 100%
-        );
-      z-index: 1;
-    }
-
-    .trophy-layer {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      animation: trophyFloat 3s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .trophy-layer img {
-      width: 140px; height: auto;
-      filter: drop-shadow(0 0 30px rgba(255,215,0,0.5))
-              drop-shadow(0 4px 20px rgba(0,0,0,0.4));
-      mix-blend-mode: multiply;
-    }
-
-    @keyframes trophyFloat {
-      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-      50% { transform: translate(-50%, -50%) translateY(-12px); }
-    }
-
-    .trophy-glow {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 250px; height: 250px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
-      animation: glowPulse 2.5s ease-in-out infinite;
-      z-index: 9; pointer-events: none;
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-    }
-
-    .messi-layer {
-      position: absolute;
-      bottom: 8%; left: 3%;
-      z-index: 12;
-      animation: playerFloat 2.5s ease-in-out infinite;
-    }
-
-    .messi-layer img {
-      width: 160px; height: auto;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
-      mix-blend-mode: multiply;
-    }
-
-    @keyframes playerFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .wulei-layer {
-      position: absolute;
-      bottom: 8%; right: 3%;
-      z-index: 12;
-      animation: playerFloat 2.5s ease-in-out infinite;
-      animation-delay: 0.6s;
-    }
-
-    .wulei-layer img {
-      width: 160px; height: auto;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
-      mix-blend-mode: multiply;
-    }
-
-    .sky-stars { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-    .sky-star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      animation: twinkle var(--d) ease-in-out infinite;
-      animation-delay: var(--dl);
-    }
-    @keyframes twinkle {
-      0%,100% { opacity: var(--lo); transform: scale(1); }
-      50% { opacity: var(--hi); transform: scale(1.4); }
-    }
-
-    .confetti-container {
-      position: absolute; inset: 0;
-      pointer-events: none; overflow: hidden;
-      z-index: 20;
-    }
-
-    .confetti {
-      position: absolute;
-      width: var(--w, 6px);
-      height: var(--h, 10px);
-      background: var(--c);
-      top: -20px;
-      animation: confettiFall var(--cd) linear infinite;
-      animation-delay: var(--dl);
-      border-radius: var(--br, 0);
-      opacity: 0.8;
-    }
-
-    @keyframes confettiFall {
-      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
-      50% { transform: translateY(50vh) rotate(180deg) scale(0.8); opacity: 0.7; }
-      100% { transform: translateY(110vh) rotate(360deg) scale(0.5); opacity: 0; }
-    }
-
-    .smoke-container {
-      position: absolute; inset: 0;
-      pointer-events: none; z-index: 3;
-    }
-
-    .smoke-cloud {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-      animation: smokeFloat var(--sd) ease-in-out infinite;
-      animation-delay: var(--sdl);
-    }
-
-    @keyframes smokeFloat {
-      0%,100% { transform: translateX(0) scale(1); opacity: 0.2; }
-      50% { transform: translateX(var(--sx, 20px)) scale(1.15); opacity: 0.5; }
-    }
-
-    .flag-strip {
-      position: absolute;
-      top: 12%; left: 0; right: 0;
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      padding: 0 20px;
-      z-index: 15;
-    }
-
-    .fs-flag {
-      font-size: 0.85rem;
-      opacity: 0.6;
-      animation: fsPulse 4s ease-in-out infinite;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-    }
-
-    @keyframes fsPulse {
-      0%,100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.08); }
-    }
-
-    .epic-title {
-      position: absolute;
-      top: 3%; left: 0; right: 0;
-      text-align: center;
-      z-index: 25;
-      padding: 0 16px;
-    }
-
-    .epic-title h1 {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      background: linear-gradient(135deg, #FFD600, #FF6D00, #F44336, #FFD600);
-      background-size: 300% 300%;
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      animation: titleShimmer 3s ease infinite;
-      line-height: 1;
-      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.7));
-    }
-
-    @keyframes titleShimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .epic-title .sub {
-      font-family: var(--font-heading);
-      font-size: 0.85rem; font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      text-shadow: 0 1px 6px rgba(0,0,0,0.7);
-      margin-top: 2px;
-    }
-
-    .epic-title .zh {
-      font-family: var(--font-zh);
-      font-size: 0.95rem; font-weight: 700;
-      color: rgba(255,215,0,0.8);
-      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
-    }
-
-    .vs-badge {
-      position: absolute;
-      bottom: 30%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-display);
-      font-size: 2rem;
-      color: #FFD600;
-      text-shadow: 0 0 20px rgba(255,214,0,0.6), 0 2px 4px rgba(0,0,0,0.6);
-      z-index: 13;
-      letter-spacing: 0.1em;
-      animation: vsPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes vsPulse {
-      0%,100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-    }
-
-    .epic-buttons {
-      position: absolute;
-      bottom: 2%; left: 0; right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      z-index: 30;
-      padding: 0 36px;
-    }
-
-    .btn-vamos {
-      padding: 15px 56px; border: none;
-      background: linear-gradient(135deg, #F44336, #FF6D00);
-      color: #fff; font-family: var(--font-heading);
-      font-size: 1.35rem; font-weight: 700;
-      letter-spacing: 0.08em; border-radius: 50px; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(244,67,54,0.4), 0 0 40px rgba(244,67,54,0.15);
-      transition: all 0.3s ease;
-      width: 100%; max-width: 280px;
-    }
-    .btn-vamos:hover, .btn-vamos:active { transform: scale(1.05); box-shadow: 0 6px 28px rgba(244,67,54,0.5); }
-
-    .btn-sub {
-      padding: 9px 28px; border: 1.5px solid rgba(255,255,255,0.35);
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.7); font-family: var(--font-heading);
-      font-size: 0.75rem; font-weight: 600;
-      border-radius: 20px; cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(4px);
-    }
-    .btn-sub:hover { background: rgba(255,255,255,0.15); }
-
-    /* ============================================
-       MAIN APP
-       ============================================ */
-    #main { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 4px 16px 0; display: none; background: var(--bg); }
-    #main.show { display: block; animation: fadeIn 0.5s ease; }
+    /* MAIN APP */
+    #main { position:relative; z-index:1; max-width:480px; margin:0 auto; padding:4px 16px 0; display:none; background:var(--bg); }
+    #main.show { display:block; animation:fadeIn 0.5s ease; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-    header { padding: 18px 0 12px; display: flex; align-items: center; justify-content: space-between; }
-    .brand { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 0.05em; background: linear-gradient(135deg, var(--red-bright), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .live-badge { display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; color: var(--red-bright); background: var(--red-soft); padding: 5px 12px; border-radius: 20px; }
-    .live-dot { width: 8px; height: 8px; background: var(--red-bright); border-radius: 50%; animation: blink 1.2s ease-in-out infinite; }
+    header { padding:18px 0 12px; display:flex; align-items:center; justify-content:space-between; }
+    .brand { font-family:var(--font-display); font-size:1.7rem; letter-spacing:0.05em; background:linear-gradient(135deg,var(--red-bright),var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .live-badge { display:flex; align-items:center; gap:6px; font-family:var(--font-heading); font-size:0.7rem; font-weight:600; color:var(--red-bright); background:var(--red-soft); padding:5px 12px; border-radius:20px; }
+    .live-dot { width:8px; height:8px; background:var(--red-bright); border-radius:50%; animation:blink 1.2s ease-in-out infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-    .section-title { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
-    .section-title::before { content: '★'; color: var(--gold-bright); }
-    .match-card { background: var(--surface); border-radius: var(--radius); padding: 16px 16px 14px; margin-bottom: 12px; border-left: 4px solid var(--gold); box-shadow: var(--shadow); animation: cardIn 0.45s cubic-bezier(0.34,1.56,0.64,1) backwards; }
-    .match-card:nth-child(2) { animation-delay: 0.08s; border-left-color: var(--red-bright); }
-    .match-card:nth-child(3) { animation-delay: 0.16s; border-left-color: var(--green-bright); }
+    .section-title { font-family:var(--font-heading); font-size:0.85rem; font-weight:600; color:var(--text-muted); margin:18px 0 10px; display:flex; align-items:center; gap:8px; }
+    .section-title::before { content:'★'; color:var(--gold-bright); }
+    .match-card { background:var(--surface); border-radius:var(--radius); padding:16px 16px 14px; margin-bottom:12px; border-left:4px solid var(--gold); box-shadow:var(--shadow); animation:cardIn 0.45s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+    .match-card:nth-child(2) { animation-delay:0.08s; border-left-color:var(--red-bright); }
+    .match-card:nth-child(3) { animation-delay:0.16s; border-left-color:var(--green-bright); }
     @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
-    .match-card.following { border-left-width: 5px; box-shadow: 0 4px 20px rgba(249,168,37,0.15), var(--shadow); }
-    .match-card.event-flash { animation: eFlash 0.4s ease; }
+    .match-card.following { border-left-width:5px; box-shadow:0 4px 20px rgba(249,168,37,0.15),var(--shadow); }
+    .match-card.event-flash { animation:eFlash 0.4s ease; }
     @keyframes eFlash { 0%{box-shadow:0 0 0 3px rgba(249,168,37,0.4),var(--shadow)} 100%{box-shadow:var(--shadow)} }
-    .match-teams { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-    .team { display: flex; align-items: center; gap: 8px; flex: 1; }
-    .team.away { justify-content: flex-end; text-align: right; }
-    .team-flag { font-size: 1.8rem; line-height: 1; }
-    .team-name { font-family: var(--font-heading); font-size: 0.92rem; font-weight: 600; }
-    .match-center { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
-    .match-score { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 0.1em; line-height: 1; color: var(--navy); }
-    .match-time { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; color: var(--red-bright); margin-top: 3px; }
-    .match-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
-    .match-group { font-family: var(--font-heading); font-size: 0.65rem; font-weight: 500; color: var(--text-muted); background: var(--surface-alt); padding: 3px 10px; border-radius: 8px; }
-    .btn-follow { padding: 7px 20px; border: 2px solid var(--text-muted); background: transparent; color: var(--text-muted); font-family: var(--font-heading); font-size: 0.72rem; font-weight: 600; border-radius: 20px; cursor: pointer; transition: all 0.3s; }
-    .btn-follow:hover { border-color: var(--red-bright); color: var(--red-bright); }
-    .btn-follow.active { border-color: var(--red-bright); background: linear-gradient(135deg, var(--red-bright), var(--orange)); color: #fff; }
-    .team-label { display: inline-block; font-family: var(--font-heading); font-size: 0.6rem; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
-    .team-label.home-label { background: var(--gold-soft); color: #E65100; }
-    .team-label.away-label { background: var(--blue-soft); color: var(--blue); }
-    .team-label.all-label { background: var(--green-soft); color: var(--green); }
-    .event-feed { margin-top: 20px; padding-bottom: 100px; }
-    .event-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: eSlide 0.3s ease; }
+    .match-teams { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .team { display:flex; align-items:center; gap:8px; flex:1; }
+    .team.away { justify-content:flex-end; text-align:right; }
+    .team-flag { font-size:1.8rem; line-height:1; }
+    .team-name { font-family:var(--font-heading); font-size:0.92rem; font-weight:600; }
+    .match-center { display:flex; flex-direction:column; align-items:center; min-width:80px; }
+    .match-score { font-family:var(--font-display); font-size:2.2rem; letter-spacing:0.1em; line-height:1; color:var(--navy); }
+    .match-time { font-family:var(--font-heading); font-size:0.7rem; font-weight:600; color:var(--red-bright); margin-top:3px; }
+    .match-actions { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+    .match-group { font-family:var(--font-heading); font-size:0.65rem; font-weight:500; color:var(--text-muted); background:var(--surface-alt); padding:3px 10px; border-radius:8px; }
+    .btn-follow { padding:7px 20px; border:2px solid var(--text-muted); background:transparent; color:var(--text-muted); font-family:var(--font-heading); font-size:0.72rem; font-weight:600; border-radius:20px; cursor:pointer; transition:all 0.3s; }
+    .btn-follow:hover { border-color:var(--red-bright); color:var(--red-bright); }
+    .btn-follow.active { border-color:var(--red-bright); background:linear-gradient(135deg,var(--red-bright),var(--orange)); color:#fff; }
+    .team-label { display:inline-block; font-family:var(--font-heading); font-size:0.6rem; font-weight:600; padding:2px 8px; border-radius:10px; margin-top:4px; }
+    .team-label.home-label { background:var(--gold-soft); color:#E65100; }
+    .team-label.away-label { background:var(--blue-soft); color:var(--blue); }
+    .team-label.all-label { background:var(--green-soft); color:var(--green); }
+    .event-feed { margin-top:20px; padding-bottom:100px; }
+    .event-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); animation:eSlide 0.3s ease; }
     @keyframes eSlide { from{opacity:0;transform:translateX(-12px)} to{opacity:1;transform:translateX(0)} }
-    .event-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+    .event-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
     .event-icon.goal{background:var(--gold-soft)} .event-icon.my-goal{background:var(--gold-soft);border:2px solid var(--gold)} .event-icon.opp-goal{background:#3E0000;border:2px solid #600} .event-icon.shot{background:var(--red-soft)} .event-icon.free{background:var(--blue-soft)} .event-icon.danger{background:var(--orange-soft)} .event-icon.yellow{background:#FFFDE7} .event-icon.red{background:var(--red-soft)} .event-icon.whistle{background:#F3E5F5}
     .event-info{flex:1} .event-desc{font-size:0.82rem;line-height:1.4} .event-desc strong{font-weight:700} .event-desc.goal-text{color:var(--orange);font-weight:700} .event-desc.opp-text{color:#880000;font-weight:700} .event-meta{font-family:var(--font-heading);font-size:0.6rem;font-weight:500;color:var(--text-muted);margin-top:2px}
     .feed-empty{text-align:center;padding:32px 0;color:var(--text-muted);font-size:0.88rem;font-style:italic}
@@ -554,10 +282,10 @@
       <div class="vibra-title">PROBAR PATRONES DE VIBRACIÓN</div>
       <div class="vibra-grid">
         <button class="vibra-btn" data-pattern="goal"><span class="emoji">⚽</span>¡GOL!<br><small>Festejo extendido (~20s)</small></button>
-        <button class="vibra-btn" data-pattern="opp_goal"><span class="emoji">💔</span>GOL EN CONTRA<br><small>Vibración continua 7s</small></button>
+        <button class="vibra-btn" data-pattern="opp_goal"><span class="emoji">💔</span>GOL EN CONTRA<br><small>Flatline 7s + recuperación</small></button>
         <button class="vibra-btn" data-pattern="shot"><span class="emoji">🥅</span>TIRO AL ARCO<br><small>Fuerte → se desvanece</small></button>
         <button class="vibra-btn" data-pattern="free_kick"><span class="emoji">🦶</span>TIRO LIBRE<br><small>Silbato</small></button>
-        <button class="vibra-btn" data-pattern="danger"><span class="emoji">💓</span>JUGADA DE RIESGO<br><small>Latidos acelerados</small></button>
+        <button class="vibra-btn" data-pattern="danger"><span class="emoji">💓</span>ATAQUE ESCALANTE<br><small>Tocá varias veces seguidas</small></button>
       </div>
       <div class="sensitivity-row">
         <span class="sensitivity-label">Intensidad</span>
@@ -624,70 +352,95 @@
 })();
 
 // ============================================================
-// V7 — VIBRATION ENGINE ACTUALIZADO
-// Cambios: sin tarjetas, gol en contra 7s continuo,
-// filtrado por equipo, segundo plano
+// v7.1 — VIBRATION ENGINE
+// Ataque escalante + flatline con recuperación + sin tarjetas
 // ============================================================
 
-const CONFIG = { sensitivity: 'medium', notifEnabled: false, isInBackground: false };
-const SENS_MULT = { low: 0.6, medium: 1, high: 1.5 };
+const CONFIG = { sensitivity:'medium', notifEnabled:false, isInBackground:false };
+const SENS_MULT = { low:0.6, medium:1, high:1.5 };
 
-// PATRONES DE VIBRACIÓN
-// NOTA v7: se eliminaron amarilla y roja por completo
 const VIB = {
-  shot: [200, 80, 180, 80, 150, 100, 120, 120, 80, 150, 50, 200, 30],
-  free_kick: [80, 60, 80, 120, 300],
-  end: [400, 200, 400]
+  shot: [200,80,180,80,150,100,120,120,80,150,50,200,30],
+  free_kick: [80,60,80,120,300],
+  end: [400,200,400]
 };
 
-// GOL EN CONTRA v7: vibración continua de 6-7 segundos
-// Patrón: vibraciones cortas y rápidas continuas durante ~7s
+// FLATLINE CONTINUO ~7s
 const VIB_FLATLINE_CONTINUOUS = [
-  200,100,200,100,200,100,200,100,200,100,
-  200,100,200,100,200,100,200,100,200,100,
-  200,100,200,100,200,100,200,100,200,100,
-  200,100,200,100,200,100,200,100,200,100,
-  200,100,200,100,200,100,200,100
+  200,80,200,80,200,80,200,80,200,80,
+  200,80,200,80,200,80,200,80,200,80,
+  200,80,200,80,200,80,200,80,200,80,
+  200,80,200,80,200,80,200,80,200,80,
+  200,80,200,80
 ];
 
-const HEARTBEAT = [
-  [250,650,250,750,250,650,250],
-  [220,480,220,480,220,480,220,550],
-  [200,370,200,370,200,370,200,370,200],
-  [180,280,180,280,180,280,180,280,180,280,180],
-  [150,220,150,220,150,220,150,220,150,220,150,220,150]
-];
+// ============================================================
+// ATAQUE ESCALANTE
+// 100→110→120→130→140→150→160 BPM
+// Cada 8 latidos sube un nivel
+// ============================================================
 
-const heartState = { matchId: null, level: 0, lastTime: 0, fadeTimer: null, resetTimer: null };
+const dangerStates = {};
 
-function triggerDanger(m) {
-  const n = Date.now();
-  if (heartState.matchId === m && n - heartState.lastTime < 12000)
-    heartState.level = Math.min(heartState.level + 1, 4);
-  else heartState.level = 0;
-  heartState.matchId = m;
-  heartState.lastTime = n;
-  clearTimeout(heartState.fadeTimer);
-  clearTimeout(heartState.resetTimer);
-  doVibrate(HEARTBEAT[heartState.level]);
-  heartState.fadeTimer = setTimeout(() => {
-    if (heartState.matchId === m) doVibrate([100,200,80,280,60,360,40]);
-  }, 5000);
-  heartState.resetTimer = setTimeout(() => {
-    heartState.matchId = null;
-    heartState.level = 0;
-  }, 12000);
+function triggerDanger(matchId) {
+  const now = Date.now();
+  if (dangerStates[matchId] && dangerStates[matchId].active) {
+    dangerStates[matchId].lastEvent = now;
+    clearTimeout(dangerStates[matchId].fadeTimer);
+    dangerStates[matchId].fadeTimer = setTimeout(() => fadeOutDanger(matchId), 8000);
+    return;
+  }
+  dangerStates[matchId] = { active:true, beatCount:0, startTime:now, lastEvent:now, timer:null, fadeTimer:null };
+  escalateHeartbeat(matchId);
+  dangerStates[matchId].fadeTimer = setTimeout(() => fadeOutDanger(matchId), 8000);
 }
 
-function resetHeartbeat() {
-  clearTimeout(heartState.fadeTimer);
-  clearTimeout(heartState.resetTimer);
-  heartState.matchId = null;
-  heartState.level = 0;
+function escalateHeartbeat(matchId) {
+  const ds = dangerStates[matchId];
+  if (!ds || !ds.active) return;
+  const level = Math.min(Math.floor(ds.beatCount / 8), 6);
+  const bpm = 100 + (level * 10);
+  const cycleMs = 60000 / bpm;
+  const lub = Math.round(70 + (level * 12));
+  const dub = Math.round(70 + (level * 12));
+  const gap = Math.round(40 + (level * 5));
+  const mainPause = Math.round(cycleMs - lub - dub - gap);
+  const pattern = [lub, gap, dub, Math.max(mainPause, 15)];
+  doVibrate(pattern);
+  ds.beatCount++;
+  const totalDuration = pattern.reduce((a, b) => a + b, 0);
+  ds.timer = setTimeout(() => escalateHeartbeat(matchId), totalDuration);
 }
+
+function fadeOutDanger(matchId) {
+  const ds = dangerStates[matchId];
+  if (!ds) return;
+  ds.active = false;
+  clearTimeout(ds.timer);
+  doVibrate([50, 500, 40, 700, 30]);
+  setTimeout(() => { delete dangerStates[matchId]; }, 2000);
+}
+
+function stopDanger(matchId) {
+  if (dangerStates[matchId]) {
+    dangerStates[matchId].active = false;
+    clearTimeout(dangerStates[matchId].timer);
+    clearTimeout(dangerStates[matchId].fadeTimer);
+    if ('vibrate' in navigator) try { navigator.vibrate(0); } catch(e) {}
+    delete dangerStates[matchId];
+  }
+}
+
+function stopAllDanger() {
+  Object.keys(dangerStates).forEach(id => stopDanger(id));
+}
+
+// ============================================================
+// GOL: CELEBRACIÓN 20s
+// ============================================================
 
 function triggerGoalCelebration() {
-  resetHeartbeat();
+  stopAllDanger();
   state.recentGoal = true;
   doVibrate([300,80,300,80,500]);
   setTimeout(() => doVibrate([200,100,200,100,200,100,300,150,300]), 2500);
@@ -699,62 +452,51 @@ function triggerGoalCelebration() {
   setTimeout(() => { state.recentGoal = false; }, 21000);
 }
 
-// v7: gol en contra = vibración continua de ~7 segundos
+// ============================================================
+// GOL EN CONTRA: FLATLINE + RECUPERACIÓN EMOCIONAL
+// ============================================================
+
 function triggerFlatline() {
-  resetHeartbeat();
+  stopAllDanger();
   state.recentGoal = true;
   doVibrate(VIB_FLATLINE_CONTINUOUS);
-  setTimeout(() => { state.recentGoal = false; }, 7500);
+  setTimeout(() => { doVibrate([80, 1200]); }, 7500);
+  setTimeout(() => { doVibrate([130, 700, 160, 650]); }, 9200);
+  setTimeout(() => { doVibrate([200, 400, 220, 380, 240, 350]); }, 11500);
+  setTimeout(() => { doVibrate([250, 350, 250, 350, 250, 350, 250, 350, 250]); }, 14000);
+  setTimeout(() => { state.recentGoal = false; }, 17500);
 }
+
+// ============================================================
+// VIBRACIÓN BASE
+// ============================================================
 
 function doVibrate(pattern) {
   const m = SENS_MULT[CONFIG.sensitivity] || 1;
   const s = pattern.map(v => Math.round(v * m));
   if ('vibrate' in navigator) try { navigator.vibrate(s); } catch(e) {}
-  const d = s.reduce((a,b) => a+b, 0);
+  const d = s.reduce((a, b) => a + b, 0);
   const i = document.getElementById('vibraIndicator');
   i.classList.add('active');
   setTimeout(() => i.classList.remove('active'), d);
 }
 
 // ============================================================
-// v7: MODO SEGUNDO PLANO
+// SEGUNDO PLANO
 // ============================================================
 
 function setupBackgroundMode() {
   const badge = document.getElementById('bgBadge');
-
-  // Detectar cuando la app va a segundo plano
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      CONFIG.isInBackground = true;
-      badge.classList.add('active');
-      console.log('🔔 App en segundo plano — vibraciones siguen activas');
-    } else {
-      CONFIG.isInBackground = false;
-      badge.classList.remove('active');
-      console.log('📱 App en primer plano');
-    }
+    if (document.hidden) { CONFIG.isInBackground = true; badge.classList.add('active'); }
+    else { CONFIG.isInBackground = false; badge.classList.remove('active'); }
   });
-
-  // Intentar Wake Lock API (mantener pantalla activa)
   if ('wakeLock' in navigator) {
     let wakeLock = null;
     async function requestWakeLock() {
-      try {
-        wakeLock = await navigator.wakeLock.request('screen');
-        console.log('🔆 Wake Lock activo — pantalla no se apaga');
-        wakeLock.addEventListener('release', () => {
-          console.log('🔆 Wake Lock liberado');
-        });
-      } catch(e) {
-        console.log('Wake Lock no disponible:', e.message);
-      }
+      try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
     }
-    // Solicitar cuando el usuario entra a la app
-    document.addEventListener('click', () => {
-      if (!wakeLock) requestWakeLock();
-    }, { once: true });
+    document.addEventListener('click', () => { if (!wakeLock) requestWakeLock(); }, { once:true });
   }
 }
 
@@ -771,20 +513,22 @@ const DEMO_MATCHES = [
 const DEMO_EVENTS = {
   1: [
     { delay:5000, type:'shot', team:'home', player:'Messi', minute:11 },
-    { delay:12000, type:'free_kick', team:'home', minute:17 },
-    { delay:18000, type:'danger', team:'home', minute:22 },
-    { delay:22000, type:'danger', team:'home', minute:24 },
+    { delay:10000, type:'danger', team:'home', minute:14 },
+    { delay:14000, type:'danger', team:'home', minute:17 },
+    { delay:18000, type:'danger', team:'home', minute:20 },
+    { delay:22000, type:'danger', team:'home', minute:23 },
     { delay:27000, type:'goal', team:'home', player:'Messi', minute:28, scorer:'Lionel Messi' },
     { delay:44000, type:'shot', team:'away', player:'Vinícius Jr.', minute:36 },
-    { delay:50000, type:'yellow', team:'away', player:'Casemiro', minute:42 },
-    { delay:55000, type:'danger', team:'away', minute:51 },
-    { delay:59000, type:'danger', team:'away', minute:54 },
+    { delay:50000, type:'danger', team:'away', minute:42 },
+    { delay:54000, type:'danger', team:'away', minute:45 },
+    { delay:58000, type:'danger', team:'away', minute:50 },
     { delay:62000, type:'goal', team:'away', player:'Vinícius Jr.', minute:57, scorer:'Vinícius Jr.' },
-    { delay:78000, type:'free_kick', team:'home', minute:67 },
-    { delay:82000, type:'danger', team:'home', minute:72 },
-    { delay:86000, type:'goal', team:'home', player:'J. Álvarez', minute:79, scorer:'Julián Álvarez' },
-    { delay:98000, type:'red', team:'away', player:'Marquinhos', minute:86 },
-    { delay:106000, type:'end', minute:90 }
+    { delay:72000, type:'free_kick', team:'home', minute:65 },
+    { delay:76000, type:'danger', team:'home', minute:70 },
+    { delay:80000, type:'danger', team:'home', minute:74 },
+    { delay:84000, type:'danger', team:'home', minute:77 },
+    { delay:88000, type:'goal', team:'home', player:'J. Álvarez', minute:82, scorer:'Julián Álvarez' },
+    { delay:100000, type:'end', minute:90 }
   ],
   2: [
     { delay:6000, type:'shot', team:'away', player:'Pedri', minute:8 },
@@ -795,10 +539,11 @@ const DEMO_EVENTS = {
     { delay:42000, type:'shot', team:'away', player:'Morata', minute:41 },
     { delay:50000, type:'free_kick', team:'away', minute:53 },
     { delay:56000, type:'goal', team:'away', player:'Pedri', minute:63, scorer:'Pedri' },
-    { delay:66000, type:'yellow', team:'home', player:'Zhang Linpeng', minute:72 },
-    { delay:72000, type:'danger', team:'home', minute:78 },
-    { delay:76000, type:'danger', team:'home', minute:82 },
-    { delay:80000, type:'goal', team:'home', player:'Wu Lei', minute:88, scorer:'武磊 (Wu Lei)' },
+    { delay:66000, type:'danger', team:'home', minute:72 },
+    { delay:70000, type:'danger', team:'home', minute:76 },
+    { delay:74000, type:'danger', team:'home', minute:80 },
+    { delay:78000, type:'danger', team:'home', minute:84 },
+    { delay:82000, type:'goal', team:'home', player:'Wu Lei', minute:88, scorer:'武磊 (Wu Lei)' },
     { delay:94000, type:'end', minute:90 }
   ],
   3: [
@@ -807,16 +552,17 @@ const DEMO_EVENTS = {
     { delay:30000, type:'shot', team:'away', player:'Wirtz', minute:28 },
     { delay:36000, type:'danger', team:'away', minute:35 },
     { delay:40000, type:'danger', team:'away', minute:38 },
-    { delay:44000, type:'goal', team:'away', player:'Musiala', minute:44, scrorer:'Jamal Musiala' },
+    { delay:44000, type:'goal', team:'away', player:'Musiala', minute:44, scorer:'Jamal Musiala' },
     { delay:58000, type:'shot', team:'home', player:'Griezmann', minute:58 },
     { delay:66000, type:'free_kick', team:'away', minute:66 },
     { delay:72000, type:'goal', team:'home', player:'Mbappé', minute:74, scorer:'Kylian Mbappé' },
-    { delay:82000, type:'yellow', team:'away', player:'Kimmich', minute:82 },
+    { delay:82000, type:'danger', team:'away', minute:82 },
+    { delay:86000, type:'danger', team:'away', minute:85 },
     { delay:90000, type:'end', minute:90 }
   ]
 };
 
-const EV_ICON = { goal:'⚽', shot:'🥅', free_kick:'🦶', danger:'💓', yellow:'🟨', red:'🟥', start:'📣', end:'🏁' };
+const EV_ICON = { goal:'⚽', shot:'🥅', free_kick:'🦶', danger:'💓', yellow:'🟨', red:'🟥', end:'🏁' };
 
 // ============================================================
 // STATE
@@ -856,15 +602,12 @@ const dom = {
 };
 
 // ============================================================
-// v7: LÓGICA DE FILTRADO POR EQUIPO
-// Solo vibra por acciones ofensivas del equipo elegido
+// FILTRADO POR EQUIPO
 // ============================================================
 
 function shouldVibrate(matchId, ev) {
   const chosen = state.chosenTeam[matchId];
-  // Si no eligió equipo o eligió "todos", siempre vibra
   if (!chosen || chosen === null) return true;
-  // Si eligió un equipo, solo vibra si es acción ofensiva de SU equipo
   return ev.team === chosen;
 }
 
@@ -942,7 +685,7 @@ function addEvent(mid, ev) {
   const opp = ch && ev.team !== ch && ch !== null;
   const ic = ev.type === 'goal' ? (opp ? 'opp-goal' : 'my-goal') :
     ev.type === 'shot' ? 'shot' : ev.type === 'free_kick' ? 'free' :
-    ev.type === 'danger' ? 'danger' : ['yellow','red'].includes(ev.type) ? ev.type : 'whistle';
+    ev.type === 'danger' ? 'danger' : 'whistle';
   const tF = ev.team === 'home' ? match.homeFlag : match.awayFlag;
   let desc = '';
   switch(ev.type) {
@@ -950,8 +693,6 @@ function addEvent(mid, ev) {
     case 'shot': desc = `${tF} Tiro al arco — ${ev.player||''}`; break;
     case 'free_kick': desc = `${tF} Tiro libre`; break;
     case 'danger': desc = `${tF} ¡Jugada de peligro!`; break;
-    case 'yellow': desc = `${tF} Tarjeta amarilla — ${ev.player||''}`; break;
-    case 'red': desc = `${tF} Tarjeta roja — ${ev.player||''}`; break;
     case 'end': desc = `${match.homeFlag} ${match.home} ${match.score[0]} - ${match.score[1]} ${match.away} ${match.awayFlag} — Final`; break;
     default: desc = `${tF} ${ev.type}`;
   }
@@ -1003,7 +744,7 @@ function sendNotif(t, b) {
 }
 
 // ============================================================
-// DEMO ENGINE — v7 CON FILTRADO POR EQUIPO
+// DEMO ENGINE
 // ============================================================
 
 function startDemo(mid) {
@@ -1022,10 +763,7 @@ function startDemo(mid) {
       const te = document.querySelector(`#card-${mid} .match-time`);
       if (te) te.textContent = ev.minute + "'";
       flashCard(mid);
-
-      // v7: determinar si vibra según filtrado por equipo
       const vib = shouldVibrate(mid, ev);
-
       switch(ev.type) {
         case 'danger':
           if (vib) triggerDanger(mid);
@@ -1041,33 +779,21 @@ function startDemo(mid) {
           renderMatches();
           const card = document.getElementById(`card-${mid}`);
           if (card) card.classList.add('following');
-          // v7: gol propio vibra SIEMPRE, gol en contra solo si es del equipo elegido
-          const ch = state.chosenTeam[mid];
-          const isOwnGoal = ev.team === ch || !ch;
-          if (isOwnGoal) {
-            setTimeout(() => showGoalOverlay(mid, ev), 300);
-          } else {
-            // Es gol del rival — mostrar como gol en contra
-            setTimeout(() => showGoalOverlay(mid, ev), 300);
-          }
+          setTimeout(() => showGoalOverlay(mid, ev), 300);
           break;
         case 'yellow':
         case 'red':
-          // v7: sin vibración para tarjetas — solo visual
           break;
         case 'end':
+          stopDanger(mid);
           if (vib) doVibrate(VIB.end);
           showToast('🏁', `Final: ${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);
           break;
       }
-
-      // Notificación visual (siempre, sin importar filtrado)
-      if (ev.type !== 'goal' && ev.type !== 'end' && ev.type !== 'yellow' && ev.type !== 'red') {
+      if (ev.type === 'shot' || ev.type === 'free_kick' || ev.type === 'danger') {
         const lb = { shot:'Tiro al arco', free_kick:'Tiro libre', danger:'Jugada de peligro' };
         showToast(EV_ICON[ev.type]||'•', `${lb[ev.type]||ev.type} — ${ev.team==='home'?m.home:m.away} ${ev.minute}'`);
       }
-
-      // Agregar al feed de eventos (siempre)
       addEvent(mid, ev);
     }, ev.delay);
     state.demoTimers[mid].push(t);
@@ -1075,11 +801,11 @@ function startDemo(mid) {
 }
 
 function stopDemo(mid) {
+  stopDanger(mid);
   if (state.demoTimers[mid]) { state.demoTimers[mid].forEach(clearTimeout); delete state.demoTimers[mid]; }
   if (state.minuteIntervals[mid]) { clearInterval(state.minuteIntervals[mid]); delete state.minuteIntervals[mid]; }
   const m = state.matches.find(x => x.id === mid);
   if (m) { m.score = [0,0]; m.minute = 0; }
-  resetHeartbeat();
   renderMatches();
 }
 
@@ -1096,30 +822,24 @@ function closeVibraModal() { dom.vibraMod.classList.remove('show'); }
 
 function init() {
   setupBackgroundMode();
-
   dom.btnEnter.addEventListener('click', () => {
     dom.splash.classList.add('hide');
     dom.main.classList.add('show');
     dom.bottomBar.classList.remove('hidden');
     setTimeout(() => dom.splash.style.display = 'none', 800);
   });
-
   document.getElementById('btnAbout').addEventListener('click', () => {
     alert('Vibra Fútbol (足球震动)\n\nHerramienta de bienestar emocional para trabajadores a través de la pasión futbolera.\n\nUn proyecto de cooperación cultural Argentina-China.');
   });
-
   renderMatches();
-
   dom.btnDemo.addEventListener('click', openVibraModal);
   dom.btnTest.addEventListener('click', openVibraModal);
-
   dom.vibraMod.addEventListener('click', e => { if (e.target === dom.vibraMod) closeVibraModal(); });
   dom.teamMod.addEventListener('click', e => { if (e.target === dom.teamMod) closeTeamModal(); });
-
   document.querySelectorAll('.vibra-btn[data-pattern]').forEach(btn => {
     btn.addEventListener('click', () => {
       const p = btn.dataset.pattern;
-      if (p === 'danger') { triggerDanger('demo'); setTimeout(() => triggerDanger('demo'), 4000); setTimeout(() => triggerDanger('demo'), 8000); }
+      if (p === 'danger') { triggerDanger('demo'); }
       else if (p === 'goal') triggerGoalCelebration();
       else if (p === 'opp_goal') triggerFlatline();
       else if (VIB[p]) doVibrate(VIB[p]);
@@ -1127,7 +847,6 @@ function init() {
       setTimeout(() => { btn.style.borderColor = ''; btn.style.background = ''; }, 600);
     });
   });
-
   document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(btn => {
     btn.addEventListener('click', () => {
       CONFIG.sensitivity = btn.dataset.sensitivity;
@@ -1135,13 +854,11 @@ function init() {
       btn.classList.add('active');
     });
   });
-
   dom.goalOver.addEventListener('click', () => {
     dom.goalOver.classList.remove('show','flatline-mode');
     dom.pulseBg.classList.remove('goal','flatline');
   });
-
-  console.log('✅ Vibra Fútbol v7 — Filtro equipo + Gol contra 7s + Sin tarjetas + Segundo plano');
+  console.log('✅ Vibra Fútbol v7.1 — Ataque escalante + Flatline recuperación');
 }
 
 init();
