@@ -89,6 +89,17 @@
     .vibra-indicator.active { opacity: 1; animation: vibraShake 0.3s ease; }
     @keyframes vibraShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px) rotate(-3deg)} 75%{transform:translateX(4px) rotate(3deg)} }
 
+    /* Background mode indicator */
+    .bg-mode-badge {
+      position: fixed; top: 18px; left: 18px; z-index: 10;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-heading); font-size: 0.6rem; font-weight: 600;
+      color: var(--green-bright); background: var(--green-soft);
+      padding: 4px 10px; border-radius: 12px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .bg-mode-badge.active { opacity: 1; }
+
     /* ================================================
        SPLASH — IMAGEN DE FONDO + CAPAS
        ================================================ */
@@ -99,14 +110,12 @@
     }
     #splash.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
 
-    /* IMAGEN DE FONDO */
     .splash-bg {
       position: absolute; inset: 0;
       background: url('https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Fondo%20del%20estadio.png') center center / cover no-repeat;
       z-index: 0;
     }
 
-    /* Overlay oscuro para que el texto se lea */
     .splash-overlay {
       position: absolute; inset: 0;
       background:
@@ -120,11 +129,9 @@
       z-index: 1;
     }
 
-    /* TROFEO — IMAGEN */
     .trophy-layer {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       z-index: 10;
       animation: trophyFloat 3s ease-in-out infinite;
@@ -132,11 +139,9 @@
     }
 
     .trophy-layer img {
-      width: 140px;
-      height: auto;
+      width: 140px; height: auto;
       filter: drop-shadow(0 0 30px rgba(255,215,0,0.5))
               drop-shadow(0 4px 20px rgba(0,0,0,0.4));
-      /* Fondo blanco → transparente */
       mix-blend-mode: multiply;
     }
 
@@ -145,7 +150,6 @@
       50% { transform: translate(-50%, -50%) translateY(-12px); }
     }
 
-    /* Glow detrás del trofeo */
     .trophy-glow {
       position: absolute;
       top: 50%; left: 50%;
@@ -154,8 +158,7 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
       animation: glowPulse 2.5s ease-in-out infinite;
-      z-index: 9;
-      pointer-events: none;
+      z-index: 9; pointer-events: none;
     }
 
     @keyframes glowPulse {
@@ -163,20 +166,16 @@
       50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
     }
 
-    /* MESSI — IMAGEN */
     .messi-layer {
       position: absolute;
-      bottom: 8%;
-      left: 3%;
+      bottom: 8%; left: 3%;
       z-index: 12;
       animation: playerFloat 2.5s ease-in-out infinite;
     }
 
     .messi-layer img {
-      width: 160px;
-      height: auto;
+      width: 160px; height: auto;
       filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
-      /* Fondo blanco → transparente */
       mix-blend-mode: multiply;
     }
 
@@ -185,25 +184,20 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* WU LEI — IMAGEN */
     .wulei-layer {
       position: absolute;
-      bottom: 8%;
-      right: 3%;
+      bottom: 8%; right: 3%;
       z-index: 12;
       animation: playerFloat 2.5s ease-in-out infinite;
       animation-delay: 0.6s;
     }
 
     .wulei-layer img {
-      width: 160px;
-      height: auto;
+      width: 160px; height: auto;
       filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
-      /* Fondo blanco → transparente */
       mix-blend-mode: multiply;
     }
 
-    /* ESTRELLAS CSS (encima de la imagen) */
     .sky-stars { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
     .sky-star {
       position: absolute;
@@ -217,7 +211,6 @@
       50% { opacity: var(--hi); transform: scale(1.4); }
     }
 
-    /* CONFETI CSS (encima de todo) */
     .confetti-container {
       position: absolute; inset: 0;
       pointer-events: none; overflow: hidden;
@@ -242,7 +235,6 @@
       100% { transform: translateY(110vh) rotate(360deg) scale(0.5); opacity: 0; }
     }
 
-    /* HUMO CSS */
     .smoke-container {
       position: absolute; inset: 0;
       pointer-events: none; z-index: 3;
@@ -261,11 +253,9 @@
       50% { transform: translateX(var(--sx, 20px)) scale(1.15); opacity: 0.5; }
     }
 
-    /* BANDERAS DE PAÍSES */
     .flag-strip {
       position: absolute;
-      top: 12%;
-      left: 0; right: 0;
+      top: 12%; left: 0; right: 0;
       display: flex;
       justify-content: center;
       gap: 6px;
@@ -286,7 +276,6 @@
       50% { opacity: 0.8; transform: scale(1.08); }
     }
 
-    /* TÍTULO */
     .epic-title {
       position: absolute;
       top: 3%; left: 0; right: 0;
@@ -327,7 +316,6 @@
       text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
 
-    /* VS */
     .vs-badge {
       position: absolute;
       bottom: 30%;
@@ -347,7 +335,6 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
     }
 
-    /* BOTONES */
     .epic-buttons {
       position: absolute;
       bottom: 2%; left: 0; right: 0;
@@ -383,7 +370,7 @@
     .btn-sub:hover { background: rgba(255,255,255,0.15); }
 
     /* ============================================
-       MAIN APP (igual que v5)
+       MAIN APP
        ============================================ */
     #main { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 4px 16px 0; display: none; background: var(--bg); }
     #main.show { display: block; animation: fadeIn 0.5s ease; }
@@ -489,65 +476,37 @@
   <div class="top-stripe"></div>
   <div class="pulse-bg" id="pulseBg"></div>
   <div class="vibra-indicator" id="vibraIndicator">📳</div>
+  <div class="bg-mode-badge" id="bgBadge">🔔 Modo segundo plano activo</div>
 
   <div id="splash">
-    <!-- FONDO: IMAGEN DEL ESTADIO -->
     <div class="splash-bg"></div>
-
-    <!-- Overlay oscuro para legibilidad -->
     <div class="splash-overlay"></div>
-
-    <!-- Estrellas CSS encima -->
     <div class="sky-stars" id="skyStars"></div>
-
-    <!-- Humo CSS -->
     <div class="smoke-container" id="smoke"></div>
-
-    <!-- Glow del trofeo -->
     <div class="trophy-glow"></div>
-
-    <!-- TROFEO: IMAGEN -->
     <div class="trophy-layer">
-      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Trofeo%20Copa%20del%20Mundo.png"
-           alt="Copa del Mundo">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Trofeo%20Copa%20del%20Mundo.png" alt="Copa del Mundo">
     </div>
-
-    <!-- VS -->
     <div class="vs-badge">VS</div>
-
-    <!-- MESSI: IMAGEN -->
     <div class="messi-layer">
-      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Messi.png"
-           alt="Messi">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Messi.png" alt="Messi">
     </div>
-
-    <!-- WU LEI: IMAGEN -->
     <div class="wulei-layer">
-      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Wu%20Lei.png"
-           alt="Wu Lei">
+      <img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Wu%20Lei.png" alt="Wu Lei">
     </div>
-
-    <!-- Bandera de países -->
     <div class="flag-strip" id="flagStrip"></div>
-
-    <!-- Confeti CSS -->
     <div class="confetti-container" id="confetti"></div>
-
-    <!-- Título -->
     <div class="epic-title">
       <h1>VIBRA FÚTBOL</h1>
       <div class="sub">Siente cada jugada</div>
       <div class="zh">足球震动 — 感受每一刻</div>
     </div>
-
-    <!-- Botones -->
     <div class="epic-buttons">
       <button class="btn-vamos" id="btnEnter">¡VAMOS!</button>
       <button class="btn-sub" id="btnAbout">Sobre el proyecto / 关于项目</button>
     </div>
   </div>
 
-  <!-- MAIN APP -->
   <div id="main">
     <header>
       <div class="brand">VIBRA FÚTBOL</div>
@@ -595,13 +554,10 @@
       <div class="vibra-title">PROBAR PATRONES DE VIBRACIÓN</div>
       <div class="vibra-grid">
         <button class="vibra-btn" data-pattern="goal"><span class="emoji">⚽</span>¡GOL!<br><small>Festejo extendido (~20s)</small></button>
-        <button class="vibra-btn" data-pattern="opp_goal"><span class="emoji">💔</span>GOL EN CONTRA<br><small>Línea plana del corazón</small></button>
+        <button class="vibra-btn" data-pattern="opp_goal"><span class="emoji">💔</span>GOL EN CONTRA<br><small>Vibración continua 7s</small></button>
         <button class="vibra-btn" data-pattern="shot"><span class="emoji">🥅</span>TIRO AL ARCO<br><small>Fuerte → se desvanece</small></button>
         <button class="vibra-btn" data-pattern="free_kick"><span class="emoji">🦶</span>TIRO LIBRE<br><small>Silbato</small></button>
         <button class="vibra-btn" data-pattern="danger"><span class="emoji">💓</span>JUGADA DE RIESGO<br><small>Latidos acelerados</small></button>
-        <button class="vibra-btn" data-pattern="yellow"><span class="emoji">🟨</span>AMARILLA<br><small>Descendente</small></button>
-        <button class="vibra-btn" data-pattern="red"><span class="emoji">🟥</span>ROJA<br><small>Agresiva</small></button>
-        <button class="vibra-btn" data-pattern="end"><span class="emoji">🏁</span>FINAL<br><small>Doble pitido</small></button>
       </div>
       <div class="sensitivity-row">
         <span class="sensitivity-label">Intensidad</span>
@@ -616,9 +572,10 @@
   </div>
 
 <script>
-// === ELEMENTOS CSS DINÁMICOS ===
+// ============================================================
+// ELEMENTOS CSS DINÁMICOS
+// ============================================================
 
-// Estrellas
 (function(){
   const c=document.getElementById('skyStars');
   for(let i=0;i<60;i++){
@@ -630,7 +587,6 @@
   }
 })();
 
-// Humo
 (function(){
   const c=document.getElementById('smoke');
   for(let i=0;i<5;i++){
@@ -642,7 +598,6 @@
   }
 })();
 
-// Banderas
 (function(){
   const flags=['🇦🇷','🇨🇳','🇧🇷','🇫🇷','🇩🇪','🇪🇸','🇮🇹','🇯🇵','🇰🇷','🇺🇸','🇲🇽','🏴','🇳🇱','🇵🇹','🇧🇪','🇭🇷','🇨🇴','🇺🇾','🇳🇬','🇲🇦','🇦🇺','🇸🇦','🇨🇭','🇩🇰','🇪🇨','🇸🇳','🇪🇬','🇹🇳','🇨🇲','🇨🇷','🇵🇦','🇳🇿','🇵🇾','🇵🇪','🇨🇱','🇯🇲'];
   const c=document.getElementById('flagStrip');
@@ -655,7 +610,6 @@
   });
 })();
 
-// Confeti
 (function(){
   const c=document.getElementById('confetti');
   const colors=['#FFD600','#F44336','#75AADB','#fff','#66BB6A','#FF6D00','#CC0000','#42A5F5'];
@@ -669,87 +623,527 @@
   }
 })();
 
-// === VIBRATIONS ===
-const CONFIG={sensitivity:'medium',notifEnabled:false};
-const SENS_MULT={low:0.6,medium:1,high:1.5};
-const VIB={shot:[200,80,180,80,150,100,120,120,80,150,50,200,30],free_kick:[80,60,80,120,300],yellow:[200,150,100],red:[300,80,300,80,300,80,300],end:[400,200,400]};
-const VIB_FLATLINE=[3000,500,2000,500,1500];
-const HEARTBEAT=[[250,650,250,750,250,650,250],[220,480,220,480,220,480,220,550],[200,370,200,370,200,370,200,370,200],[180,280,180,280,180,280,180,280,180,280,180],[150,220,150,220,150,220,150,220,150,220,150,220,150]];
-const heartState={matchId:null,level:0,lastTime:0,fadeTimer:null,resetTimer:null};
-function triggerDanger(m){const n=Date.now();if(heartState.matchId===m&&n-heartState.lastTime<12000)heartState.level=Math.min(heartState.level+1,4);else heartState.level=0;heartState.matchId=m;heartState.lastTime=n;clearTimeout(heartState.fadeTimer);clearTimeout(heartState.resetTimer);doVibrate(HEARTBEAT[heartState.level]);heartState.fadeTimer=setTimeout(()=>{if(heartState.matchId===m)doVibrate([100,200,80,280,60,360,40])},5000);heartState.resetTimer=setTimeout(()=>{heartState.matchId=null;heartState.level=0},12000)}
-function resetHeartbeat(){clearTimeout(heartState.fadeTimer);clearTimeout(heartState.resetTimer);heartState.matchId=null;heartState.level=0}
-function triggerGoalCelebration(){resetHeartbeat();state.recentGoal=true;doVibrate([300,80,300,80,500]);setTimeout(()=>doVibrate([200,100,200,100,200,100,300,150,300]),2500);setTimeout(()=>doVibrate([180,100,180,100,180,100,200,120,200,120,180]),5500);setTimeout(()=>doVibrate([150,120,150,120,150,120,150,150,150]),9000);setTimeout(()=>doVibrate([100,180,80,220,60,260,40]),12500);setTimeout(()=>doVibrate([50,300,40,380,30]),15500);setTimeout(()=>doVibrate([150]),18500);setTimeout(()=>{state.recentGoal=false},21000)}
-function triggerFlatline(){resetHeartbeat();state.recentGoal=true;doVibrate(VIB_FLATLINE);setTimeout(()=>doVibrate([120,600,120,600,150,500,180]),7000);setTimeout(()=>doVibrate([180,400,200,400,220]),11000);setTimeout(()=>{state.recentGoal=false},13000)}
-function doVibrate(p){const m=SENS_MULT[CONFIG.sensitivity]||1;const s=p.map(v=>Math.round(v*m));if('vibrate' in navigator)try{navigator.vibrate(s)}catch(e){}const d=s.reduce((a,b)=>a+b,0);const i=document.getElementById('vibraIndicator');i.classList.add('active');setTimeout(()=>i.classList.remove('active'),d)}
+// ============================================================
+// V7 — VIBRATION ENGINE ACTUALIZADO
+// Cambios: sin tarjetas, gol en contra 7s continuo,
+// filtrado por equipo, segundo plano
+// ============================================================
 
-const DEMO_MATCHES=[{id:1,home:'Argentina',homeFlag:'🇦🇷',away:'Brasil',awayFlag:'🇧🇷',score:[0,0],minute:0,group:'Grupo A'},{id:2,home:'China PR',homeFlag:'🇨🇳',away:'España',awayFlag:'🇪🇸',score:[0,0],minute:0,group:'Grupo B'},{id:3,home:'Francia',homeFlag:'🇫🇷',away:'Alemania',awayFlag:'🇩🇪',score:[0,0],minute:0,group:'Grupo C'}];
-const DEMO_EVENTS={1:[{delay:5000,type:'shot',team:'home',player:'Messi',minute:11},{delay:12000,type:'free_kick',team:'home',minute:17},{delay:18000,type:'danger',team:'home',minute:22},{delay:22000,type:'danger',team:'home',minute:24},{delay:27000,type:'goal',team:'home',player:'Messi',minute:28,scorer:'Lionel Messi'},{delay:44000,type:'shot',team:'away',player:'Vinícius Jr.',minute:36},{delay:50000,type:'yellow',team:'away',player:'Casemiro',minute:42},{delay:55000,type:'danger',team:'away',minute:51},{delay:59000,type:'danger',team:'away',minute:54},{delay:62000,type:'goal',team:'away',player:'Vinícius Jr.',minute:57,scorer:'Vinícius Jr.'},{delay:78000,type:'free_kick',team:'home',minute:67},{delay:82000,type:'danger',team:'home',minute:72},{delay:86000,type:'goal',team:'home',player:'J. Álvarez',minute:79,scorer:'Julián Álvarez'},{delay:98000,type:'red',team:'away',player:'Marquinhos',minute:86},{delay:106000,type:'end',minute:90}],2:[{delay:6000,type:'shot',team:'away',player:'Pedri',minute:8},{delay:14000,type:'free_kick',team:'home',minute:16},{delay:20000,type:'danger',team:'home',minute:22},{delay:24000,type:'danger',team:'home',minute:25},{delay:28000,type:'goal',team:'home',player:'Wu Lei',minute:30,scorer:'武磊 (Wu Lei)'},{delay:42000,type:'shot',team:'away',player:'Morata',minute:41},{delay:50000,type:'free_kick',team:'away',minute:53},{delay:56000,type:'goal',team:'away',player:'Pedri',minute:63,scorer:'Pedri'},{delay:66000,type:'yellow',team:'home',player:'Zhang Linpeng',minute:72},{delay:72000,type:'danger',team:'home',minute:78},{delay:76000,type:'danger',team:'home',minute:82},{delay:80000,type:'goal',team:'home',player:'Wu Lei',minute:88,scorer:'武磊 (Wu Lei)'},{delay:94000,type:'end',minute:90}],3:[{delay:7000,type:'free_kick',team:'home',minute:10},{delay:14000,type:'goal',team:'home',player:'Mbappé',minute:19,scorer:'Kylian Mbappé'},{delay:30000,type:'shot',team:'away',player:'Wirtz',minute:28},{delay:36000,type:'danger',team:'away',minute:35},{delay:40000,type:'danger',team:'away',minute:38},{delay:44000,type:'goal',team:'away',player:'Musiala',minute:44,scorer:'Jamal Musiala'},{delay:58000,type:'shot',team:'home',player:'Griezmann',minute:58},{delay:66000,type:'free_kick',team:'away',minute:66},{delay:72000,type:'goal',team:'home',player:'Mbappé',minute:74,scorer:'Kylian Mbappé'},{delay:82000,type:'yellow',team:'away',player:'Kimmich',minute:82},{delay:90000,type:'end',minute:90}]};
-const EV_ICON={goal:'⚽',shot:'🥅',free_kick:'🦶',danger:'💓',yellow:'🟨',red:'🟥',start:'📣',end:'🏁'};
-const state={matches:JSON.parse(JSON.stringify(DEMO_MATCHES)),followed:new Set(),chosenTeam:{},events:[],demoTimers:{},minuteIntervals:{},recentGoal:false,pendingTeamPicker:null};
-const dom={splash:document.getElementById('splash'),btnEnter:document.getElementById('btnEnter'),main:document.getElementById('main'),bottomBar:document.getElementById('bottomBar'),matchList:document.getElementById('matchList'),eventFeed:document.getElementById('eventFeed'),goalOver:document.getElementById('goal-overlay'),goalText:document.getElementById('goalText'),goalDet:document.getElementById('goalDetail'),toast:document.getElementById('toast'),toastIco:document.getElementById('toastIcon'),toastTxt:document.getElementById('toastText'),pulseBg:document.getElementById('pulseBg'),btnDemo:document.getElementById('btnDemo'),btnTest:document.getElementById('btnTest'),vibraMod:document.getElementById('vibra-modal'),teamMod:document.getElementById('team-modal'),teamOpts:document.getElementById('teamOptions'),teamSub:document.getElementById('teamSheetSub')};
+const CONFIG = { sensitivity: 'medium', notifEnabled: false, isInBackground: false };
+const SENS_MULT = { low: 0.6, medium: 1, high: 1.5 };
 
-function renderMatches(){dom.matchList.innerHTML=state.matches.map(m=>{const f=state.followed.has(m.id);const c=state.chosenTeam[m.id];let l='';if(f&&c==='home')l=`<span class="team-label home-label">⚽ ${m.home}</span>`;else if(f&&c==='away')l=`<span class="team-label away-label">⚽ ${m.away}</span>`;else if(f)l=`<span class="team-label all-label">⚽ Todos</span>`;return`<div class="match-card ${f?'following':''}" id="card-${m.id}"><div class="match-teams"><div class="team home"><span class="team-flag">${m.homeFlag}</span><span class="team-name">${m.home}</span></div><div class="match-center"><div class="match-score">${m.score[0]} — ${m.score[1]}</div><div class="match-time">${m.minute}'</div></div><div class="team away"><span class="team-name">${m.away}</span><span class="team-flag">${m.awayFlag}</span></div></div><div class="match-actions"><span class="match-group">${m.group} ${l}</span><button class="btn-follow ${f?'active':''}" onclick="toggleFollow(${m.id})">${f?'● SIGUIENDO':'SEGUIR'}</button></div></div>`}).join('')}
+// PATRONES DE VIBRACIÓN
+// NOTA v7: se eliminaron amarilla y roja por completo
+const VIB = {
+  shot: [200, 80, 180, 80, 150, 100, 120, 120, 80, 150, 50, 200, 30],
+  free_kick: [80, 60, 80, 120, 300],
+  end: [400, 200, 400]
+};
 
-function openTeamModal(mid){const m=state.matches.find(x=>x.id===mid);if(!m)return;state.pendingTeamPicker=mid;dom.teamSub.textContent=`${m.homeFlag} ${m.home} vs ${m.away} ${m.awayFlag}`;dom.teamOpts.innerHTML=`<div class="team-option" onclick="chooseTeam(${mid},'home')"><span class="flag">${m.homeFlag}</span><span class="name">${m.home}</span><span class="desc">Celebrás goles de ${m.home}</span></div><div class="team-option" onclick="chooseTeam(${mid},'away')"><span class="flag">${m.awayFlag}</span><span class="name">${m.away}</span><span class="desc">Celebrás goles de ${m.away}</span></div><div class="team-option" onclick="chooseTeam(${mid},null)"><span class="flag">🌍</span><span class="name">Todos los goles</span><span class="desc">Sin distinción</span></div>`;dom.teamMod.classList.add('show')}
-function closeTeamModal(){dom.teamMod.classList.remove('show');state.pendingTeamPicker=null}
-function chooseTeam(mid,s){state.chosenTeam[mid]=s;state.followed.add(mid);closeTeamModal();startDemo(mid);if(state.followed.size>0)dom.pulseBg.classList.add('fast');renderMatches();if(!CONFIG.notifEnabled&&'Notification' in window)Notification.requestPermission().then(p=>{CONFIG.notifEnabled=(p==='granted')})}
-function toggleFollow(id){if(state.followed.has(id)){state.followed.delete(id);delete state.chosenTeam[id];stopDemo(id);if(state.followed.size===0)dom.pulseBg.classList.remove('fast');renderMatches()}else openTeamModal(id)}
+// GOL EN CONTRA v7: vibración continua de 6-7 segundos
+// Patrón: vibraciones cortas y rápidas continuas durante ~7s
+const VIB_FLATLINE_CONTINUOUS = [
+  200,100,200,100,200,100,200,100,200,100,
+  200,100,200,100,200,100,200,100,200,100,
+  200,100,200,100,200,100,200,100,200,100,
+  200,100,200,100,200,100,200,100,200,100,
+  200,100,200,100,200,100,200,100
+];
 
-function addEvent(mid,ev){const match=state.matches.find(m=>m.id===mid);if(!match)return;const ch=state.chosenTeam[mid];const opp=ch&&ev.team!==ch&&ch!==null;const ic=ev.type==='goal'?(opp?'opp-goal':'my-goal'):ev.type==='shot'?'shot':ev.type==='free_kick'?'free':ev.type==='danger'?'danger':['yellow','red'].includes(ev.type)?ev.type:'whistle';const tF=ev.team==='home'?match.homeFlag:match.awayFlag;let desc='';switch(ev.type){case'goal':desc=opp?`<strong class="opp-text">${tF} Gol de ${ev.scorer||ev.player}</strong>`:`<strong class="goal-text">${tF} ¡GOL de ${ev.scorer||ev.player}!</strong>`;break;case'shot':desc=`${tF} Tiro al arco — ${ev.player||''}`;break;case'free_kick':desc=`${tF} Tiro libre`;break;case'danger':desc=`${tF} ¡Jugada de peligro!`;break;case'yellow':desc=`${tF} Tarjeta amarilla — ${ev.player||''}`;break;case'red':desc=`${tF} Tarjeta roja — ${ev.player||''}`;break;case'end':desc=`${match.homeFlag} ${match.home} ${match.score[0]} - ${match.score[1]} ${match.away} ${match.awayFlag} — Final`;break;default:desc=`${tF} ${ev.type}`}const emp=dom.eventFeed.querySelector('.feed-empty');if(emp)emp.remove();const el=document.createElement('div');el.className='event-item';el.innerHTML=`<div class="event-icon ${ic}">${EV_ICON[ev.type]||'•'}</div><div class="event-info"><div class="event-desc">${desc}</div><div class="event-meta">${ev.minute}' — ${match.home} vs ${match.away}</div></div>`;dom.eventFeed.insertBefore(el,dom.eventFeed.firstChild);while(dom.eventFeed.children.length>30)dom.eventFeed.removeChild(dom.eventFeed.lastChild)}
+const HEARTBEAT = [
+  [250,650,250,750,250,650,250],
+  [220,480,220,480,220,480,220,550],
+  [200,370,200,370,200,370,200,370,200],
+  [180,280,180,280,180,280,180,280,180,280,180],
+  [150,220,150,220,150,220,150,220,150,220,150,220,150]
+];
 
-function updateScore(mid,t){const m=state.matches.find(x=>x.id===mid);if(m)t==='home'?m.score[0]++:m.score[1]++}
-function flashCard(mid){const c=document.getElementById(`card-${mid}`);if(!c)return;c.classList.remove('event-flash');void c.offsetWidth;c.classList.add('event-flash');setTimeout(()=>c.classList.remove('event-flash'),500)}
-function showToast(icon,text,ms=3500){dom.toastIco.textContent=icon;dom.toastTxt.textContent=text;dom.toast.classList.add('show');setTimeout(()=>dom.toast.classList.remove('show'),ms)}
+const heartState = { matchId: null, level: 0, lastTime: 0, fadeTimer: null, resetTimer: null };
 
-function showGoalOverlay(mid,ev){const m=state.matches.find(x=>x.id===mid);if(!m)return;const ch=state.chosenTeam[mid];const opp=ch&&ev.team!==ch&&ch!==null;const tF=ev.team==='home'?m.homeFlag:m.awayFlag;if(opp){dom.goalOver.classList.add('flatline-mode');dom.goalText.textContent='GOL EN CONTRA';dom.goalDet.innerHTML=`<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.4)">${ev.minute}'</small>`;dom.pulseBg.classList.add('flatline');triggerFlatline();sendNotif(`📉 Gol de ${ev.scorer||''}`,`${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`)}else{dom.goalOver.classList.remove('flatline-mode');dom.goalText.textContent='¡GOL!';dom.goalDet.innerHTML=`<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.6)">${ev.minute}'</small>`;dom.pulseBg.classList.remove('flatline');dom.pulseBg.classList.add('goal');triggerGoalCelebration();sendNotif(`⚽ ¡GOL! ${ev.scorer||''}`,`${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`)}dom.goalOver.classList.add('show');setTimeout(()=>{dom.goalOver.classList.remove('show','flatline-mode');dom.pulseBg.classList.remove('goal','flatline')},opp?6000:5000)}
-function sendNotif(t,b){if(!CONFIG.notifEnabled||!('Notification' in window))return;try{new Notification(t,{body:b,tag:'vibra-futbol'})}catch(e){}}
+function triggerDanger(m) {
+  const n = Date.now();
+  if (heartState.matchId === m && n - heartState.lastTime < 12000)
+    heartState.level = Math.min(heartState.level + 1, 4);
+  else heartState.level = 0;
+  heartState.matchId = m;
+  heartState.lastTime = n;
+  clearTimeout(heartState.fadeTimer);
+  clearTimeout(heartState.resetTimer);
+  doVibrate(HEARTBEAT[heartState.level]);
+  heartState.fadeTimer = setTimeout(() => {
+    if (heartState.matchId === m) doVibrate([100,200,80,280,60,360,40]);
+  }, 5000);
+  heartState.resetTimer = setTimeout(() => {
+    heartState.matchId = null;
+    heartState.level = 0;
+  }, 12000);
+}
 
-function startDemo(mid){const evs=DEMO_EVENTS[mid];if(!evs)return;state.minuteIntervals[mid]=setInterval(()=>{const m=state.matches.find(x=>x.id===mid);if(m&&m.minute<90){m.minute++;const el=document.querySelector(`#card-${mid} .match-time`);if(el)el.textContent=m.minute+"'"}});if(!state.demoTimers[mid])state.demoTimers[mid]=[];evs.forEach(ev=>{const t=setTimeout(()=>{if(!state.followed.has(mid))return;const m=state.matches.find(x=>x.id===mid);if(m)m.minute=ev.minute;const te=document.querySelector(`#card-${mid} .match-time`);if(te)te.textContent=ev.minute+"'";flashCard(mid);switch(ev.type){case'danger':triggerDanger(mid);break;case'shot':doVibrate(VIB.shot);break;case'free_kick':doVibrate(VIB.free_kick);break;case'goal':updateScore(mid,ev.team);renderMatches();const card=document.getElementById(`card-${mid}`);if(card)card.classList.add('following');setTimeout(()=>showGoalOverlay(mid,ev),300);break;case'yellow':doVibrate(VIB.yellow);break;case'red':doVibrate(VIB.red);break;case'end':doVibrate(VIB.end);showToast('🏁',`Final: ${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);break}if(ev.type!=='goal'&&ev.type!=='end'){const lb={shot:'Tiro al arco',free_kick:'Tiro libre',danger:'Jugada de peligro',yellow:'Tarjeta amarilla',red:'Tarjeta roja'};showToast(EV_ICON[ev.type]||'•',`${lb[ev.type]||ev.type} — ${ev.team==='home'?m.home:m.away} ${ev.minute}'`)}addEvent(mid,ev)},ev.delay);state.demoTimers[mid].push(t)})}
+function resetHeartbeat() {
+  clearTimeout(heartState.fadeTimer);
+  clearTimeout(heartState.resetTimer);
+  heartState.matchId = null;
+  heartState.level = 0;
+}
 
-function stopDemo(mid){if(state.demoTimers[mid]){state.demoTimers[mid].forEach(clearTimeout);delete state.demoTimers[mid]}if(state.minuteIntervals[mid]){clearInterval(state.minuteIntervals[mid]);delete state.minuteIntervals[mid]}const m=state.matches.find(x=>x.id===mid);if(m){m.score=[0,0];m.minute=0}resetHeartbeat();renderMatches()}
+function triggerGoalCelebration() {
+  resetHeartbeat();
+  state.recentGoal = true;
+  doVibrate([300,80,300,80,500]);
+  setTimeout(() => doVibrate([200,100,200,100,200,100,300,150,300]), 2500);
+  setTimeout(() => doVibrate([180,100,180,100,180,100,200,120,200,120,180]), 5500);
+  setTimeout(() => doVibrate([150,120,150,120,150,120,150,150,150]), 9000);
+  setTimeout(() => doVibrate([100,180,80,220,60,260,40]), 12500);
+  setTimeout(() => doVibrate([50,300,40,380,30]), 15500);
+  setTimeout(() => doVibrate([150]), 18500);
+  setTimeout(() => { state.recentGoal = false; }, 21000);
+}
 
-function openVibraModal(){dom.vibraMod.classList.add('show')}
-function closeVibraModal(){dom.vibraMod.classList.remove('show')}
+// v7: gol en contra = vibración continua de ~7 segundos
+function triggerFlatline() {
+  resetHeartbeat();
+  state.recentGoal = true;
+  doVibrate(VIB_FLATLINE_CONTINUOUS);
+  setTimeout(() => { state.recentGoal = false; }, 7500);
+}
 
-function init(){
-  dom.btnEnter.addEventListener('click',()=>{
+function doVibrate(pattern) {
+  const m = SENS_MULT[CONFIG.sensitivity] || 1;
+  const s = pattern.map(v => Math.round(v * m));
+  if ('vibrate' in navigator) try { navigator.vibrate(s); } catch(e) {}
+  const d = s.reduce((a,b) => a+b, 0);
+  const i = document.getElementById('vibraIndicator');
+  i.classList.add('active');
+  setTimeout(() => i.classList.remove('active'), d);
+}
+
+// ============================================================
+// v7: MODO SEGUNDO PLANO
+// ============================================================
+
+function setupBackgroundMode() {
+  const badge = document.getElementById('bgBadge');
+
+  // Detectar cuando la app va a segundo plano
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      CONFIG.isInBackground = true;
+      badge.classList.add('active');
+      console.log('🔔 App en segundo plano — vibraciones siguen activas');
+    } else {
+      CONFIG.isInBackground = false;
+      badge.classList.remove('active');
+      console.log('📱 App en primer plano');
+    }
+  });
+
+  // Intentar Wake Lock API (mantener pantalla activa)
+  if ('wakeLock' in navigator) {
+    let wakeLock = null;
+    async function requestWakeLock() {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        console.log('🔆 Wake Lock activo — pantalla no se apaga');
+        wakeLock.addEventListener('release', () => {
+          console.log('🔆 Wake Lock liberado');
+        });
+      } catch(e) {
+        console.log('Wake Lock no disponible:', e.message);
+      }
+    }
+    // Solicitar cuando el usuario entra a la app
+    document.addEventListener('click', () => {
+      if (!wakeLock) requestWakeLock();
+    }, { once: true });
+  }
+}
+
+// ============================================================
+// DATOS DEMO
+// ============================================================
+
+const DEMO_MATCHES = [
+  { id:1, home:'Argentina', homeFlag:'🇦🇷', away:'Brasil', awayFlag:'🇧🇷', score:[0,0], minute:0, group:'Grupo A' },
+  { id:2, home:'China PR', homeFlag:'🇨🇳', away:'España', awayFlag:'🇪🇸', score:[0,0], minute:0, group:'Grupo B' },
+  { id:3, home:'Francia', homeFlag:'🇫🇷', away:'Alemania', awayFlag:'🇩🇪', score:[0,0], minute:0, group:'Grupo C' }
+];
+
+const DEMO_EVENTS = {
+  1: [
+    { delay:5000, type:'shot', team:'home', player:'Messi', minute:11 },
+    { delay:12000, type:'free_kick', team:'home', minute:17 },
+    { delay:18000, type:'danger', team:'home', minute:22 },
+    { delay:22000, type:'danger', team:'home', minute:24 },
+    { delay:27000, type:'goal', team:'home', player:'Messi', minute:28, scorer:'Lionel Messi' },
+    { delay:44000, type:'shot', team:'away', player:'Vinícius Jr.', minute:36 },
+    { delay:50000, type:'yellow', team:'away', player:'Casemiro', minute:42 },
+    { delay:55000, type:'danger', team:'away', minute:51 },
+    { delay:59000, type:'danger', team:'away', minute:54 },
+    { delay:62000, type:'goal', team:'away', player:'Vinícius Jr.', minute:57, scorer:'Vinícius Jr.' },
+    { delay:78000, type:'free_kick', team:'home', minute:67 },
+    { delay:82000, type:'danger', team:'home', minute:72 },
+    { delay:86000, type:'goal', team:'home', player:'J. Álvarez', minute:79, scorer:'Julián Álvarez' },
+    { delay:98000, type:'red', team:'away', player:'Marquinhos', minute:86 },
+    { delay:106000, type:'end', minute:90 }
+  ],
+  2: [
+    { delay:6000, type:'shot', team:'away', player:'Pedri', minute:8 },
+    { delay:14000, type:'free_kick', team:'home', minute:16 },
+    { delay:20000, type:'danger', team:'home', minute:22 },
+    { delay:24000, type:'danger', team:'home', minute:25 },
+    { delay:28000, type:'goal', team:'home', player:'Wu Lei', minute:30, scorer:'武磊 (Wu Lei)' },
+    { delay:42000, type:'shot', team:'away', player:'Morata', minute:41 },
+    { delay:50000, type:'free_kick', team:'away', minute:53 },
+    { delay:56000, type:'goal', team:'away', player:'Pedri', minute:63, scorer:'Pedri' },
+    { delay:66000, type:'yellow', team:'home', player:'Zhang Linpeng', minute:72 },
+    { delay:72000, type:'danger', team:'home', minute:78 },
+    { delay:76000, type:'danger', team:'home', minute:82 },
+    { delay:80000, type:'goal', team:'home', player:'Wu Lei', minute:88, scorer:'武磊 (Wu Lei)' },
+    { delay:94000, type:'end', minute:90 }
+  ],
+  3: [
+    { delay:7000, type:'free_kick', team:'home', minute:10 },
+    { delay:14000, type:'goal', team:'home', player:'Mbappé', minute:19, scorer:'Kylian Mbappé' },
+    { delay:30000, type:'shot', team:'away', player:'Wirtz', minute:28 },
+    { delay:36000, type:'danger', team:'away', minute:35 },
+    { delay:40000, type:'danger', team:'away', minute:38 },
+    { delay:44000, type:'goal', team:'away', player:'Musiala', minute:44, scrorer:'Jamal Musiala' },
+    { delay:58000, type:'shot', team:'home', player:'Griezmann', minute:58 },
+    { delay:66000, type:'free_kick', team:'away', minute:66 },
+    { delay:72000, type:'goal', team:'home', player:'Mbappé', minute:74, scorer:'Kylian Mbappé' },
+    { delay:82000, type:'yellow', team:'away', player:'Kimmich', minute:82 },
+    { delay:90000, type:'end', minute:90 }
+  ]
+};
+
+const EV_ICON = { goal:'⚽', shot:'🥅', free_kick:'🦶', danger:'💓', yellow:'🟨', red:'🟥', start:'📣', end:'🏁' };
+
+// ============================================================
+// STATE
+// ============================================================
+
+const state = {
+  matches: JSON.parse(JSON.stringify(DEMO_MATCHES)),
+  followed: new Set(),
+  chosenTeam: {},
+  events: [],
+  demoTimers: {},
+  minuteIntervals: {},
+  recentGoal: false,
+  pendingTeamPicker: null
+};
+
+const dom = {
+  splash: document.getElementById('splash'),
+  btnEnter: document.getElementById('btnEnter'),
+  main: document.getElementById('main'),
+  bottomBar: document.getElementById('bottomBar'),
+  matchList: document.getElementById('matchList'),
+  eventFeed: document.getElementById('eventFeed'),
+  goalOver: document.getElementById('goal-overlay'),
+  goalText: document.getElementById('goalText'),
+  goalDet: document.getElementById('goalDetail'),
+  toast: document.getElementById('toast'),
+  toastIco: document.getElementById('toastIcon'),
+  toastTxt: document.getElementById('toastText'),
+  pulseBg: document.getElementById('pulseBg'),
+  btnDemo: document.getElementById('btnDemo'),
+  btnTest: document.getElementById('btnTest'),
+  vibraMod: document.getElementById('vibra-modal'),
+  teamMod: document.getElementById('team-modal'),
+  teamOpts: document.getElementById('teamOptions'),
+  teamSub: document.getElementById('teamSheetSub')
+};
+
+// ============================================================
+// v7: LÓGICA DE FILTRADO POR EQUIPO
+// Solo vibra por acciones ofensivas del equipo elegido
+// ============================================================
+
+function shouldVibrate(matchId, ev) {
+  const chosen = state.chosenTeam[matchId];
+  // Si no eligió equipo o eligió "todos", siempre vibra
+  if (!chosen || chosen === null) return true;
+  // Si eligió un equipo, solo vibra si es acción ofensiva de SU equipo
+  return ev.team === chosen;
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+
+function renderMatches() {
+  dom.matchList.innerHTML = state.matches.map(m => {
+    const f = state.followed.has(m.id);
+    const c = state.chosenTeam[m.id];
+    let l = '';
+    if (f && c === 'home') l = `<span class="team-label home-label">⚽ ${m.home}</span>`;
+    else if (f && c === 'away') l = `<span class="team-label away-label">⚽ ${m.away}</span>`;
+    else if (f) l = `<span class="team-label all-label">⚽ Todos</span>`;
+    return `<div class="match-card ${f?'following':''}" id="card-${m.id}">
+      <div class="match-teams">
+        <div class="team home"><span class="team-flag">${m.homeFlag}</span><span class="team-name">${m.home}</span></div>
+        <div class="match-center"><div class="match-score">${m.score[0]} — ${m.score[1]}</div><div class="match-time">${m.minute}'</div></div>
+        <div class="team away"><span class="team-name">${m.away}</span><span class="team-flag">${m.awayFlag}</span></div>
+      </div>
+      <div class="match-actions"><span class="match-group">${m.group} ${l}</span>
+        <button class="btn-follow ${f?'active':''}" onclick="toggleFollow(${m.id})">${f?'● SIGUIENDO':'SEGUIR'}</button>
+      </div></div>`;
+  }).join('');
+}
+
+// ============================================================
+// MODALES
+// ============================================================
+
+function openTeamModal(mid) {
+  const m = state.matches.find(x => x.id === mid);
+  if (!m) return;
+  state.pendingTeamPicker = mid;
+  dom.teamSub.textContent = `${m.homeFlag} ${m.home} vs ${m.away} ${m.awayFlag}`;
+  dom.teamOpts.innerHTML = `
+    <div class="team-option" onclick="chooseTeam(${mid},'home')"><span class="flag">${m.homeFlag}</span><span class="name">${m.home}</span><span class="desc">Solo vibrás por goles y ataques de ${m.home}</span></div>
+    <div class="team-option" onclick="chooseTeam(${mid},'away')"><span class="flag">${m.awayFlag}</span><span class="name">${m.away}</span><span class="desc">Solo vibrás por goles y ataques de ${m.away}</span></div>
+    <div class="team-option" onclick="chooseTeam(${mid},null)"><span class="flag">🌍</span><span class="name">Todos los goles</span><span class="desc">Vibrás por cualquier acción</span></div>`;
+  dom.teamMod.classList.add('show');
+}
+
+function closeTeamModal() { dom.teamMod.classList.remove('show'); state.pendingTeamPicker = null; }
+
+function chooseTeam(mid, s) {
+  state.chosenTeam[mid] = s;
+  state.followed.add(mid);
+  closeTeamModal();
+  startDemo(mid);
+  if (state.followed.size > 0) dom.pulseBg.classList.add('fast');
+  renderMatches();
+  if (!CONFIG.notifEnabled && 'Notification' in window)
+    Notification.requestPermission().then(p => { CONFIG.notifEnabled = (p === 'granted'); });
+}
+
+function toggleFollow(id) {
+  if (state.followed.has(id)) {
+    state.followed.delete(id);
+    delete state.chosenTeam[id];
+    stopDemo(id);
+    if (state.followed.size === 0) dom.pulseBg.classList.remove('fast');
+    renderMatches();
+  } else openTeamModal(id);
+}
+
+// ============================================================
+// EVENTOS
+// ============================================================
+
+function addEvent(mid, ev) {
+  const match = state.matches.find(m => m.id === mid);
+  if (!match) return;
+  const ch = state.chosenTeam[mid];
+  const opp = ch && ev.team !== ch && ch !== null;
+  const ic = ev.type === 'goal' ? (opp ? 'opp-goal' : 'my-goal') :
+    ev.type === 'shot' ? 'shot' : ev.type === 'free_kick' ? 'free' :
+    ev.type === 'danger' ? 'danger' : ['yellow','red'].includes(ev.type) ? ev.type : 'whistle';
+  const tF = ev.team === 'home' ? match.homeFlag : match.awayFlag;
+  let desc = '';
+  switch(ev.type) {
+    case 'goal': desc = opp ? `<strong class="opp-text">${tF} Gol de ${ev.scorer||ev.player}</strong>` : `<strong class="goal-text">${tF} ¡GOL de ${ev.scorer||ev.player}!</strong>`; break;
+    case 'shot': desc = `${tF} Tiro al arco — ${ev.player||''}`; break;
+    case 'free_kick': desc = `${tF} Tiro libre`; break;
+    case 'danger': desc = `${tF} ¡Jugada de peligro!`; break;
+    case 'yellow': desc = `${tF} Tarjeta amarilla — ${ev.player||''}`; break;
+    case 'red': desc = `${tF} Tarjeta roja — ${ev.player||''}`; break;
+    case 'end': desc = `${match.homeFlag} ${match.home} ${match.score[0]} - ${match.score[1]} ${match.away} ${match.awayFlag} — Final`; break;
+    default: desc = `${tF} ${ev.type}`;
+  }
+  const emp = dom.eventFeed.querySelector('.feed-empty');
+  if (emp) emp.remove();
+  const el = document.createElement('div');
+  el.className = 'event-item';
+  el.innerHTML = `<div class="event-icon ${ic}">${EV_ICON[ev.type]||'•'}</div><div class="event-info"><div class="event-desc">${desc}</div><div class="event-meta">${ev.minute}' — ${match.home} vs ${match.away}</div></div>`;
+  dom.eventFeed.insertBefore(el, dom.eventFeed.firstChild);
+  while (dom.eventFeed.children.length > 30) dom.eventFeed.removeChild(dom.eventFeed.lastChild);
+}
+
+function updateScore(mid, t) { const m = state.matches.find(x => x.id === mid); if (m) t === 'home' ? m.score[0]++ : m.score[1]++; }
+function flashCard(mid) { const c = document.getElementById(`card-${mid}`); if (!c) return; c.classList.remove('event-flash'); void c.offsetWidth; c.classList.add('event-flash'); setTimeout(() => c.classList.remove('event-flash'), 500); }
+function showToast(icon, text, ms = 3500) { dom.toastIco.textContent = icon; dom.toastTxt.textContent = text; dom.toast.classList.add('show'); setTimeout(() => dom.toast.classList.remove('show'), ms); }
+
+function showGoalOverlay(mid, ev) {
+  const m = state.matches.find(x => x.id === mid);
+  if (!m) return;
+  const ch = state.chosenTeam[mid];
+  const opp = ch && ev.team !== ch && ch !== null;
+  const tF = ev.team === 'home' ? m.homeFlag : m.awayFlag;
+  if (opp) {
+    dom.goalOver.classList.add('flatline-mode');
+    dom.goalText.textContent = 'GOL EN CONTRA';
+    dom.goalDet.innerHTML = `<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.4)">${ev.minute}'</small>`;
+    dom.pulseBg.classList.add('flatline');
+    triggerFlatline();
+    sendNotif(`📉 Gol de ${ev.scorer||''}`, `${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);
+  } else {
+    dom.goalOver.classList.remove('flatline-mode');
+    dom.goalText.textContent = '¡GOL!';
+    dom.goalDet.innerHTML = `<span class="flag">${tF}</span>${ev.scorer||ev.player||''}<br><small style="color:rgba(255,255,255,0.6)">${ev.minute}'</small>`;
+    dom.pulseBg.classList.remove('flatline');
+    dom.pulseBg.classList.add('goal');
+    triggerGoalCelebration();
+    sendNotif(`⚽ ¡GOL! ${ev.scorer||''}`, `${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);
+  }
+  dom.goalOver.classList.add('show');
+  setTimeout(() => {
+    dom.goalOver.classList.remove('show','flatline-mode');
+    dom.pulseBg.classList.remove('goal','flatline');
+  }, opp ? 6000 : 5000);
+}
+
+function sendNotif(t, b) {
+  if (!CONFIG.notifEnabled || !('Notification' in window)) return;
+  try { new Notification(t, { body: b, tag: 'vibra-futbol' }); } catch(e) {}
+}
+
+// ============================================================
+// DEMO ENGINE — v7 CON FILTRADO POR EQUIPO
+// ============================================================
+
+function startDemo(mid) {
+  const evs = DEMO_EVENTS[mid];
+  if (!evs) return;
+  state.minuteIntervals[mid] = setInterval(() => {
+    const m = state.matches.find(x => x.id === mid);
+    if (m && m.minute < 90) { m.minute++; const el = document.querySelector(`#card-${mid} .match-time`); if (el) el.textContent = m.minute + "'"; }
+  }, 2000);
+  if (!state.demoTimers[mid]) state.demoTimers[mid] = [];
+  evs.forEach(ev => {
+    const t = setTimeout(() => {
+      if (!state.followed.has(mid)) return;
+      const m = state.matches.find(x => x.id === mid);
+      if (m) m.minute = ev.minute;
+      const te = document.querySelector(`#card-${mid} .match-time`);
+      if (te) te.textContent = ev.minute + "'";
+      flashCard(mid);
+
+      // v7: determinar si vibra según filtrado por equipo
+      const vib = shouldVibrate(mid, ev);
+
+      switch(ev.type) {
+        case 'danger':
+          if (vib) triggerDanger(mid);
+          break;
+        case 'shot':
+          if (vib) doVibrate(VIB.shot);
+          break;
+        case 'free_kick':
+          if (vib) doVibrate(VIB.free_kick);
+          break;
+        case 'goal':
+          updateScore(mid, ev.team);
+          renderMatches();
+          const card = document.getElementById(`card-${mid}`);
+          if (card) card.classList.add('following');
+          // v7: gol propio vibra SIEMPRE, gol en contra solo si es del equipo elegido
+          const ch = state.chosenTeam[mid];
+          const isOwnGoal = ev.team === ch || !ch;
+          if (isOwnGoal) {
+            setTimeout(() => showGoalOverlay(mid, ev), 300);
+          } else {
+            // Es gol del rival — mostrar como gol en contra
+            setTimeout(() => showGoalOverlay(mid, ev), 300);
+          }
+          break;
+        case 'yellow':
+        case 'red':
+          // v7: sin vibración para tarjetas — solo visual
+          break;
+        case 'end':
+          if (vib) doVibrate(VIB.end);
+          showToast('🏁', `Final: ${m.home} ${m.score[0]} - ${m.score[1]} ${m.away}`);
+          break;
+      }
+
+      // Notificación visual (siempre, sin importar filtrado)
+      if (ev.type !== 'goal' && ev.type !== 'end' && ev.type !== 'yellow' && ev.type !== 'red') {
+        const lb = { shot:'Tiro al arco', free_kick:'Tiro libre', danger:'Jugada de peligro' };
+        showToast(EV_ICON[ev.type]||'•', `${lb[ev.type]||ev.type} — ${ev.team==='home'?m.home:m.away} ${ev.minute}'`);
+      }
+
+      // Agregar al feed de eventos (siempre)
+      addEvent(mid, ev);
+    }, ev.delay);
+    state.demoTimers[mid].push(t);
+  });
+}
+
+function stopDemo(mid) {
+  if (state.demoTimers[mid]) { state.demoTimers[mid].forEach(clearTimeout); delete state.demoTimers[mid]; }
+  if (state.minuteIntervals[mid]) { clearInterval(state.minuteIntervals[mid]); delete state.minuteIntervals[mid]; }
+  const m = state.matches.find(x => x.id === mid);
+  if (m) { m.score = [0,0]; m.minute = 0; }
+  resetHeartbeat();
+  renderMatches();
+}
+
+// ============================================================
+// VIBRA MODAL
+// ============================================================
+
+function openVibraModal() { dom.vibraMod.classList.add('show'); }
+function closeVibraModal() { dom.vibraMod.classList.remove('show'); }
+
+// ============================================================
+// INIT
+// ============================================================
+
+function init() {
+  setupBackgroundMode();
+
+  dom.btnEnter.addEventListener('click', () => {
     dom.splash.classList.add('hide');
     dom.main.classList.add('show');
     dom.bottomBar.classList.remove('hidden');
-    setTimeout(()=>dom.splash.style.display='none',800);
+    setTimeout(() => dom.splash.style.display = 'none', 800);
   });
-  document.getElementById('btnAbout').addEventListener('click',()=>{
+
+  document.getElementById('btnAbout').addEventListener('click', () => {
     alert('Vibra Fútbol (足球震动)\n\nHerramienta de bienestar emocional para trabajadores a través de la pasión futbolera.\n\nUn proyecto de cooperación cultural Argentina-China.');
   });
+
   renderMatches();
-  dom.btnDemo.addEventListener('click',openVibraModal);
-  dom.btnTest.addEventListener('click',openVibraModal);
-  dom.vibraMod.addEventListener('click',e=>{if(e.target===dom.vibraMod)closeVibraModal()});
-  dom.teamMod.addEventListener('click',e=>{if(e.target===dom.teamMod)closeTeamModal()});
-  document.querySelectorAll('.vibra-btn[data-pattern]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const p=btn.dataset.pattern;
-      if(p==='danger'){triggerDanger('demo');setTimeout(()=>triggerDanger('demo'),4000);setTimeout(()=>triggerDanger('demo'),8000)}
-      else if(p==='goal')triggerGoalCelebration();
-      else if(p==='opp_goal')triggerFlatline();
-      else if(VIB[p])doVibrate(VIB[p]);
-      btn.style.borderColor='var(--red-bright)';btn.style.background='var(--red-soft)';
-      setTimeout(()=>{btn.style.borderColor='';btn.style.background=''},600);
+
+  dom.btnDemo.addEventListener('click', openVibraModal);
+  dom.btnTest.addEventListener('click', openVibraModal);
+
+  dom.vibraMod.addEventListener('click', e => { if (e.target === dom.vibraMod) closeVibraModal(); });
+  dom.teamMod.addEventListener('click', e => { if (e.target === dom.teamMod) closeTeamModal(); });
+
+  document.querySelectorAll('.vibra-btn[data-pattern]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = btn.dataset.pattern;
+      if (p === 'danger') { triggerDanger('demo'); setTimeout(() => triggerDanger('demo'), 4000); setTimeout(() => triggerDanger('demo'), 8000); }
+      else if (p === 'goal') triggerGoalCelebration();
+      else if (p === 'opp_goal') triggerFlatline();
+      else if (VIB[p]) doVibrate(VIB[p]);
+      btn.style.borderColor = 'var(--red-bright)'; btn.style.background = 'var(--red-soft)';
+      setTimeout(() => { btn.style.borderColor = ''; btn.style.background = ''; }, 600);
     });
   });
-  document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      CONFIG.sensitivity=btn.dataset.sensitivity;
-      document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(b=>b.classList.remove('active'));
+
+  document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      CONFIG.sensitivity = btn.dataset.sensitivity;
+      document.querySelectorAll('.toggle-btn[data-sensitivity]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
   });
-  dom.goalOver.addEventListener('click',()=>{
+
+  dom.goalOver.addEventListener('click', () => {
     dom.goalOver.classList.remove('show','flatline-mode');
     dom.pulseBg.classList.remove('goal','flatline');
   });
-  console.log('✅ Vibra Fútbol v6 — Imágenes reales integradas');
+
+  console.log('✅ Vibra Fútbol v7 — Filtro equipo + Gol contra 7s + Sin tarjetas + Segundo plano');
 }
+
 init();
 </script>
 
