@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Vibra Fútbol — Mundial 2026</title>
+  <meta name="theme-color" content="#0a0a14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== ESTILOS (mismos que antes, sin cambios) ========== */
+    :root{--bg:#FEF9F2;--s:#FFF;--sa:#FFF7ED;--red:#F44336;--rs:#FFEBEE;--gold:#F9A825;--gb:#FFD600;--gs:#FFF8E1;--grn:#66BB6A;--grns:#E8F5E9;--bl:#42A5F5;--bls:#E3F2FD;--org:#FF6D00;--navy:#1A237E;--pur:#9C27B0;--purs:#F3E5F5;--t:#1A1A2E;--m:#8A8A9A;--bd:rgba(0,0,0,.06);--fd:'Bangers',cursive;--fh:'Fredoka',sans-serif;--fb:'Nunito',sans-serif;--fz:'Noto Sans SC',sans-serif;--r:14px;--sh:0 2px 12px rgba(0,0,0,.07);--shl:0 8px 32px rgba(0,0,0,.1)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--fb);color:var(--t);min-height:100vh;background:#0a0a14;-webkit-tap-highlight-color:transparent}
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:999;background:linear-gradient(90deg,#E53935,#FF9800,#FFD600,#4CAF50,#2196F3,#9C27B0,#E53935);background-size:200% 100%;animation:sf 4s linear infinite}
+    @keyframes sf{to{background-position:200% 0}}
+    .pulse-bg{position:fixed;top:38%;left:50%;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(249,168,37,.22),transparent 70%);transform:translate(-50%,-50%);animation:ph 3s ease-in-out infinite;pointer-events:none;z-index:0}
+    @keyframes ph{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.4}50%{transform:translate(-50%,-50%) scale(1.12);opacity:.7}}
+    .vib-ind{position:fixed;top:18px;right:18px;z-index:10;width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#fff;opacity:0;transition:opacity .15s}
+    .vib-ind.active{opacity:1;animation:vi .3s ease}
+    @keyframes vi{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px) rotate(-3deg)}75%{transform:translateX(4px) rotate(3deg)}}
+    #splash{position:fixed;inset:0;z-index:100;overflow:hidden;transition:opacity .8s,transform .8s}
+    #splash.hide{opacity:0;transform:scale(1.06);pointer-events:none}
+    .splash-bg{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Fondo%20del%20estadio.png') center/cover no-repeat;z-index:0}
+    .splash-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.1) 30%,rgba(0,0,0,.05) 50%,rgba(0,0,0,.15) 75%,rgba(0,0,0,.5));z-index:1}
+    .trophy-l{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;animation:tf 3s ease-in-out infinite;pointer-events:none}
+    .trophy-l img{width:140px;height:auto;filter:drop-shadow(0 0 30px rgba(255,215,0,.5)) drop-shadow(0 4px 20px rgba(0,0,0,.4));mix-blend-mode:multiply}
+    @keyframes tf{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-12px)}}
+    .trophy-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.3),transparent 70%);animation:gp 2.5s ease-in-out infinite;z-index:9;pointer-events:none}
+    @keyframes gp{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}}
+    .messi-l{position:absolute;bottom:8%;left:3%;z-index:12;animation:pf 2.5s ease-in-out infinite}
+    .messi-l img{width:160px;height:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));mix-blend-mode:multiply}
+    @keyframes pf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .wulei-l{position:absolute;bottom:8%;right:3%;z-index:12;animation:pf 2.5s ease-in-out infinite;animation-delay:.6s}
+    .wulei-l img{width:160px;height:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5));mix-blend-mode:multiply}
+    .sky-stars{position:absolute;inset:0;pointer-events:none;z-index:2}
+    .confetti-c{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:20}
+    .flag-s{position:absolute;top:12%;left:0;right:0;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:0 20px;z-index:15}
+    .fs-flag{font-size:.85rem;opacity:.6;animation:fp 4s ease-in-out infinite;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+    @keyframes fp{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.08)}}
+    .epic-t{position:absolute;top:3%;left:0;right:0;text-align:center;z-index:25;padding:0 16px}
+    .epic-t h1{font-family:var(--fd);font-size:3rem;background:linear-gradient(135deg,#FFD600,#FF6D00,#F44336,#FFD600);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:ts 3s ease infinite;line-height:1;filter:drop-shadow(0 2px 10px rgba(0,0,0,.7))}
+    @keyframes ts{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+    .epic-t .sub{font-family:var(--fh);font-size:.85rem;font-weight:500;color:rgba(255,255,255,.7);text-shadow:0 1px 6px rgba(0,0,0,.7);margin-top:2px}
+    .epic-t .zh{font-family:var(--fz);font-size:.95rem;font-weight:700;color:rgba(255,215,0,.8);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+    .vs-b{position:absolute;bottom:30%;left:50%;transform:translateX(-50%);font-family:var(--fd);font-size:2rem;color:#FFD600;text-shadow:0 0 20px rgba(255,214,0,.6),0 2px 4px rgba(0,0,0,.6);z-index:13;letter-spacing:.1em;animation:vp 2s ease-in-out infinite}
+    @keyframes vp{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+    .epic-btns{position:absolute;bottom:2%;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:30;padding:0 36px}
+    .btn-vamos{padding:15px 56px;border:none;background:linear-gradient(135deg,#F44336,#FF6D00);color:#fff;font-family:var(--fh);font-size:1.35rem;font-weight:700;letter-spacing:.08em;border-radius:50px;cursor:pointer;box-shadow:0 4px 20px rgba(244,67,54,.4);transition:all .3s;width:100%;max-width:280px}
+    .btn-vamos:active{transform:scale(1.05)}
+    .btn-sub{padding:9px 28px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-family:var(--fh);font-size:.75rem;font-weight:600;border-radius:20px;cursor:pointer;transition:all .3s;backdrop-filter:blur(4px)}
+    .lang-selector-splash{position:absolute;top:20px;right:20px;z-index:30;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:30px;backdrop-filter:blur(5px)}
+    .lang-selector-splash select{background:transparent;color:white;border:1px solid white;padding:4px 8px;border-radius:20px;font-family:var(--fh)}
+    #main{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:4px 16px 0;display:none;background:var(--bg);padding-bottom:80px}
+    #main.show{display:block;animation:fi .5s ease}
+    @keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    header{padding:18px 0 12px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-family:var(--fd);font-size:1.7rem;background:linear-gradient(135deg,var(--red),var(--org));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .user-b{display:flex;align-items:center;gap:8px;background:var(--gs);padding:6px 12px;border-radius:20px;font-family:var(--fh);font-size:.7rem;font-weight:600;color:#E65100;cursor:pointer}
+    .user-b .av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--org));display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff}
+    .bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--s);border-top:1.5px solid var(--bd);display:flex;max-width:480px;margin:0 auto;padding:6px 0 16px}
+    .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border:none;background:transparent;cursor:pointer}
+    .nb .ni{font-size:1.2rem}
+    .nb .nl{font-family:var(--fh);font-size:.55rem;font-weight:600;color:var(--m)}
+    .nb.active .ni{transform:scale(1.15)}
+    .nb.active .nl{color:var(--org)}
+    .app-p{display:none}
+    .app-p.active{display:block}
+    .card{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+    .scoreboard{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:14px;text-align:center;border-left:5px solid var(--gold)}
+    .team-sc{font-family:var(--fd);font-size:3rem}
+    .match-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
+    .flag{font-size:1.5rem}
+    .btn-follow{padding:4px 12px;border:1px solid var(--org);border-radius:20px;background:white;cursor:pointer}
+    .btn-follow.active{background:var(--org);color:white}
+    .standings-table{width:100%;font-size:0.75rem;border-collapse:collapse}
+    .standings-table th,.standings-table td{padding:4px;text-align:center}
+    .standings-table th:first-child,.standings-table td:first-child{text-align:left}
+    .vib-cfg{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:14px}
+    .vib-group-label{font-family:var(--fh);font-size:.65rem;font-weight:700;color:var(--m);margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--bd)}
+    .vib-row{display:flex;align-items:center;gap:8px;padding:8px 0}
+    .vib-ico{width:28px;text-align:center}
+    .vib-name{flex:1;font-size:.78rem;font-weight:600}
+    .btn-probar{padding:4px 8px;border:1px solid var(--bl);background:var(--bls);border-radius:8px;font-size:.6rem;cursor:pointer}
+    .vib-sel{padding:4px;border-radius:8px;font-family:var(--fh);font-size:.68rem}
+    .post-comp{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:14px}
+    .comp-hdr{display:flex;gap:10px;margin-bottom:10px}
+    .comp-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--org));display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .comp-in{flex:1;padding:10px;border:1px solid var(--bd);border-radius:12px;resize:none}
+    .comp-actions{display:flex;justify-content:flex-end;margin-top:10px}
+    .btn-post{padding:8px 20px;background:linear-gradient(135deg,var(--red),var(--org));color:white;border:none;border-radius:16px}
+    .social-feed{padding-bottom:20px}
+    .post-card{background:var(--s);border-radius:var(--r);padding:14px;margin-bottom:10px}
+    .post-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .post-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--org));display:flex;align-items:center;justify-content:center}
+    .post-actions{display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
+    .post-act{background:none;border:none;display:flex;align-items:center;gap:4px;cursor:pointer}
+    .news-card{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:10px;box-shadow:var(--sh);cursor:pointer;transition:all .2s;border-left:4px solid var(--bl)}
+    .news-card:nth-child(2){border-left-color:var(--gold)}
+    .news-card:nth-child(3){border-left-color:var(--grn)}
+    .news-hdr{display:flex;align-items:flex-start;gap:10px}
+    .news-emoji{font-size:1.8rem;line-height:1;flex-shrink:0}
+    .news-title{font-family:var(--fh);font-size:.92rem;font-weight:700;line-height:1.3}
+    .news-meta{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap}
+    .news-tag{font-family:var(--fh);font-size:.55rem;font-weight:700;padding:2px 8px;border-radius:8px}
+    .news-tag.cultura{background:var(--purs);color:var(--pur)}
+    .news-tag.ciencia{background:var(--bls);color:var(--bl)}
+    .news-tag.bienestar{background:var(--grns);color:var(--grn)}
+    .news-author{font-family:var(--fh);font-size:.58rem;color:var(--m)}
+    .news-time{font-family:var(--fh);font-size:.58rem;color:var(--m)}
+    .news-summary{font-size:.85rem;line-height:1.5;color:var(--t);margin-top:10px}
+    .news-body{display:none;margin-top:10px;font-size:.88rem;line-height:1.6;color:var(--t)}
+    .news-card.expanded .news-body{display:block}
+    .news-card.expanded .news-summary{display:none}
+    .news-expand{font-family:var(--fh);font-size:.65rem;font-weight:600;color:var(--org);margin-top:6px}
+    .news-agent-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--fh);font-size:.55rem;font-weight:700;padding:2px 8px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--org));color:#fff;margin-bottom:8px}
+    .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--s);border-radius:var(--r);padding:12px 20px;transition:transform .3s;z-index:200}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+    .prof-card{background:var(--s);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px}
+    .prof-av-lg{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--org));display:flex;align-items:center;justify-content:center;font-size:2.8rem;margin:0 auto 12px;position:relative}
+    .edit-av{position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;background:var(--s);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:.8rem;cursor:pointer}
+    .prof-name{font-family:var(--fh);font-size:1.3rem;font-weight:700}
+    .prof-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+    .ps{background:var(--s);border-radius:12px;padding:14px 8px;text-align:center}
+    .ps-v{font-family:var(--fd);font-size:1.6rem;color:var(--org)}
+    .ps-l{font-family:var(--fh);font-size:.58rem;font-weight:600;color:var(--m)}
+    .prof-edit{background:var(--s);border-radius:var(--r);padding:16px;margin-bottom:14px}
+    .av-pick{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+    .av-opt{width:48px;height:48px;border-radius:50%;background:var(--sa);border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer}
+    .av-opt.sel{border-color:var(--org);background:var(--gs)}
+    .fi{width:100%;padding:12px;background:var(--sa);border:2px solid var(--bd);border-radius:12px;margin-bottom:10px}
+    .btn-save{width:100%;padding:13px;border:none;background:linear-gradient(135deg,var(--gold),var(--org));color:#fff;border-radius:14px;cursor:pointer;margin-top:10px}
+    .user-list{margin-bottom:20px}
+    .uc{display:flex;align-items:center;gap:12px;background:var(--s);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+    .uc-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--org));display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .hidden{display:none}
+    .btn-go-real{background:var(--org); color:white; border:none; padding:10px; border-radius:20px; font-weight:bold; margin-top:10px; width:100%}
+    .btn-clear-followed{background:#f0f0f0; color:#333; border:1px solid #ccc; padding:8px; border-radius:20px; margin-top:10px; width:100%; cursor:pointer}
+  </style>
+</head>
+<body>
+<div class="top-stripe"></div>
+<div class="pulse-bg" id="pulseBg"></div>
+<div class="vib-ind" id="vibInd">📳</div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-bg"></div><div class="splash-ov"></div>
+  <div class="sky-stars" id="skyStars"></div>
+  <div class="trophy-glow"></div>
+  <div class="trophy-l"><img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Trofeo%20Copa%20del%20Mundo.png" alt="Copa"></div>
+  <div class="vs-b">VS</div>
+  <div class="messi-l"><img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Messi.png" alt="Messi"></div>
+  <div class="wulei-l"><img src="https://raw.githubusercontent.com/ArbolDeLosTero/vibra-futbol/main/Imagen-Fongo/Wu%20Lei.png" alt="Wu Lei"></div>
+  <div class="flag-s" id="flagStrip"></div><div class="confetti-c" id="confetti"></div>
+  <div class="epic-t"><h1>VIBRA FÚTBOL</h1><div class="sub">Siente cada jugada</div><div class="zh">足球震动 — 感受每一刻</div></div>
+  <div class="epic-btns"><button class="btn-vamos" id="btnEnter">¡VAMOS!</button><button class="btn-sub" id="btnAbout">Sobre el proyecto</button></div>
+  <div class="lang-selector-splash">
+    <select id="splashLangSelect"></select>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main">
+  <header>
+    <div class="brand">VIBRA FÚTBOL</div>
+    <div id="hdrU" class="user-b hidden" onclick="goPanel('panel-perfil')"><div class="av" id="hdrAv">⚽</div><span id="hdrName">Usuario</span></div>
+  </header>
+
+  <!-- INICIO: solo partidos seguidos + marcador grande -->
+  <div class="app-p active" id="panel-inicio">
+    <div class="scoreboard" id="mainScoreboard">
+      <div class="match-st"><div class="match-tm" id="mainMatchTimer">--:--</div><div class="match-lb" id="mainMatchStatus">---</div></div>
+      <div class="teams-r">
+        <div class="team-c"><div class="team-em" id="mainHomeFlag">🏆</div><div class="team-nm" id="mainHomeName">--</div><div class="team-sc" id="mainHomeScore">0</div></div>
+        <div class="score-dv">—</div>
+        <div class="team-c"><div class="team-em" id="mainAwayFlag">🏆</div><div class="team-nm" id="mainAwayName">--</div><div class="team-sc" id="mainAwayScore">0</div></div>
+      </div>
+    </div>
+    <div class="card" id="followedContainer">
+      <h3 id="followedTitle">📋 Partidos que sigues</h3>
+      <div id="followedMatchesList"></div>
+      <button class="btn-clear-followed" id="clearFollowedBtn">🗑️ Limpiar todos los seguidos</button>
+    </div>
+    <div class="vib-cfg" id="vibCfg">
+      <div class="vib-group-label">⚙️ Configuración de vibración</div>
+      <div id="vibCfgBody"></div>
+    </div>
+  </div>
+
+  <!-- REAL: fixture completo y clasificación mejorada -->
+  <div class="app-p" id="panel-real">
+    <div class="card">
+      <h3 id="fixtureTitle">📅 Calendario Mundial 2026</h3>
+      <div id="matchesContainer"></div>
+    </div>
+    <div class="card">
+      <h3 id="standingsTitle">🏆 Clasificación por grupos</h3>
+      <div id="standingsContainer"></div>
+    </div>
+    <div class="card">
+      <h3>⚽ Máximos goleadores</h3>
+      <div id="topScorers"></div>
+    </div>
+  </div>
+
+  <!-- FESTEJA público -->
+  <div class="app-p" id="panel-festeja">
+    <div class="post-comp">
+      <div class="comp-hdr"><div class="comp-av" id="compAv">⚽</div><textarea class="comp-in" id="postTxt" placeholder="¿Qué estás festejando? 🎉⚽" rows="2"></textarea></div>
+      <div class="comp-actions"><button class="btn-post" id="btnPost">Publicar</button></div>
+    </div>
+    <div class="social-feed" id="sFeed"></div>
+  </div>
+
+  <!-- NOTICIAS -->
+  <div class="app-p" id="panel-noticias">
+    <div class="news-agent-badge">🤖 VF Agent · Tono humanista y positivo</div>
+    <div id="newsContainer"></div>
+  </div>
+
+  <!-- PERFIL -->
+  <div class="app-p" id="panel-perfil">
+    <div class="prof-card">
+      <div class="prof-av-lg" id="pAv"><span id="pAvE">⚽</span><div class="edit-av" onclick="togAvPick()">✏️</div></div>
+      <div class="prof-name" id="pName">Usuario</div>
+      <div class="prof-bio" id="pBio">Agregá tu bio...</div>
+    </div>
+    <div class="prof-stats">
+      <div class="ps"><div class="ps-v" id="psG">0</div><div class="ps-l" id="statGoals">Goles</div></div>
+      <div class="ps"><div class="ps-v" id="psP">0</div><div class="ps-l" id="statPosts">Posts</div></div>
+      <div class="ps"><div class="ps-v" id="psF">0</div><div class="ps-l" id="statFollows">Seguidos</div></div>
+    </div>
+    <div class="prof-edit">
+      <div class="section-t" id="editTitle">Editar perfil</div>
+      <div id="avPicker" style="display:none"><label id="avatarLabel">AVATAR</label><div class="av-pick" id="avGrid"></div></div>
+      <input class="fi" id="editUsername" placeholder="Nombre de usuario">
+      <textarea class="fi" id="editBio" rows="2" placeholder="Tu biografía..."></textarea>
+      <div class="lang-selector-profile" style="margin-top:10px">
+        <label id="langLabel">Idioma: </label>
+        <select id="profileLangSelect"></select>
+      </div>
+      <button class="btn-save" id="saveProfileBtn" onclick="saveProfile()">GUARDAR</button>
+    </div>
+    <div class="section-t" id="communityTitle">Comunidad</div>
+    <div class="user-list" id="uList"></div>
+    <button class="btn-save" id="resetProfileBtn" style="background:var(--rs); color:var(--red); margin-top:10px" onclick="resetProfile()">Restablecer perfil</button>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bnav" id="bnav">
+    <button class="nb active" data-p="panel-inicio"><span class="ni">🏠</span><span class="nl" id="navHome">Inicio</span></button>
+    <button class="nb" data-p="panel-real"><span class="ni">⚡</span><span class="nl" id="navLive">Real</span></button>
+    <button class="nb" data-p="panel-festeja"><span class="ni">🎉</span><span class="nl" id="navCelebrate">Festeja</span></button>
+    <button class="nb" data-p="panel-noticias"><span class="ni">📰</span><span class="nl" id="navNews">Noticias</span></button>
+    <button class="nb" data-p="panel-perfil"><span class="ni">👤</span><span class="nl" id="navProfile">Perfil</span></button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<script>
+// ========== DATOS DEL MUNDIAL 2026 ==========
+const matchesData = [
+  { id: 1, group: 'A', home: 'México', homeFlag: '🇲🇽', away: 'Sudáfrica', awayFlag: '🇿🇦', dateUTC: '2026-06-11T15:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 2, group: 'A', home: 'Senegal', homeFlag: '🇸🇳', away: 'Países Bajos', awayFlag: '🇳🇱', dateUTC: '2026-06-11T18:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 3, group: 'B', home: 'Marruecos', homeFlag: '🇲🇦', away: 'Brasil', awayFlag: '🇧🇷', dateUTC: '2026-06-12T13:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 4, group: 'B', home: 'Francia', homeFlag: '🇫🇷', away: 'Japón', awayFlag: '🇯🇵', dateUTC: '2026-06-12T16:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 5, group: 'J', home: 'Argentina', homeFlag: '🇦🇷', away: 'Argelia', awayFlag: '🇩🇿', dateUTC: '2026-06-16T20:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 6, group: 'K', home: 'Alemania', homeFlag: '🇩🇪', away: 'Corea del Sur', awayFlag: '🇰🇷', dateUTC: '2026-06-17T15:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
+  { id: 7, group: 'C', home: 'Inglaterra', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', away: 'Irán', awayFlag: '🇮🇷', dateUTC: '2026-06-13T19:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 }
+];
+
+// ========== STANDINGS MEJORADA ==========
+let standings = {};
+function initStandings() {
+  standings = {};
+  matchesData.forEach(m => {
+    if (!standings[m.home]) standings[m.home] = { pts: 0, gf: 0, gc: 0, mp: 0, w: 0, d: 0, l: 0, group: m.group };
+    if (!standings[m.away]) standings[m.away] = { pts: 0, gf: 0, gc: 0, mp: 0, w: 0, d: 0, l: 0, group: m.group };
+  });
+}
+function updateStandings() {
+  for (let t in standings) {
+    standings[t].pts = 0; standings[t].gf = 0; standings[t].gc = 0;
+    standings[t].mp = 0; standings[t].w = 0; standings[t].d = 0; standings[t].l = 0;
+  }
+  matchesData.forEach(m => {
+    if (m.status === 'played') {
+      const home = m.home, away = m.away;
+      standings[home].gf += m.homeScore;
+      standings[home].gc += m.awayScore;
+      standings[away].gf += m.awayScore;
+      standings[away].gc += m.homeScore;
+      standings[home].mp++; standings[away].mp++;
+      if (m.homeScore > m.awayScore) {
+        standings[home].pts += 3; standings[home].w++;
+        standings[away].l++;
+      } else if (m.awayScore > m.homeScore) {
+        standings[away].pts += 3; standings[away].w++;
+        standings[home].l++;
+      } else {
+        standings[home].pts += 1; standings[away].pts += 1;
+        standings[home].d++; standings[away].d++;
+      }
+    }
+  });
+}
+
+// ========== PARTIDOS SEGUIDOS (inicia vacío) ==========
+let followedMatches = [];
+function loadFollowedMatches() {
+  const stored = localStorage.getItem('followedMatches');
+  if (stored) {
+    try {
+      let parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        followedMatches = parsed.filter(id => matchesData.some(m => m.id === id));
+      } else {
+        followedMatches = [];
+      }
+    } catch(e) { followedMatches = []; }
+  } else {
+    followedMatches = [];
+  }
+  console.log('Followed matches cargados:', followedMatches);
+}
+loadFollowedMatches();
+function saveFollowed() { 
+  localStorage.setItem('followedMatches', JSON.stringify(followedMatches));
+  console.log('Guardados seguidos:', followedMatches);
+}
+function toggleFollow(matchId) {
+  if (followedMatches.includes(matchId)) {
+    followedMatches = followedMatches.filter(id => id !== matchId);
+  } else {
+    followedMatches.push(matchId);
+  }
+  saveFollowed();
+  renderRealMatches();        // actualiza botones en Real
+  renderFollowedList();       // actualiza lista en Inicio
+  updateVibConfigForFollowed();
+  updateMainScoreboard();
+  console.log('toggleFollow -> ahora seguidos:', followedMatches);
+}
+function isFollowed(id) { return followedMatches.includes(id); }
+function clearAllFollowed() {
+  followedMatches = [];
+  saveFollowed();
+  renderRealMatches();
+  renderFollowedList();
+  updateVibConfigForFollowed();
+  updateMainScoreboard();
+  showToast('Se han limpiado todos los partidos seguidos');
+}
+
+// ========== ORDENAR PARTIDOS SEGUIDOS ==========
+function getSortedFollowedMatches() {
+  const now = new Date();
+  const followed = matchesData.filter(m => followedMatches.includes(m.id));
+  followed.forEach(m => {
+    const matchDate = new Date(m.dateUTC);
+    if (m.status === 'played') m._priority = -1;
+    else if (matchDate <= now) m._priority = 0;
+    else m._priority = matchDate - now;
+  });
+  followed.sort((a,b) => {
+    if (a._priority === b._priority) return 0;
+    if (a._priority === 0) return -1;
+    if (b._priority === 0) return 1;
+    return a._priority - b._priority;
+  });
+  return followed;
+}
+
+// ========== VIBRACIONES (sin cambios) ==========
+let selectedTeamForVib = null;
+const S = { vibConf: {} };
+function initVibConf() {
+  const types = ['goal','shot','free_kick','corner','danger','yellow_my','yellow_rival','red_my','red_rival','goal_against'];
+  types.forEach(t => { if (!S.vibConf[t]) S.vibConf[t] = { intensity: 'normal', enabled: true }; });
+  S.vibConf.yellow_rival.intensity = 'suave';
+  S.vibConf.red_rival.intensity = 'suave';
+}
+initVibConf();
+function setVibIntensity(type, val) { S.vibConf[type].intensity = val; updateVibConfigForFollowed(); }
+function toggleVibEnabled(type, btn) { S.vibConf[type].enabled = !S.vibConf[type].enabled; updateVibConfigForFollowed(); }
+function testVib(type) { playVibForType(type); }
+const VIB_PATTERNS = { suave: { goal: [150,60,150], goal_against: [100,80,100], shot: [80], free_kick: [60,60], corner: [50,50], danger: [70,70], yellow: [100], red: [200] }, normal: { goal: [300,80,300], goal_against: [200,80,200], shot: [150], free_kick: [100,100], corner: [80,80], danger: [100,100], yellow: [150], red: [300] }, fuerte: { goal: [500,100,500], goal_against: [300,100,300], shot: [250], free_kick: [150,150], corner: [120,120], danger: [150,150], yellow: [200], red: [500] } };
+function playVibForType(type) {
+  const conf = S.vibConf[type];
+  if (!conf || !conf.enabled) return;
+  let key = type;
+  if (key === 'goal_against') key = 'goal_against';
+  else if (key === 'yellow_my' || key === 'yellow_rival') key = 'yellow';
+  else if (key === 'red_my' || key === 'red_rival') key = 'red';
+  const pattern = VIB_PATTERNS[conf.intensity]?.[key] || VIB_PATTERNS.normal.shot;
+  if ('vibrate' in navigator) navigator.vibrate(pattern);
+  document.getElementById('vibInd').classList.add('active');
+  setTimeout(() => document.getElementById('vibInd').classList.remove('active'), pattern.reduce((a,b)=>a+b,0));
+}
+function updateVibConfigForFollowed() {
+  const container = document.getElementById('vibCfgBody');
+  if (!container) return;
+  if (followedMatches.length === 0) {
+    container.innerHTML = '<div style="padding:10px; text-align:center" id="noFollowedVibMsg">No sigues ningún partido. Ve a "Real" y sigue un partido para configurar vibraciones.</div>';
+    return;
+  }
+  const firstFollowed = matchesData.find(m => m.id === followedMatches[0]);
+  if (!firstFollowed) return;
+  let html = `<div class="vib-group-label">📌 Partido: ${firstFollowed.homeFlag} ${firstFollowed.home} vs ${firstFollowed.away} ${firstFollowed.awayFlag}</div>`;
+  html += `<div style="margin-bottom:10px"><button class="btn-follow ${selectedTeamForVib === 'home' ? 'active' : ''}" onclick="setVibTeam('home')">Vibrar por ${firstFollowed.home}</button>`;
+  html += `<button class="btn-follow ${selectedTeamForVib === 'away' ? 'active' : ''}" onclick="setVibTeam('away')">Vibrar por ${firstFollowed.away}</button>`;
+  html += `<button class="btn-follow ${selectedTeamForVib === null ? 'active' : ''}" onclick="setVibTeam(null)">Ambos equipos</button></div>`;
+  const items = [
+    {type:'goal',icon:'⚽',label:'Gol a favor',group:'my'},
+    {type:'goal_against',icon:'💔',label:'Gol en contra',group:'rival'},
+    {type:'shot',icon:'🥅',label:'Tiro al arco',group:'my'},
+    {type:'free_kick',icon:'🦶',label:'Tiro libre',group:'my'},
+    {type:'corner',icon:'🚩',label:'Córner',group:'my'},
+    {type:'danger',icon:'💓',label:'Jugada de peligro',group:'my'},
+    {type:'yellow_my',icon:'🟨',label:'Amarilla (mi equipo)',group:'my'},
+    {type:'yellow_rival',icon:'🟨',label:'Amarilla (rival)',group:'rival'},
+    {type:'red_my',icon:'🟥',label:'Roja (mi equipo)',group:'my'},
+    {type:'red_rival',icon:'🟥',label:'Roja (rival)',group:'rival'}
+  ];
+  let myHtml = '<div class="vib-group-label">🏠 MI EQUIPO</div>';
+  let rivalHtml = '<div class="vib-group-label">👥 RIVAL</div>';
+  items.forEach(item => {
+    const conf = S.vibConf[item.type] || { intensity: 'normal', enabled: true };
+    const isRival = item.type.includes('rival') || item.type === 'goal_against';
+    const options = (item.type === 'yellow_rival' || item.type === 'red_rival') 
+      ? `<option value="suave" ${conf.intensity==='suave'?'selected':''}>Suave</option>`
+      : `<option value="suave" ${conf.intensity==='suave'?'selected':''}>Suave</option><option value="normal" ${conf.intensity==='normal'?'selected':''}>Normal</option><option value="fuerte" ${conf.intensity==='fuerte'?'selected':''}>Fuerte</option>`;
+    const row = `<div class="vib-row">
+      <span class="vib-ico">${item.icon}</span>
+      <span class="vib-name">${item.label}</span>
+      <button class="btn-probar" onclick="testVib('${item.type}')">Probar</button>
+      <select class="vib-sel" onchange="setVibIntensity('${item.type}',this.value)">${options}</select>
+      <button class="btn-probar" style="border-color:${!conf.enabled?'var(--red)':'var(--grn)'};background:${!conf.enabled?'var(--rs)':'var(--grns)'}" onclick="toggleVibEnabled('${item.type}',this)">${conf.enabled?'✓':'✕'}</button>
+    </div>`;
+    if (isRival) rivalHtml += row;
+    else myHtml += row;
+  });
+  if (selectedTeamForVib === null) container.innerHTML = myHtml + rivalHtml;
+  else container.innerHTML = myHtml + (selectedTeamForVib ? rivalHtml : '');
+}
+window.setVibTeam = function(team) {
+  selectedTeamForVib = team;
+  updateVibConfigForFollowed();
+  showToast(`Vibración configurada para ${team === 'home' ? 'local' : team === 'away' ? 'visitante' : 'ambos equipos'}`);
+};
+
+// ========== SIMULACIÓN EN VIVO ==========
+let liveInterval;
+function startLiveSimulation() {
+  if (liveInterval) clearInterval(liveInterval);
+  liveInterval = setInterval(() => {
+    const now = new Date();
+    matchesData.forEach(m => {
+      if (m.status === 'pending') {
+        const matchDate = new Date(m.dateUTC);
+        if (now > matchDate) {
+          m.status = 'played';
+          m.homeScore = Math.floor(Math.random() * 4);
+          m.awayScore = Math.floor(Math.random() * 4);
+          m.minute = 90;
+        }
+      }
+    });
+    updateStandings();
+    renderRealMatches();
+    renderFollowedList();
+    renderStandings();
+    renderTopScorers();
+    updateMainScoreboard();
+  }, 3000);
+}
+
+function updateMainScoreboard() {
+  const sorted = getSortedFollowedMatches();
+  if (sorted.length === 0) {
+    document.getElementById('mainHomeFlag').innerHTML = '🏆';
+    document.getElementById('mainHomeName').innerHTML = '--';
+    document.getElementById('mainHomeScore').innerHTML = '0';
+    document.getElementById('mainAwayFlag').innerHTML = '🏆';
+    document.getElementById('mainAwayName').innerHTML = '--';
+    document.getElementById('mainAwayScore').innerHTML = '0';
+    document.getElementById('mainMatchTimer').innerHTML = '--:--';
+    document.getElementById('mainMatchStatus').innerHTML = '---';
+    return;
+  }
+  const currentMatch = sorted[0];
+  if (currentMatch) {
+    document.getElementById('mainHomeFlag').innerHTML = currentMatch.homeFlag;
+    document.getElementById('mainHomeName').innerHTML = currentMatch.home;
+    document.getElementById('mainHomeScore').innerHTML = currentMatch.status === 'played' ? currentMatch.homeScore : '0';
+    document.getElementById('mainAwayFlag').innerHTML = currentMatch.awayFlag;
+    document.getElementById('mainAwayName').innerHTML = currentMatch.away;
+    document.getElementById('mainAwayScore').innerHTML = currentMatch.status === 'played' ? currentMatch.awayScore : '0';
+    const matchTime = currentMatch.status === 'played' ? `${currentMatch.minute}'` : new Date(currentMatch.dateUTC).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('mainMatchTimer').innerHTML = matchTime;
+    const statusText = currentMatch.status === 'played' ? (currentLang === 'es' ? 'EN VIVO' : (currentLang === 'en' ? 'LIVE' : (currentLang === 'zh' ? '直播' : 'LIVE'))) : (currentLang === 'es' ? 'PRÓXIMO' : (currentLang === 'en' ? 'UPCOMING' : (currentLang === 'zh' ? '即将开始' : 'UPCOMING')));
+    document.getElementById('mainMatchStatus').innerHTML = statusText;
+  }
+}
+
+function renderRealMatches() {
+  const container = document.getElementById('matchesContainer');
+  if (!container) return;
+  let html = '';
+  const groups = [...new Set(matchesData.map(m => m.group))].sort();
+  groups.forEach(g => {
+    html += `<h4 style="margin:10px 0 5px; background:var(--gold); display:inline-block; padding:2px 12px; border-radius:20px">Grupo ${g}</h4>`;
+    matchesData.filter(m => m.group === g).forEach(m => {
+      const scoreDisplay = m.status === 'played' ? `${m.homeScore} - ${m.awayScore}` : 'vs';
+      const localTime = new Date(m.dateUTC).toLocaleString();
+      const followText = isFollowed(m.id) ? (currentLang === 'es' ? 'Siguiendo' : (currentLang === 'en' ? 'Following' : (currentLang === 'zh' ? '关注' : 'Siguiendo'))) : (currentLang === 'es' ? 'Seguir' : (currentLang === 'en' ? 'Follow' : (currentLang === 'zh' ? '关注' : 'Seguir')));
+      html += `<div class="match-row">
+        <span class="flag">${m.homeFlag}</span> <strong>${m.home}</strong>
+        <span>${scoreDisplay}</span>
+        <strong>${m.away}</strong> <span class="flag">${m.awayFlag}</span>
+        <button class="btn-follow ${isFollowed(m.id) ? 'active' : ''}" data-id="${m.id}">${followText}</button>
+      </div>
+      <div style="font-size:0.7rem; text-align:center; margin-bottom:8px">${localTime}</div>`;
+    });
+  });
+  container.innerHTML = html;
+  document.querySelectorAll('.btn-follow').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      toggleFollow(id);
+    });
+  });
+}
+
+function renderFollowedList() {
+  const container = document.getElementById('followedMatchesList');
+  if (!container) return;
+  const sorted = getSortedFollowedMatches();
+  if (sorted.length === 0) {
+    const msg = currentLang === 'es' ? 'No sigues ningún partido.' : (currentLang === 'en' ? "You're not following any matches." : (currentLang === 'zh' ? '你没有关注任何比赛。' : 'No sigues ningún partido.'));
+    const btnText = currentLang === 'es' ? 'Ir a Real para seguir' : (currentLang === 'en' ? 'Go to Live to follow' : (currentLang === 'zh' ? '前往直播关注' : 'Ir a Real'));
+    container.innerHTML = `<p>${msg}</p><button class="btn-go-real" onclick="goPanel('panel-real')">${btnText}</button>`;
+    return;
+  }
+  let html = '';
+  sorted.forEach(m => {
+    const scoreDisplay = m.status === 'played' ? `${m.homeScore} - ${m.awayScore}` : 'vs';
+    html += `<div class="match-row">
+      <span class="flag">${m.homeFlag}</span> ${m.home} vs ${m.away} <span class="flag">${m.awayFlag}</span>
+      <strong>${scoreDisplay}</strong>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderStandings() {
+  const container = document.getElementById('standingsContainer');
+  if (!container) return;
+  const groups = [...new Set(matchesData.map(m => m.group))].sort();
+  let html = '';
+  groups.forEach(g => {
+    const teams = Object.entries(standings).filter(([_, data]) => data.group === g);
+    teams.sort((a,b) => b[1].pts - a[1].pts || (b[1].gf - b[1].gc) - (a[1].gf - a[1].gc));
+    html += `<h4 style="margin-top:12px">Grupo ${g}</h4>`;
+    html += `<table class="standings-table">
+      <thead><tr><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></td></thead>
+      <tbody>`;
+    teams.forEach(([team, stats]) => {
+      const flag = matchesData.find(m => m.home === team || m.away === team)?.homeFlag || '🏁';
+      html += `<tr>
+        <td style="text-align:left"><span class="flag">${flag}</span> ${team}</td>
+        <td>${stats.mp}</td><td>${stats.w}</td><td>${stats.d}</td><td>${stats.l}</td>
+        <td>${stats.gf}</td><td>${stats.gc}</td><td>${stats.gf - stats.gc}</td>
+        <td><strong>${stats.pts}</strong></td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderTopScorers() {
+  const container = document.getElementById('topScorers');
+  if (!container) return;
+  const goalsMap = new Map();
+  matchesData.forEach(m => {
+    if (m.status === 'played') {
+      for (let i = 0; i < m.homeScore; i++) {
+        const player = `⚽ ${m.home} ${['Messi','Álvarez','Di María','Mac Allister'][Math.floor(Math.random()*4)]}`;
+        goalsMap.set(player, (goalsMap.get(player) || 0) + 1);
+      }
+      for (let i = 0; i < m.awayScore; i++) {
+        const player = `⚽ ${m.away} ${['Mbappé','Vinícius','Griezmann','Hakimi'][Math.floor(Math.random()*4)]}`;
+        goalsMap.set(player, (goalsMap.get(player) || 0) + 1);
+      }
+    }
+  });
+  const sorted = Array.from(goalsMap.entries()).sort((a,b) => b[1] - a[1]).slice(0,10);
+  if (sorted.length === 0) {
+    container.innerHTML = '<p>Sin datos aún. Los goleadores aparecerán después de los partidos.</p>';
+    return;
+  }
+  let html = '<table class="standings-table"><thead><tr><th>Jugador</th><th>Goles</th></tr></thead><tbody>';
+  sorted.forEach(([player, goals]) => {
+    html += `<tr><td style="text-align:left">${player}</td><td>${goals}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ========== FESTEJA, NOTICIAS, PERFIL ==========
+let publicPosts = JSON.parse(localStorage.getItem('public_posts') || '[]');
+function savePublicPosts() { localStorage.setItem('public_posts', JSON.stringify(publicPosts)); }
+function addPublicPost(text) {
+  if (!text.trim()) return;
+  publicPosts.unshift({ id: Date.now(), username: currentUser.username, avatar: currentUser.avatar, text: text, time: new Date().toISOString(), likes: 0, comments: [] });
+  savePublicPosts(); renderFeed();
+}
+function renderFeed() {
+  const feed = document.getElementById('sFeed');
+  if (!feed) return;
+  if (publicPosts.length === 0) { feed.innerHTML = '<div class="card">No hay publicaciones. ¡Sé el primero en festejar!</div>'; return; }
+  feed.innerHTML = publicPosts.slice(0,30).map(p => {
+    const timeAgo = new Date(p.time).toLocaleString();
+    return `<div class="post-card">
+      <div class="post-hdr"><div class="post-av">${p.avatar}</div><div><strong>${escapeHtml(p.username)}</strong><div style="font-size:0.7rem; color:gray">${timeAgo}</div></div></div>
+      <div class="post-body">${escapeHtml(p.text)}</div>
+      <div class="post-actions">
+        <button class="post-act" onclick="toggleLike(${p.id})">❤️ ${p.likes}</button>
+        <button class="post-act" onclick="toggleComments(${p.id})">💬 ${p.comments.length}</button>
+      </div>
+      <div id="comments-${p.id}" style="display:none; margin-top:8px">
+        ${p.comments.map(c => `<div><strong>${escapeHtml(c.name)}</strong>: ${escapeHtml(c.text)} <span style="font-size:0.6rem">${new Date(c.time).toLocaleString()}</span></div>`).join('')}
+        <div class="cmt-row" style="display:flex; gap:6px; margin-top:6px">
+          <input type="text" id="cmt-input-${p.id}" placeholder="Comentar..." style="flex:1; padding:6px; border-radius:10px; border:1px solid #ddd">
+          <button onclick="addComment(${p.id})">Enviar</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+window.toggleLike = function(postId) {
+  const post = publicPosts.find(p => p.id === postId);
+  if (post) { post.likes++; savePublicPosts(); renderFeed(); }
+};
+window.toggleComments = function(postId) {
+  const div = document.getElementById(`comments-${postId}`);
+  if (div) div.style.display = div.style.display === 'none' ? 'block' : 'none';
+};
+window.addComment = function(postId) {
+  const input = document.getElementById(`cmt-input-${postId}`);
+  const text = input.value.trim();
+  if (!text) return;
+  const post = publicPosts.find(p => p.id === postId);
+  if (post) {
+    post.comments.push({ name: currentUser.username, text: text, time: new Date().toISOString() });
+    savePublicPosts(); renderFeed();
+  }
+};
+function escapeHtml(str) { return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+const newsArticles = [
+  { emoji: '🌍', tag: 'cultura', tagLabel: 'Cultura', title: 'El Mundial que une dos mundos', date: '10 Jun 2026', read: '4 min', summary: 'Argentina y China, dos naciones separadas por 20.000 kilómetros, comparten algo poderoso: la pasión por el fútbol.', content: '<p>Hay algo extraordinario en ver a un hincha argentino y a un hincha chino gritar el mismo gol al mismo tiempo...</p>' },
+  { emoji: '🧠', tag: 'ciencia', tagLabel: 'Ciencia', title: '¿Por qué sentimos el gol en el cuerpo?', date: '9 Jun 2026', read: '3 min', summary: 'Cuando tu equipo anota, tu cuerpo reacciona antes que tu mente.', content: '<p>Investigadores de la Universidad de Calgary descubrieron que cuando un hincha ve un gol de su equipo, su ritmo cardíaco puede aumentar un 40% en menos de un segundo.</p>' },
+  { emoji: '💚', tag: 'bienestar', tagLabel: 'Bienestar', title: 'El fútbol como medicina emocional', date: '7 Jun 2026', read: '4 min', summary: 'La psicóloga Pilar Sordo dice que vivimos en una sociedad que prohíbe la tristeza y exige productividad constante. El fútbol ofrece un espacio donde está bien sentir.', content: '<p>Pilar Sordo escribe en "¡Basta de todo!" sobre ese punto en el que la persona ya no siente ni bien ni mal. Simplemente no siente. El fútbol es uno de los pocos espacios donde esa anestesia se rompe.</p>' }
+];
+function renderNews() {
+  const container = document.getElementById('newsContainer');
+  if (!container) return;
+  container.innerHTML = newsArticles.map((a, idx) => `
+    <div class="news-card" onclick="toggleNews(${idx})">
+      <div class="news-hdr">
+        <span class="news-emoji">${a.emoji}</span>
+        <div>
+          <div class="news-title">${a.title}</div>
+          <div class="news-meta">
+            <span class="news-tag ${a.tag}">${a.tagLabel}</span>
+            <span class="news-author">VF Agent</span>
+            <span class="news-time">${a.date} · ${a.read}</span>
+          </div>
+        </div>
+      </div>
+      <p class="news-summary">${a.summary}</p>
+      <div class="news-body">${a.content}</div>
+      <div class="news-expand">▼ Leer más</div>
+    </div>
+  `).join('');
+}
+window.toggleNews = function(idx) {
+  const card = document.querySelectorAll('.news-card')[idx];
+  const isOpen = card.classList.contains('expanded');
+  card.classList.toggle('expanded');
+  const expandBtn = card.querySelector('.news-expand');
+  expandBtn.textContent = isOpen ? '▼ Leer más' : '▲ Cerrar';
+};
+
+// ========== TRADUCCIONES Y PERFIL ==========
+const translations = {
+  es: { brand: 'VIBRA FÚTBOL', inicio: 'Inicio', real: 'Real', festeja: 'Festeja', noticias: 'Noticias', perfil: 'Perfil', following: 'Siguiendo', follow: 'Seguir', live: 'EN VIVO', upcoming: 'PRÓXIMO', noFollowed: 'No sigues ningún partido.', goToReal: 'Ir a Real para seguir', editProfile: 'Editar perfil', avatar: 'AVATAR', language: 'Idioma: ', save: 'GUARDAR', reset: 'Restablecer perfil', community: 'Comunidad', goals: 'Goles', posts: 'Posts', follows: 'Seguidos', vibConfig: '⚙️ Configuración de vibración', noFollowedVib: 'No sigues ningún partido. Ve a "Real" y sigue un partido para configurar vibraciones.', fixtureTitle: '📅 Calendario Mundial 2026', standingsTitle: '🏆 Clasificación por grupos', followedTitle: '📋 Partidos que sigues', vamos: '¡VAMOS!', clearFollowed: '🗑️ Limpiar todos los seguidos', about: 'Sobre el proyecto', publish: 'Publicar', comment: 'Comentar', saveProfile: 'GUARDAR', resetProfile: 'Restablecer perfil' },
+  en: { brand: 'VIBRA FOOTBALL', inicio: 'Home', real: 'Live', festeja: 'Celebrate', noticias: 'News', perfil: 'Profile', following: 'Following', follow: 'Follow', live: 'LIVE', upcoming: 'UPCOMING', noFollowed: "You're not following any matches.", goToReal: 'Go to Live to follow', editProfile: 'Edit profile', avatar: 'AVATAR', language: 'Language: ', save: 'SAVE', reset: 'Reset profile', community: 'Community', goals: 'Goals', posts: 'Posts', follows: 'Follows', vibConfig: '⚙️ Vibration Settings', noFollowedVib: 'You are not following any match. Go to "Live" and follow a match to configure vibrations.', fixtureTitle: '📅 World Cup 2026 Schedule', standingsTitle: '🏆 Group Standings', followedTitle: '📋 Matches you follow', vamos: 'GO!', clearFollowed: '🗑️ Clear all followed', about: 'About the project', publish: 'Publish', comment: 'Comment', saveProfile: 'SAVE', resetProfile: 'Reset profile' },
+  zh: { brand: '足球震动', inicio: '首页', real: '直播', festeja: '庆祝', noticias: '新闻', perfil: '个人资料', following: '关注', follow: '关注', live: '直播', upcoming: '即将开始', noFollowed: '你没有关注任何比赛。', goToReal: '前往直播关注', editProfile: '编辑资料', avatar: '头像', language: '语言: ', save: '保存', reset: '重置个人资料', community: '社区', goals: '进球', posts: '帖子', follows: '关注', vibConfig: '⚙️ 振动设置', noFollowedVib: '您没有关注任何比赛。请前往“直播”关注比赛以配置振动。', fixtureTitle: '📅 2026世界杯赛程', standingsTitle: '🏆 小组积分榜', followedTitle: '📋 你关注的比赛', vamos: '开始！', clearFollowed: '🗑️ 清除所有关注', about: '关于项目', publish: '发布', comment: '评论', saveProfile: '保存', resetProfile: '重置个人资料' }
+};
+['fr','de','pt','nl','ja','ar'].forEach(l => { if (!translations[l]) translations[l] = translations.es; });
+
+let currentLang = 'es';
+function applyLanguage(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+  document.querySelector('.brand').innerText = t.brand;
+  document.getElementById('navHome').innerText = t.inicio;
+  document.getElementById('navLive').innerText = t.real;
+  document.getElementById('navCelebrate').innerText = t.festeja;
+  document.getElementById('navNews').innerText = t.noticias;
+  document.getElementById('navProfile').innerText = t.perfil;
+  document.getElementById('followedTitle').innerHTML = t.followedTitle;
+  document.getElementById('fixtureTitle').innerHTML = t.fixtureTitle;
+  document.getElementById('standingsTitle').innerHTML = t.standingsTitle;
+  document.getElementById('editTitle').innerHTML = t.editProfile;
+  document.getElementById('avatarLabel').innerHTML = t.avatar;
+  document.getElementById('langLabel').innerHTML = t.language;
+  document.getElementById('saveProfileBtn').innerHTML = t.save;
+  document.getElementById('resetProfileBtn').innerHTML = t.reset;
+  document.getElementById('communityTitle').innerHTML = t.community;
+  document.getElementById('statGoals').innerHTML = t.goals;
+  document.getElementById('statPosts').innerHTML = t.posts;
+  document.getElementById('statFollows').innerHTML = t.follows;
+  document.querySelector('.vib-group-label').innerHTML = t.vibConfig;
+  const noFollowedMsg = document.getElementById('noFollowedVibMsg');
+  if (noFollowedMsg) noFollowedMsg.innerText = t.noFollowedVib;
+  document.getElementById('btnEnter').innerText = t.vamos;
+  document.getElementById('btnAbout').innerText = t.about;
+  const clearBtn = document.getElementById('clearFollowedBtn');
+  if (clearBtn) clearBtn.innerText = t.clearFollowed;
+  const pubBtn = document.getElementById('btnPost');
+  if (pubBtn) pubBtn.innerText = t.publish;
+  renderRealMatches();
+  renderFollowedList();
+  updateMainScoreboard();
+  localStorage.setItem('vf_lang', lang);
+}
+function initLanguageSelector() {
+  const savedLang = localStorage.getItem('vf_lang') || 'es';
+  const splashSelect = document.getElementById('splashLangSelect');
+  const profileSelect = document.getElementById('profileLangSelect');
+  const options = Object.keys(translations).map(l => `<option value="${l}">${l.toUpperCase()}</option>`).join('');
+  splashSelect.innerHTML = options;
+  profileSelect.innerHTML = options;
+  splashSelect.value = savedLang;
+  profileSelect.value = savedLang;
+  splashSelect.addEventListener('change', e => applyLanguage(e.target.value));
+  profileSelect.addEventListener('change', e => applyLanguage(e.target.value));
+  applyLanguage(savedLang);
+}
+let currentUser = JSON.parse(localStorage.getItem('vf_user') || '{"username":"Fan","avatar":"⚽","bio":""}');
+function saveProfile() {
+  currentUser.username = document.getElementById('editUsername').value || 'Fan';
+  currentUser.bio = document.getElementById('editBio').value;
+  const selectedAvatar = document.querySelector('.av-opt.sel')?.innerText || currentUser.avatar;
+  currentUser.avatar = selectedAvatar;
+  localStorage.setItem('vf_user', JSON.stringify(currentUser));
+  loadProfileUI();
+  showToast(translations[currentLang].save);
+}
+function loadProfileUI() {
+  document.getElementById('pName').innerText = currentUser.username;
+  document.getElementById('pAvE').innerText = currentUser.avatar;
+  document.getElementById('hdrAv').innerText = currentUser.avatar;
+  document.getElementById('compAv').innerText = currentUser.avatar;
+  document.getElementById('hdrName').innerText = currentUser.username;
+  document.getElementById('pBio').innerText = currentUser.bio || 'Agregá tu bio...';
+  document.getElementById('editUsername').value = currentUser.username;
+  document.getElementById('editBio').value = currentUser.bio;
+  const avatars = ['⚽','🏆','🥅','👟','🎯','🌟','⚡','🔥','💪','🧤','🦁','🐐','🎖️'];
+  const avGrid = document.getElementById('avGrid');
+  avGrid.innerHTML = avatars.map(a => `<div class="av-opt ${currentUser.avatar === a ? 'sel' : ''}" onclick="selectAvatar('${a}')">${a}</div>`).join('');
+  const userPosts = publicPosts.filter(p => p.username === currentUser.username).length;
+  document.getElementById('psG').innerText = '0';
+  document.getElementById('psP').innerText = userPosts;
+  document.getElementById('psF').innerText = followedMatches.length;
+  const allUsers = JSON.parse(localStorage.getItem('all_users') || '[]');
+  document.getElementById('uList').innerHTML = allUsers.map(u => `<div class="uc"><div class="uc-av">${u.avatar}</div><div><strong>${u.username}</strong><div>${u.bio || ''}</div></div></div>`).join('');
+}
+window.selectAvatar = function(av) {
+  document.querySelectorAll('.av-opt').forEach(opt => opt.classList.remove('sel'));
+  const selected = Array.from(document.querySelectorAll('.av-opt')).find(opt => opt.innerText === av);
+  if (selected) selected.classList.add('sel');
+};
+function resetProfile() {
+  currentUser = { username: 'Fan', avatar: '⚽', bio: '' };
+  localStorage.setItem('vf_user', JSON.stringify(currentUser));
+  loadProfileUI();
+  showToast(translations[currentLang].reset);
+}
+function togAvPick() { const picker = document.getElementById('avPicker'); picker.style.display = picker.style.display === 'none' ? 'block' : 'none'; }
+function updateCommunityList() {
+  const allUsers = JSON.parse(localStorage.getItem('all_users') || '[]');
+  if (!allUsers.find(u => u.username === currentUser.username)) {
+    allUsers.push({ username: currentUser.username, avatar: currentUser.avatar, bio: currentUser.bio });
+    localStorage.setItem('all_users', JSON.stringify(allUsers));
+  }
+  loadProfileUI();
+}
+
+function goPanel(panelId) {
+  document.querySelectorAll('.app-p').forEach(p => p.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+  document.querySelectorAll('.nb').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`.nb[data-p="${panelId}"]`).classList.add('active');
+  if (panelId === 'panel-perfil') { loadProfileUI(); updateCommunityList(); }
+  if (panelId === 'panel-festeja') renderFeed();
+  if (panelId === 'panel-noticias') renderNews();
+}
+document.querySelectorAll('.nb').forEach(btn => btn.addEventListener('click', () => goPanel(btn.dataset.p)));
+
+function init() {
+  const stars = document.getElementById('skyStars');
+  for (let i=0;i<50;i++) {
+    let s = document.createElement('div'); s.className='sky-star'; s.style.cssText=`position:absolute; background:white; border-radius:50%; width:${Math.random()*2+1}px; height:${Math.random()*2+1}px; left:${Math.random()*100}%; top:${Math.random()*30}%; opacity:${Math.random()*0.5+0.3}; animation:tw ${Math.random()*3+2}s infinite`; stars.appendChild(s);
+  }
+  const flags = ['🇦🇷','🇨🇳','🇧🇷','🇫🇷','🇩🇪','🇪🇸','🇮🇹','🇯🇵','🇰🇷','🇺🇸','🇲🇽','🏴󠁧󠁢󠁥󠁮󠁧󠁿','🇳🇱','🇵🇹','🇧🇪','🇭🇷'];
+  const flagStrip = document.getElementById('flagStrip');
+  flags.forEach(f => { let span = document.createElement('span'); span.className='fs-flag'; span.textContent=f; flagStrip.appendChild(span); });
+  const confetti = document.getElementById('confetti');
+  for (let i=0;i<30;i++) {
+    let c = document.createElement('div'); c.className='confetti'; c.style.cssText = `position:absolute; width:${Math.random()*8+4}px; height:${Math.random()*8+4}px; background:hsl(${Math.random()*360},70%,60%); left:${Math.random()*100}%; top:-20px; animation:cf ${Math.random()*4+2}s linear infinite; opacity:0.8; border-radius:${Math.random()>.5?'50%':'0'}`;
+    confetti.appendChild(c);
+  }
+  document.getElementById('btnEnter').addEventListener('click', () => {
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('main').classList.add('show');
+      document.getElementById('hdrU').classList.remove('hidden');
+      initStandings(); updateStandings();
+      renderRealMatches(); renderFollowedList(); renderStandings(); renderTopScorers(); updateMainScoreboard(); renderFeed(); renderNews();
+      startLiveSimulation();
+      loadProfileUI(); updateCommunityList();
+      updateVibConfigForFollowed();
+    }, 800);
+  });
+  document.getElementById('btnAbout').addEventListener('click', () => alert(translations[currentLang].about + '\n\nVibra Fútbol - Bienestar emocional a través del fútbol. Cooperación Argentina-China.'));
+  document.getElementById('btnPost').addEventListener('click', () => {
+    const txt = document.getElementById('postTxt').value;
+    if (txt.trim()) { addPublicPost(txt); document.getElementById('postTxt').value = ''; showToast('🎉 ¡Publicado!'); }
+  });
+  const clearBtn = document.getElementById('clearFollowedBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearAllFollowed);
+  initLanguageSelector();
+}
+function showToast(msg) { const toast = document.getElementById('toast'); document.getElementById('toastMsg').innerText = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000); }
+init();
+</script>
+</body>
+</html>

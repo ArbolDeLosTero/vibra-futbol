@@ -1,0 +1,348 @@
+
+---
+
+## O — ORGANIZACIÓN
+
+### O.1 Resumen del proyecto
+
+Vibra Fútbol (足球震动) es una herramienta de bienestar emocional para trabajadores que utiliza la pasión futbolera y la vibración háptica del teléfono celular para generar experiencias emocionales reguladas durante partidos de fútbol en vivo.
+
+No es una app de deportes. No es una red social. Es una intervención de bienestar emocional.
+
+### O.2 Misión
+
+Que cada trabajador sienta que puede vibrar —literal y emocionalmente— aunque no pueda ver el partido, aunque esté en el colectivo, aunque el día haya sido agotador.
+
+### O.3 Visión
+
+Convertirse en la herramienta de bienestar emocional más accesible del mundo hispanohablante y chino, utilizando el fútbol como puente cultural entre Argentina y China.
+
+### O.4 Cooperación internacional
+
+| Aspecto | Detalle |
+|---|---|
+| Tipo | Cooperación bilateral Argentina–China |
+| Marco | Relaciones bilaterales y acuerdos culturales |
+| Idiomas | Español (es-AR), Mandarín (zh-CN), Inglés (en) |
+| Símbolo | Messi 🇦🇷 + Wu Lei 🇨🇳 como figuras representativas |
+| Filosofía | Dos culturas, una emoción universal |
+
+### O.5 Público objetivo
+
+**Primario:** Trabajadores en situación de agotamiento emocional (burnout), migrantes, personas con horarios extendidos.
+
+**Secundario:** Hinchas de fútbol que quieren una experiencia más inmersiva, comunidades deportivas, organizaciones de bienestar laboral.
+
+### O.6 Equipo de desarrollo
+
+| Rol | Estado |
+|---|---|
+| Desarrollo frontend | En curso |
+| Diseño UX/UI | En curso |
+| Fundamentación psicológica | Completada |
+| Contenido editorial (VF Agent) | Completado (10 artículos) |
+| Backend/API | En desarrollo (adaptación a entorno dual) |
+| Traducción automática | Pendiente |
+| QA/Testing | En curso |
+
+### O.7 Cronograma de desarrollo (actualizado)
+
+**Fase 1 – Demo para el Mundial (11 de junio de 2026)**  
+- Servidor en **Hong Kong** (sin necesidad de licencia ICP)  
+- **Datos reales en vivo** usando SportScore API + Highlightly Football API (sin simulación)  
+- Red social "Festeja" en **modo solo lectura** para todos los usuarios (sin interacción real)  
+- Motor de vibraciones completamente funcional, alimentado por eventos reales de los partidos  
+- Feed con contenido oficial (clubes, selecciones, FIFA)  
+- Contadores visibles solo para reacciones positivas (❤️ y 💪) – sin botones activos  
+- **Lanzamiento de campaña de crowdfunding (Kickstarter)** y preventa dentro de la app  
+
+**Fase 2 – Post‑Mundial (julio – agosto 2026)**  
+- Solicitud y obtención de licencia **ICP** en China continental  
+- Migración de servidores a **Alibaba Cloud / Tencent Cloud**  
+- Activación de interacciones para mayores de 18 con verificación de identidad  
+- Lanzamiento de la **Plataforma Modelo para menores** con autorización parental  
+- Entrega de recompensas a los patrocinadores de Kickstarter  
+
+### O.8 Hosting y despliegue – Estrategia de dos entornos
+
+| Entorno | Plataforma | Propósito | Estado |
+|---------|------------|-----------|--------|
+| **Concurso / Demo** | Google Cloud Platform (GCP) o servidor en Hong Kong | Prototipo para validación del concepto. No maneja datos reales de usuarios chinos. | Activo |
+| **Producción China** | Alibaba Cloud / Tencent Cloud + licencia ICP | App real para usuarios en China. Cumple localización de datos y normativa. | En preparación |
+
+> ✅ Decisión estratégica: **No es necesario abandonar el concurso**. Ambos entornos comparten el mismo código base, diferenciado por variables de entorno.
+
+---
+
+## L — LEGAL
+
+### L.1 Política única global basada en la legislación china
+
+Para simplificar el desarrollo y garantizar el cumplimiento en todos los mercados, **se aplicarán las normas chinas a todos los países** desde el lanzamiento. En caso de conflicto con leyes locales, se aplicará el estándar más protector para el usuario.
+
+### L.2 Registro y acceso por edad
+
+| Situación | ¿Puede registrarse? | Acceso a "Festeja" |
+|-----------|---------------------|--------------------|
+| **Mayor de 18 años** | Sí, con verificación de identidad real (DNI/pasaporte) | Acceso completo: publicar, comentar, reaccionar, subir media. |
+| **Entre 14 y 17 años** | Solo con autorización parental explícita | **Plataforma Modelo para Menores**: contenido seguro + reacciones limitadas (❤️, 💪) sin chat ni publicación propia. |
+| **Menor de 14 años** | Solo con autorización parental explícita | Misma Plataforma Modelo, con supervisión adicional y límites de horario (22:00 a 06:00 sin acceso). |
+| **No logueado (visitante)** | No requiere registro | **Solo lectura**: puede ver el feed de contenido seguro (clubes, selecciones, FIFA), **sin ningún tipo de interacción** (ni reacciones, ni contadores visibles). |
+
+### L.3 Verificación de identidad real (Real‑Name Verification)
+
+Obligatoria para todos los usuarios mayores de 18 que deseen participar en "Festeja".  
+- En China: se integrará con el sistema estatal `网号`/`网证`.  
+- En otros países: se usará un proveedor externo (Stripe Identity, Persona, etc.).  
+- Los datos de identidad se almacenan cifrados por separado y no se muestran en el perfil público.
+
+### L.4 Plataforma Modelo para Menores (14‑17 años con autorización)
+
+Cumple con la **Ley de Protección de Menores de China** (vigente desde 2021):
+
+- ✅ Pueden ver el feed de contenido oficial (clubes, selecciones, FIFA, artículos VF Agent).  
+- ✅ Pueden **ver contadores** de reacciones positivas (❤️ Corazón latiendo, 💪 Fuerza).  
+- ✅ Pueden **reaccionar** usando esos dos emojis personalizados (sin texto, sin imágenes).  
+- ❌ No pueden publicar, comentar, subir fotos/videos ni chatear con adultos.  
+- ❌ No ven contadores de tarjetas amarillas/rojas (iconos en gris u ocultos).  
+- ⏰ Modo descanso: la red social se bloquea entre 22:00 y 06:00 (hora local).  
+- 👁️ Panel parental: los tutores pueden ver tiempo de uso e interacciones, y desactivar la cuenta.
+
+### L.5 Contenido del feed en modo juvenil / visitante
+
+- Solo publicaciones de **cuentas oficiales y verificadas** (clubes, selecciones nacionales, FIFA).  
+- Artículos del **VF Agent** (enfoque humanista y positivo).  
+- Prohibida cualquier publicación de usuarios comunes no verificados.  
+
+### L.6 Moderación de contenido
+
+| Nivel | Acción | Ejemplo |
+|-------|--------|---------|
+| Nivel 1 — Bloqueo | No se publica. Mensaje de error. | Insultos graves, amenazas, odio, contenido sexual, racismo, ataques al estado/nación. |
+| Nivel 2 — Filtro | Se publica con asteriscos o se oculta. | Groserías contextuales, palabras soezes leves. |
+| Nivel 3 — Libre | Se publica sin cambios. | Emojis, expresiones futboleras, críticas deportivas respetuosas. |
+
+**Adicional:** En China, se reportará automáticamente a las autoridades cualquier contenido que atente contra la seguridad nacional o el orden público.
+
+### L.7 Almacenamiento y localización de datos
+
+- **Usuarios chinos**: todos los datos (incluyendo identidad real, posts, comentarios) se almacenarán dentro de China continental una vez obtenida la licencia ICP.  
+- **Usuarios fuera de China**: podrán permanecer en servidores de Hong Kong o GCP durante la fase de demo.  
+- **Transferencia internacional de datos**: prohibida sin marco legal equivalente. Por eso se separan físicamente los datos desde el diseño.
+
+### L.8 Sanciones
+
+| Infracción | Consecuencia |
+|------------|---------------|
+| Publicar contenido bloqueado | Eliminación + advertencia. Reincidencia: suspensión 7 días. |
+| Suplantación de identidad o documentos falsos | Suspensión permanente + reporte a autoridades. |
+| Menor sin autorización que intenta acceder a zona de adultos | Bloqueo automático, notificación al tutor. |
+| Acoso, amenazas o discurso de odio | Eliminación de cuenta + veto de dispositivo. |
+
+---
+
+## I — INFORMACIÓN
+
+### I.1 Emojis personalizados (solo para la Plataforma Modelo)
+
+| Emoji | Nombre | Animación | ¿Contador visible? | ¿Interactivo? |
+|-------|--------|-----------|--------------------|----------------|
+| ❤️ | Corazón latiendo | Late al pulsar (efecto visual) | **Sí** | Sí (solo para menores autorizados) |
+| 💪 | Fuerza / Ánimo | Puño que se sacude | **Sí** | Sí (solo para menores autorizados) |
+| 🟨 | Tarjeta amarilla | Hombrecito mostrando tarjeta | **No** (icono gris u oculto) | No |
+| 🟥 | Tarjeta roja | Hombrecito mostrando tarjeta | **No** (icono gris u oculto) | No |
+
+**Justificación psicológica:**  
+- Mostrar contadores positivos refuerza pertenencia y validación afectiva (Teoría del Aprendizaje Social, Bandura).  
+- Ocultar contadores de tarjetas evita que los menores asocien popularidad con conductas sancionables o violentas.  
+- Estudios recientes (2024, *Journal of Adolescent Health*) indican que los contadores negativos generan estrés por rechazo.
+
+### I.2 Niveles de acceso al feed "Festeja"
+
+| Rol del usuario | Contenido visible | Contadores visibles | Interacción permitida |
+|----------------|-------------------|---------------------|----------------------|
+| No logueado | Solo oficial + VF Agent | ❌ Ninguno | Ninguna (solo scroll) |
+| Menor autorizado (14‑17) | Solo oficial + VF Agent | ✅ Solo ❤️ y 💪 | Reacciones con esos dos emojis |
+| Mayor de 18 verificado | Todo el contenido | Todos los contadores | Publicar, comentar, reaccionar, subir media |
+
+### I.3 Configuración de vibraciones
+
+Se mantienen los 8 tipos de evento, patrones científicos e intensidades configurables.  
+**Novedad:** Los eventos se disparan exclusivamente con datos reales de las APIs (SportScore y Highlightly). No hay modo simulación.
+### I.4 Fuentes de datos en tiempo real (nueva subsección)
+
+| API | Tipo | Plan gratuito | Límite | Uso en la app |
+|-----|------|---------------|--------|----------------|
+| **SportScore** | API REST (JSON) | Sí, sin API key | 10.000 requests/día/IP | Fuente primaria. Extrae goles, tarjetas, tiros, etc. |
+| **Highlightly Football** | API REST | Sí, con API key gratuita | 100 requests/día | Fuente secundaria de respaldo. Se consulta si SportScore falla o no responde. |
+
+**Arquitectura de tolerancia a fallos (enjambre):**
+1. El agente de vibración intenta obtener eventos desde SportScore.
+2. Si SportScore no responde en <2 segundos o devuelve error, cambia automáticamente a Highlightly.
+3. Si ambas fallan, se muestra un mensaje "Reconectando..." y se reintenta cada 10 segundos.
+4. Los eventos se cachean localmente para evitar vibraciones duplicadas en el mismo segundo.
+
+**Flujo de datos:**  
+`App → SportScore → (si falla) → Highlightly → (si falla) → reintento`
+
+**Ventajas:**  
+- Sin simulación: todo es real.  
+- Alta disponibilidad para el lanzamiento del Mundial.  
+- No requiere licencias especiales (son APIs públicas).  
+
+### I.5 Traducción automática de comentarios (sin cambios)
+
+API MyMemory, detección de idioma por caracteres.
+
+### I.6 Fixture del Mundial 2026 (sin cambios)
+
+Datos integrados en la demo.
+
+### I.7 Design system (sin cambios)
+
+Fuentes, colores, bordes, breakpoint móvil.
+
+### I.8 Diseño visual y experiencia de usuario (UI/UX) preservada
+
+**A partir de la versión demo actual (11 de junio de 2026), se establece como estándar obligatorio el siguiente diseño visual. Cualquier actualización o modificación futura deberá conservar estos elementos sin alteraciones significativas, a menos que se indique explícitamente lo contrario.**
+
+#### I.8.1 Sección de Noticias (referencia visual)
+- **Formato:** Tarjetas (`news-card`) con borde lateral izquierdo coloreado según la categoría (cultura, ciencia, bienestar, etc.).
+- **Encabezado:** Contiene un emoji grande (por ejemplo, 🌍, 🧠, 🌟, 💚, 🏟️, 📖, 🔮, 📜, 🤝, ⚡) seguido del título y la metadata (etiqueta de categoría, autor “VF Agent”, fecha y tiempo de lectura).
+- **Comportamiento:** Al hacer clic en la tarjeta, se expande mostrando el cuerpo completo de la noticia y el botón “▲ Cerrar”. El resumen inicial (`news-summary`) debe mantenerse visible mientras la tarjeta está cerrada.
+- **Colores de etiquetas:** Definidos en las clases `.news-tag.cultura`, `.news-tag.ciencia`, `.news-tag.bienestar`, etc. (ver CSS original).
+- **Animación:** Transición suave al expandir/cerrar, sin cambios bruscos.
+
+#### I.8.2 Estilos generales inmutables
+- **Fuentes:** `Bangers` para títulos principales, `Fredoka` para encabezados secundarios, `Nunito` para textos largos, `Noto Sans SC` para chino.
+- **Paleta de colores:** Las variables CSS definidas en `:root` no se modificarán (oro, rojo, naranja, verde, azul, etc.).
+- **Tarjetas y sombras:** Se conserva el `border-radius: 14px`, sombras suaves y bordes redondeados.
+- **Iconografía:** Los emojis se usan como elementos gráficos principales (por ejemplo, en noticias, botones de navegación, etc.). No se reemplazarán por iconos vectoriales a menos que se acuerde en una nueva versión.
+- **Efectos hover/active:** Las animaciones y retroalimentación visual actual (escala, cambio de color) se mantienen.
+- **Layout responsive:** Ancho máximo de 480px, centrado, con padding y márgenes actuales.
+
+#### I.8.3 Elementos interactivos conservados
+- **Botón “VAMOS”**: Con su animación de escala y degradado.
+- **Selector de idiomas**: Siempre presente en el splash y en el perfil, con los 9 idiomas actuales (es, en, zh, fr, de, pt, nl, ja, ar). Su estilo (fondo negro semitransparente, borde blanco) no se altera.
+- **Perfil**: El avatar redondo con borde dorado, la edición mediante selector de emojis/banderas, y los campos de texto con bordes redondeados.
+- **Marcador grande (scoreboard)**: Con el formato de dos equipos, reloj y estado “EN VIVO/PRÓXIMO”. La animación de destello (`flash`) al haber gol se conserva.
+- **Lista de partidos seguidos**: Con banderas, nombres y marcador.
+- **Configuración de vibraciones**: Los sliders, botones “Probar” y selectores de intensidad mantienen su estilo actual.
+
+#### I.8.4 Prohibición de cambios estéticos no autorizados
+- No se eliminarán ni reemplazarán los emojis de las noticias.
+- No se modificarán las animaciones de expansión de tarjetas.
+- No se alterará el esquema de colores ni las fuentes.
+- No se cambiará la disposición de los elementos en la pantalla de inicio (scoreboard → vibraciones → lista de eventos → resultados).
+- Cualquier modificación visual que se considere en el futuro deberá ser aprobada explícitamente y documentada en una nueva versión del OLIS.
+
+**Justificación:** Preservar la identidad visual actual garantiza la coherencia con la experiencia de usuario validada en la demo y evita regresiones involuntarias. El diseño ha sido probado y aceptado por el equipo; por tanto, se convierte en estándar.
+
+---
+
+## S — SEGURIDAD
+
+### S.1 Medidas por fase
+
+| Fase | Medida | Estado |
+|------|--------|--------|
+| Demo (Hong Kong/GCP) | HTTPS, CORS, rate limiting básico, sin datos sensibles de chinos | Implementado |
+| Post‑licencia ICP | Servidores en China, contraseñas hasheadas (bcrypt), JWT, RLS en Supabase/Tencent DB | Pendiente |
+| Producción | WAF, DDoS protection, backup automático, auditoría de seguridad | Futuro |
+
+### S.2 Licencia ICP (China)
+
+- **Tipo requerido:** ICP Filing (备案) para modo solo lectura; ICP License (经营许可证) si se activa interacción completa.  
+- **Tiempo estimado:** 20‑60 días.  
+- **Estrategia:** Durante la demo, se opera desde Hong Kong sin necesidad de ICP. En paralelo, se inicia el trámite.
+
+### S.3 Protección de datos personales
+
+- Cumplimiento de **PIPL (China)** y **Ley 25.326 (Argentina)**.  
+- Derechos del usuario: acceso, rectificación, eliminación, portabilidad.  
+- Eliminación de cuenta disponible desde el perfil en cualquier momento.
+
+### S.4 Reporte a autoridades
+
+En la versión para China, la plataforma estará obligada a reportar automáticamente a las autoridades cualquier contenido ilegal grave (según catálogo oficial).
+
+### S.5 Monetización y crowdfunding (nuevo)
+
+- La recaudación de los **$50.000 USD** necesarios para el desarrollo final y servidores se hará mediante:
+  - **Campaña de Kickstarter** (recompensas para patrocinadores).
+  - **Preventa dentro de la app** (acceso vitalicio, funciones exclusivas, etc.).
+- El dinero se usará exclusivamente para:
+  - Servidores en Hong Kong (primer año).
+  - Desarrollo final de la app (contratación de un programador freelance).
+  - Traducción profesional al chino.
+  - Producción de videos para la campaña.
+- No se requiere licencia ICP para recibir fondos de Kickstarter (la plataforma opera fuera de China).
+
+---
+
+## F — FINANZAS (NUEVA SECCIÓN)
+
+### F.1 Capital necesario para la fase inicial (Demo + validación)
+
+| Concepto | Coste estimado (USD) |
+|----------|----------------------|
+| Servidor Hong Kong (12 meses) | 600 |
+| Desarrollo final de la app (ajustes, integración de APIs) | 30.000 |
+| Traducción al chino (app y perfiles) | 2.000 |
+| Kickstarter (video de campaña, diseño, pequeña publicidad) | 10.000 |
+| Equipamiento (micrófonos, etc.) – ya cubierto con ARS | 0 |
+| Fondo de contingencia | 7.400 |
+| **Total** | **50.000** |
+
+### F.2 Estructura de la campaña de crowdfunding
+
+- **Plataforma:** Kickstarter (meta: $50.000 USD).
+- **Recompensas:**  
+  - $10: Agradecimiento en web.  
+  - $25: Acceso anticipado a la app + nombre en la sección "Patrocinadores".  
+  - $50: Membresía anual gratuita + camiseta virtual exclusiva.  
+  - $100: Acceso de por vida a todas las funciones + mención en los créditos.  
+  - $500: Participación en un grupo de asesores de la comunidad.  
+- **Preventa dentro de la app:** Botón "Apóyanos" que redirige a la campaña de Kickstarter o a un formulario de pago directo (MercadoPago / Stripe) para quienes quieran aportar sin pasar por Kickstarter.
+
+### F.3 Proyección de ingresos futuros (recordatorio)
+
+Basado en el mercado chino de 300M de aficionados y publicidad en la sección de adultos, se proyecta:
+
+| Escenario | Ingresos anuales netos (con 50M MAU) |
+|-----------|---------------------------------------|
+| Conservador | ~40M USD |
+| Realista | ~107M USD |
+| Optimista | ~210M USD |
+
+---
+
+## CX — CONTEXTO DE CONVERSACIÓN
+
+*(Actualizar con los puntos recientes)*
+
+### CX.5 Decisiones adicionales tomadas el 10 de junio de 2026
+
+- **Uso exclusivo de APIs reales** (SportScore + Highlightly) desde el día 1 del Mundial. No se permite simulación.
+- **Arquitectura de tolerancia a fallos** (enjambre) para garantizar la vibración en vivo incluso si una API falla.
+- **Recaudación de $50.000 USD mediante Kickstarter** y preventa en la app, antes de buscar inversores institucionales.
+- **El demo no tendrá publicidad** ni interacción social hasta la fase 2.
+
+### CX.6 Próximos pasos (inmediatos)
+
+- [ ] Implementar la lógica de conmutación entre SportScore y Highlightly en el frontend.
+- [ ] Asegurar que el demo esté online en servidor de Hong Kong antes del 11 de junio a las 8 AM.
+- [ ] Crear la campaña de Kickstarter (video, textos, recompensas).
+- [ ] Añadir botón de "Apóyanos" dentro de la demo (redirige a Kickstarter).
+- [ ] Probar el flujo completo de vibraciones con partidos reales (amistosos previos al Mundial).
+
+### CX.7 Decisión sobre preservación del diseño visual (11 de junio de 2026)
+
+- **Acuerdo:** El aspecto visual de la demo actual (incluyendo noticias con emojis, tarjetas expandibles, paleta de colores, fuentes, animaciones y disposición de elementos) se considera **definitivo y debe mantenerse en todas las futuras actualizaciones**.
+- **Alcance:** Afecta a todas las pantallas (inicio, real, festeja, noticias, perfil). Cualquier cambio visual requerirá una nueva versión del OLIS y autorización expresa.
+- **Referencia:** El archivo `Vibra-Futbol-DEMO.html` (versión entregada el 11 de junio de 2026) es el modelo de referencia para el diseño.
+- **Consecuencia:** El asistente (DeepSeek) deberá priorizar la coherencia visual sobre nuevas funcionalidades, a menos que el usuario indique lo contrario.
+
+---
+
+## FIN DEL DOCUMENTO OLIS v5.0
