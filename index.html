@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Vibra Fútbol — Mundial 2026 (Datos ESPN)</title>
+  <title>Vibra Fútbol — Mundial 2026</title>
   <meta name="theme-color" content="#0a0a14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ========== ESTILOS (mismos que tu versión funcional) ========== */
     :root{--bg:#FEF9F2;--s:#FFF;--sa:#FFF7ED;--red:#F44336;--rs:#FFEBEE;--gold:#F9A825;--gb:#FFD600;--gs:#FFF8E1;--grn:#66BB6A;--grns:#E8F5E9;--bl:#42A5F5;--bls:#E3F2FD;--org:#FF6D00;--navy:#1A237E;--pur:#9C27B0;--purs:#F3E5F5;--t:#1A1A2E;--m:#8A8A9A;--bd:rgba(0,0,0,.06);--fd:'Bangers',cursive;--fh:'Fredoka',sans-serif;--fb:'Nunito',sans-serif;--fz:'Noto Sans SC',sans-serif;--r:14px;--sh:0 2px 12px rgba(0,0,0,.07);--shl:0 8px 32px rgba(0,0,0,.1)}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:var(--fb);color:var(--t);min-height:100vh;background:#0a0a14;-webkit-tap-highlight-color:transparent}
@@ -50,8 +49,69 @@
     .btn-vamos{padding:15px 56px;border:none;background:linear-gradient(135deg,#F44336,#FF6D00);color:#fff;font-family:var(--fh);font-size:1.35rem;font-weight:700;letter-spacing:.08em;border-radius:50px;cursor:pointer;box-shadow:0 4px 20px rgba(244,67,54,.4);transition:all .3s;width:100%;max-width:280px}
     .btn-vamos:active{transform:scale(1.05)}
     .btn-sub{padding:9px 28px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-family:var(--fh);font-size:.75rem;font-weight:600;border-radius:20px;cursor:pointer;transition:all .3s;backdrop-filter:blur(4px)}
-    .lang-selector-splash{position:absolute;top:20px;right:20px;z-index:30;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:30px;backdrop-filter:blur(5px)}
-    .lang-selector-splash select{background:transparent;color:white;border:1px solid white;padding:4px 8px;border-radius:20px;font-family:var(--fh)}
+    /* Selector de idiomas: botones destacados + desplegable */
+    .lang-selector-splash {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 30;
+      display: flex;
+      gap: 8px;
+      background: rgba(0,0,0,0.6);
+      padding: 6px 12px;
+      border-radius: 40px;
+      backdrop-filter: blur(5px);
+    }
+    .lang-btn-primary {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      font-family: var(--fh);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn-primary.active {
+      background: var(--org);
+      border-color: var(--org);
+      color: white;
+    }
+    .lang-select-splash {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      padding: 4px 8px;
+      font-family: var(--fh);
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .lang-selector-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .lang-selector-profile .lang-btn-primary {
+      background: var(--sa);
+      border: 1px solid var(--bd);
+      color: var(--t);
+    }
+    .lang-selector-profile .lang-btn-primary.active {
+      background: var(--org);
+      border-color: var(--org);
+      color: white;
+    }
+    .lang-selector-profile .lang-select-splash {
+      background: var(--s);
+      color: var(--t);
+      border: 1px solid var(--bd);
+    }
+    /* Resto de estilos (igual que antes, no se modifican) */
     #main{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:4px 16px 0;display:none;background:var(--bg);padding-bottom:80px}
     #main.show{display:block;animation:fi .5s ease}
     @keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -157,7 +217,9 @@
   <div class="epic-t"><h1>VIBRA FÚTBOL</h1><div class="sub">Siente cada jugada</div><div class="zh">足球震动 — 感受每一刻</div></div>
   <div class="epic-btns"><button class="btn-vamos" id="btnEnter">¡VAMOS!</button><button class="btn-sub" id="btnAbout">Sobre el proyecto</button></div>
   <div class="lang-selector-splash">
-    <select id="splashLangSelect"></select>
+    <button class="lang-btn-primary" data-lang="es">🇪🇸 Español</button>
+    <button class="lang-btn-primary" data-lang="zh">🇨🇳 中文</button>
+    <select id="splashLangSelect" class="lang-select-splash"></select>
   </div>
 </div>
 
@@ -168,7 +230,6 @@
     <div id="hdrU" class="user-b hidden" onclick="goPanel('panel-perfil')"><div class="av" id="hdrAv">⚽</div><span id="hdrName">Usuario</span></div>
   </header>
 
-  <!-- INICIO: solo partidos seguidos + marcador grande -->
   <div class="app-p active" id="panel-inicio">
     <div class="scoreboard" id="mainScoreboard">
       <div class="match-st"><div class="match-tm" id="mainMatchTimer">--:--</div><div class="match-lb" id="mainMatchStatus">---</div></div>
@@ -189,7 +250,6 @@
     </div>
   </div>
 
-  <!-- REAL: fixture completo y clasificación -->
   <div class="app-p" id="panel-real">
     <div class="card">
       <h3 id="fixtureTitle">📅 Calendario Mundial 2026</h3>
@@ -205,7 +265,6 @@
     </div>
   </div>
 
-  <!-- FESTEJA público -->
   <div class="app-p" id="panel-festeja">
     <div class="post-comp">
       <div class="comp-hdr"><div class="comp-av" id="compAv">⚽</div><textarea class="comp-in" id="postTxt" placeholder="¿Qué estás festejando? 🎉⚽" rows="2"></textarea></div>
@@ -214,13 +273,11 @@
     <div class="social-feed" id="sFeed"></div>
   </div>
 
-  <!-- NOTICIAS -->
   <div class="app-p" id="panel-noticias">
     <div class="news-agent-badge">🤖 VF Agent · Tono humanista y positivo</div>
     <div id="newsContainer"></div>
   </div>
 
-  <!-- PERFIL -->
   <div class="app-p" id="panel-perfil">
     <div class="prof-card">
       <div class="prof-av-lg" id="pAv"><span id="pAvE">⚽</span><div class="edit-av" onclick="togAvPick()">✏️</div></div>
@@ -237,9 +294,10 @@
       <div id="avPicker" style="display:none"><label id="avatarLabel">AVATAR</label><div class="av-pick" id="avGrid"></div></div>
       <input class="fi" id="editUsername" placeholder="Nombre de usuario">
       <textarea class="fi" id="editBio" rows="2" placeholder="Tu biografía..."></textarea>
-      <div class="lang-selector-profile" style="margin-top:10px">
-        <label id="langLabel">Idioma: </label>
-        <select id="profileLangSelect"></select>
+      <div class="lang-selector-profile">
+        <button class="lang-btn-primary" data-lang="es">🇪🇸 Español</button>
+        <button class="lang-btn-primary" data-lang="zh">🇨🇳 中文</button>
+        <select id="profileLangSelect" class="lang-select-splash"></select>
       </div>
       <button class="btn-save" id="saveProfileBtn" onclick="saveProfile()">GUARDAR</button>
     </div>
@@ -248,7 +306,6 @@
     <button class="btn-save" id="resetProfileBtn" style="background:var(--rs); color:var(--red); margin-top:10px" onclick="resetProfile()">Restablecer perfil</button>
   </div>
 
-  <!-- BOTTOM NAV -->
   <nav class="bnav" id="bnav">
     <button class="nb active" data-p="panel-inicio"><span class="ni">🏠</span><span class="nl" id="navHome">Inicio</span></button>
     <button class="nb" data-p="panel-real"><span class="ni">⚡</span><span class="nl" id="navLive">Real</span></button>
@@ -271,11 +328,8 @@ const matchesDataBackup = [
   { id: 6, group: 'K', home: 'Alemania', homeFlag: '🇩🇪', away: 'Corea del Sur', awayFlag: '🇰🇷', dateUTC: '2026-06-17T15:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 },
   { id: 7, group: 'C', home: 'Inglaterra', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', away: 'Irán', awayFlag: '🇮🇷', dateUTC: '2026-06-13T19:00:00Z', status: 'pending', homeScore: 0, awayScore: 0, minute: 0 }
 ];
-
-// Datos en vivo (se rellenarán con ESPN)
 let matchesData = [];
 
-// ========== FUNCIONES DE ESPN ==========
 async function fetchESPNdata() {
   try {
     const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/worldcup/scoreboard');
@@ -307,13 +361,8 @@ function convertirESPNaMatches(espnData) {
     if (!home || !away) return;
     let status = 'pending';
     let minute = 0;
-    if (comp.status?.type?.completed) {
-      status = 'played';
-      minute = 90;
-    } else if (comp.status?.type?.description === 'Live') {
-      status = 'played';
-      minute = parseInt(comp.status.displayClock) || 45;
-    }
+    if (comp.status?.type?.completed) { status = 'played'; minute = 90; }
+    else if (comp.status?.type?.description === 'Live') { status = 'played'; minute = parseInt(comp.status.displayClock) || 45; }
     const homeName = home.team.displayName;
     const awayName = away.team.displayName;
     matches.push({
@@ -333,7 +382,6 @@ function convertirESPNaMatches(espnData) {
   return matches;
 }
 
-// ========== STANDINGS (igual que antes) ==========
 let standings = {};
 function initStandings() {
   standings = {};
@@ -361,7 +409,6 @@ function updateStandings() {
   });
 }
 
-// ========== PARTIDOS SEGUIDOS (inicia vacío) ==========
 let followedMatches = JSON.parse(localStorage.getItem('followedMatches') || '[]');
 function saveFollowed() { localStorage.setItem('followedMatches', JSON.stringify(followedMatches)); }
 function toggleFollow(matchId) {
@@ -401,7 +448,6 @@ function getSortedFollowedMatches() {
   return followed;
 }
 
-// ========== VIBRACIONES ==========
 let selectedTeamForVib = null;
 const S = { vibConf: {} };
 function initVibConf() {
@@ -479,7 +525,6 @@ window.setVibTeam = function(team) {
   showToast(`Vibración configurada para ${team === 'home' ? 'local' : team === 'away' ? 'visitante' : 'ambos equipos'}`);
 };
 
-// ========== SIMULACIÓN EN VIVO CON PRIORIDAD ESPN ==========
 let liveInterval;
 let usandoESPN = false;
 
@@ -513,14 +558,12 @@ async function cargarDatosIniciales() {
 async function startLiveSimulation() {
   if (liveInterval) clearInterval(liveInterval);
   await cargarDatosIniciales();
-
   liveInterval = setInterval(async () => {
     if (usandoESPN) {
       const newEspn = await fetchESPNdata();
       if (newEspn && newEspn.events) {
         const updatedMatches = convertirESPNaMatches(newEspn);
         if (updatedMatches.length > 0) {
-          // Actualizar scores en matchesData existente
           updatedMatches.forEach((newMatch, idx) => {
             if (matchesData[idx]) {
               matchesData[idx].homeScore = newMatch.homeScore;
@@ -536,7 +579,6 @@ async function startLiveSimulation() {
           updateMainScoreboard();
         }
       } else {
-        // Si ESPN falla, cambiar a modo simulación
         console.warn('ESPN dejó de responder, cambiando a simulación');
         usandoESPN = false;
         matchesData = [...matchesDataBackup];
@@ -548,7 +590,6 @@ async function startLiveSimulation() {
         updateMainScoreboard();
       }
     } else {
-      // Modo simulación: actualizar resultados aleatorios cuando pasa la fecha
       const now = new Date();
       matchesData.forEach(m => {
         if (m.status === 'pending') {
@@ -567,7 +608,7 @@ async function startLiveSimulation() {
       renderStandings();
       updateMainScoreboard();
     }
-  }, 30000); // Cada 30 segundos para ESPN, menos es innecesario
+  }, 30000);
 }
 
 function updateMainScoreboard() {
@@ -659,7 +700,7 @@ function renderStandings() {
     teams.sort((a,b) => b[1].pts - a[1].pts || (b[1].gf - b[1].gc) - (a[1].gf - a[1].gc));
     html += `<h4 style="margin-top:12px">Grupo ${g}</h4>`;
     html += `<table class="standings-table">
-      <thead><tr><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead>
+      <thead><tr><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th><tr></thead>
       <tbody>`;
     teams.forEach(([team, stats]) => {
       const flag = matchesData.find(m => m.home === team || m.away === team)?.homeFlag || '🏁';
@@ -670,7 +711,7 @@ function renderStandings() {
         <td><strong>${stats.pts}</strong></td>
       </tr>`;
     });
-    html += `</tbody></td>`;
+    html += `</tbody></table>`;
   });
   container.innerHTML = html;
 }
@@ -681,7 +722,6 @@ function renderTopScorers() {
   container.innerHTML = '<p>Datos de goleadores próximamente con la API completa.</p>';
 }
 
-// ========== FESTEJA, NOTICIAS, PERFIL (igual que original) ==========
 let publicPosts = JSON.parse(localStorage.getItem('public_posts') || '[]');
 function savePublicPosts() { localStorage.setItem('public_posts', JSON.stringify(publicPosts)); }
 function addPublicPost(text) {
@@ -767,7 +807,6 @@ window.toggleNews = function(idx) {
   expandBtn.textContent = isOpen ? '▼ Leer más' : '▲ Cerrar';
 };
 
-// ========== TRADUCCIONES Y PERFIL ==========
 const translations = {
   es: { brand: 'VIBRA FÚTBOL', inicio: 'Inicio', real: 'Real', festeja: 'Festeja', noticias: 'Noticias', perfil: 'Perfil', following: 'Siguiendo', follow: 'Seguir', live: 'EN VIVO', upcoming: 'PRÓXIMO', noFollowed: 'No sigues ningún partido.', goToReal: 'Ir a Real para seguir', editProfile: 'Editar perfil', avatar: 'AVATAR', language: 'Idioma: ', save: 'GUARDAR', reset: 'Restablecer perfil', community: 'Comunidad', goals: 'Goles', posts: 'Posts', follows: 'Seguidos', vibConfig: '⚙️ Configuración de vibración', noFollowedVib: 'No sigues ningún partido. Ve a "Real" y sigue un partido para configurar vibraciones.', fixtureTitle: '📅 Calendario Mundial 2026', standingsTitle: '🏆 Clasificación por grupos', followedTitle: '📋 Partidos que sigues', vamos: '¡VAMOS!', clearFollowed: '🗑️ Limpiar todos los seguidos', about: 'Sobre el proyecto', publish: 'Publicar', comment: 'Comentar', saveProfile: 'GUARDAR', resetProfile: 'Restablecer perfil' },
   en: { brand: 'VIBRA FOOTBALL', inicio: 'Home', real: 'Live', festeja: 'Celebrate', noticias: 'News', perfil: 'Profile', following: 'Following', follow: 'Follow', live: 'LIVE', upcoming: 'UPCOMING', noFollowed: "You're not following any matches.", goToReal: 'Go to Live to follow', editProfile: 'Edit profile', avatar: 'AVATAR', language: 'Language: ', save: 'SAVE', reset: 'Reset profile', community: 'Community', goals: 'Goals', posts: 'Posts', follows: 'Follows', vibConfig: '⚙️ Vibration Settings', noFollowedVib: 'You are not following any match. Go to "Live" and follow a match to configure vibrations.', fixtureTitle: '📅 World Cup 2026 Schedule', standingsTitle: '🏆 Group Standings', followedTitle: '📋 Matches you follow', vamos: 'GO!', clearFollowed: '🗑️ Clear all followed', about: 'About the project', publish: 'Publish', comment: 'Comment', saveProfile: 'SAVE', resetProfile: 'Reset profile' },
@@ -806,24 +845,39 @@ function applyLanguage(lang) {
   if (clearBtn) clearBtn.innerText = t.clearFollowed;
   const pubBtn = document.getElementById('btnPost');
   if (pubBtn) pubBtn.innerText = t.publish;
+  // Actualizar botones destacados
+  document.querySelectorAll('.lang-btn-primary').forEach(btn => {
+    if (btn.dataset.lang === lang) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+  const splashSelect = document.getElementById('splashLangSelect');
+  const profileSelect = document.getElementById('profileLangSelect');
+  if (splashSelect) splashSelect.value = lang;
+  if (profileSelect) profileSelect.value = lang;
   renderRealMatches();
   renderFollowedList();
   updateMainScoreboard();
   localStorage.setItem('vf_lang', lang);
 }
+
 function initLanguageSelector() {
   const savedLang = localStorage.getItem('vf_lang') || 'es';
   const splashSelect = document.getElementById('splashLangSelect');
   const profileSelect = document.getElementById('profileLangSelect');
   const options = Object.keys(translations).map(l => `<option value="${l}">${l.toUpperCase()}</option>`).join('');
-  splashSelect.innerHTML = options;
-  profileSelect.innerHTML = options;
-  splashSelect.value = savedLang;
-  profileSelect.value = savedLang;
-  splashSelect.addEventListener('change', e => applyLanguage(e.target.value));
-  profileSelect.addEventListener('change', e => applyLanguage(e.target.value));
+  if (splashSelect) splashSelect.innerHTML = options;
+  if (profileSelect) profileSelect.innerHTML = options;
+  if (splashSelect) splashSelect.value = savedLang;
+  if (profileSelect) profileSelect.value = savedLang;
+  if (splashSelect) splashSelect.addEventListener('change', e => applyLanguage(e.target.value));
+  if (profileSelect) profileSelect.addEventListener('change', e => applyLanguage(e.target.value));
+  // Botones destacados
+  document.querySelectorAll('.lang-btn-primary').forEach(btn => {
+    btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+  });
   applyLanguage(savedLang);
 }
+
 let currentUser = JSON.parse(localStorage.getItem('vf_user') || '{"username":"Fan","avatar":"⚽","bio":""}');
 function saveProfile() {
   currentUser.username = document.getElementById('editUsername').value || 'Fan';
@@ -904,7 +958,7 @@ function init() {
       document.getElementById('splash').style.display = 'none';
       document.getElementById('main').classList.add('show');
       document.getElementById('hdrU').classList.remove('hidden');
-      startLiveSimulation(); // Esto carga datos ESPN automáticamente
+      startLiveSimulation();
       loadProfileUI();
       updateCommunityList();
       updateVibConfigForFollowed();
